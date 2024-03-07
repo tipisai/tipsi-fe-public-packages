@@ -1,10 +1,10 @@
+import { Result404Icon } from "@illa-public/icon"
 import { Button } from "antd"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import { ErrorPage } from "../Layout"
 import { buttonStyle, iconStyle } from "../Layout/style"
-import Result404Icon from "../assets/result404.svg?react"
 
 export const Page404: FC = () => {
   const navigate = useNavigate()

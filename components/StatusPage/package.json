@@ -5,6 +5,7 @@
   "main": "index.tsx",
   "dependencies": {
     "@illa-public/color-scheme": "workspace:*",
+    "@illa-public/icon": "workspace:*",
     "@illa-public/public-types": "workspace:*",
     "@illa-public/user-role-utils": "workspace:*",
     "react-helmet-async": "^2.0.4"
