@@ -1,0 +1,13 @@
+{
+  "name": "@illa-public/color-scheme",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.ts",
+  "dependencies": {
+    "color": "^4.2.3"
+  },
+  "devDependencies": {
+    "@types/color": "^3.0.3",
+    "tsconfig": "workspace:*"
+  }
+}
