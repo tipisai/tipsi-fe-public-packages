@@ -4,13 +4,13 @@ import {
   ILLA_MIXPANEL_PUBLIC_PAGE_NAME,
 } from "@illa-public/mixpanel-utils"
 import { ILLAMixpanel } from "@illa-public/mixpanel-utils"
-import { TextLink } from "@illa-public/text-link"
 import { isCloudVersion } from "@illa-public/utils"
+import { Button } from "antd"
 import { FC, useEffect, useState } from "react"
 import { Controller, useFormContext } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
-import { Button, Input, Password } from "@illa-design/react"
+import { Input, Password } from "@illa-design/react"
 import { OAuthButton } from "../../components/OAuthButton"
 import { EMAIL_FORMAT } from "../../constants/regExp"
 import { validateReport } from "../../utils/reportUtils"
@@ -75,7 +75,8 @@ export const MobileLogin: FC<loginProps> = (props) => {
               i18nKey="page.user.sign_in.description.register"
               t={t}
               components={[
-                <TextLink
+                <Button
+                  type="link"
                   key="text-link"
                   onClick={() => {
                     ILLAMixpanel.track(ILLA_MIXPANEL_EVENT_TYPE.CLICK, {
@@ -186,7 +187,8 @@ export const MobileLogin: FC<loginProps> = (props) => {
         )}
       </div>
       <div css={forgotPwdStyle}>
-        <TextLink
+        <Button
+          type="link"
           onClick={() => {
             ILLAMixpanel.track(ILLA_MIXPANEL_EVENT_TYPE.CLICK, {
               page: ILLA_MIXPANEL_PUBLIC_PAGE_NAME.LOGIN,
@@ -200,14 +202,13 @@ export const MobileLogin: FC<loginProps> = (props) => {
           }}
         >
           {t("page.user.sign_in.description.forgot_password")}
-        </TextLink>
+        </Button>
       </div>
       <Button
-        _css={isCloudVersion ? submitButtonStyle : singleSubmitButtonStyle}
-        colorScheme="techPurple"
+        css={isCloudVersion ? submitButtonStyle : singleSubmitButtonStyle}
         size="large"
         loading={loading}
-        fullWidth
+        block
         onClick={validReport}
       >
         {t("page.user.sign_in.actions.login")}

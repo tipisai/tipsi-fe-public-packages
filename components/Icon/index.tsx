@@ -12,6 +12,8 @@ import CopyIcon from "./publicIcon/copy.svg?react"
 import DeleteIcon from "./publicIcon/delete.svg?react"
 // public icon
 import DocsIcon from "./publicIcon/doc.svg?react"
+import DoubtIcon from "./publicIcon/doubt.svg?react"
+import DownIcon from "./publicIcon/down.svg?react"
 import ForkIcon from "./publicIcon/fork.svg?react"
 import LoadingIcon from "./publicIcon/loading.svg?react"
 import PlayFillIcon from "./publicIcon/playFill.svg?react"
@@ -26,6 +28,7 @@ import ShareIcon from "./publicIcon/share.svg?react"
 import StarFillIcon from "./publicIcon/starFill.svg?react"
 import StarOutlineIcon from "./publicIcon/starOutline.svg?react"
 import SuccessIcon from "./publicIcon/success.svg?react"
+import UpIcon from "./publicIcon/up.svg?react"
 import UploadIcon from "./publicIcon/upload.svg?react"
 import WarningCircleIcon from "./publicIcon/warningCircle.svg?react"
 
@@ -60,4 +63,7 @@ export {
   Result403Icon,
   Result404Icon,
   Result500Icon,
+  DownIcon,
+  DoubtIcon,
+  UpIcon,
 }

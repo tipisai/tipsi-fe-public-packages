@@ -4,19 +4,13 @@ import {
   ILLA_MIXPANEL_PUBLIC_PAGE_NAME,
 } from "@illa-public/mixpanel-utils"
 import { ILLAMixpanel } from "@illa-public/mixpanel-utils"
-import { TextLink } from "@illa-public/text-link"
 import { isCloudVersion } from "@illa-public/utils"
+import { Button } from "antd"
 import { FC, useEffect, useState } from "react"
 import { Controller, useFormContext } from "react-hook-form"
 import { Trans, useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
-import {
-  Button,
-  Divider,
-  Input,
-  Password,
-  WarningCircleIcon,
-} from "@illa-design/react"
+import { Divider, Input, Password, WarningCircleIcon } from "@illa-design/react"
 import { EmailCode } from "../../components/EmailCode"
 import { OAuthButton } from "../../components/OAuthButton"
 import { EMAIL_FORMAT } from "../../constants/regExp"
@@ -99,7 +93,8 @@ export const PCRegister: FC<RegisterProps> = (props) => {
               i18nKey="page.user.sign_up.description.login"
               t={t}
               components={[
-                <TextLink
+                <Button
+                  type="link"
                   key="go-to-login"
                   onClick={() => {
                     ILLAMixpanel.track(ILLA_MIXPANEL_EVENT_TYPE.CLICK, {
@@ -352,13 +347,7 @@ export const PCRegister: FC<RegisterProps> = (props) => {
             </div>
           </section>
         </section>
-        <Button
-          colorScheme="techPurple"
-          size="large"
-          loading={loading}
-          fullWidth
-          onClick={validReport}
-        >
+        <Button size="large" loading={loading} block onClick={validReport}>
           {t("page.user.sign_up.actions.create")}
         </Button>
       </form>

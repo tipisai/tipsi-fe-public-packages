@@ -6,12 +6,15 @@
   "dependencies": {
     "@illa-public/public-types": "workspace:*",
     "@illa-public/user-role-utils": "workspace:*",
-    "@illa-design/react": "workspace:*"
+    "@illa-public/icon": "workspace:*",
+    "@illa-public/color-scheme": "workspace:*"
   },
   "devDependencies": {
     "tsconfig": "workspace:*"
   },
   "peerDependencies": {
+    "antd": "^5.15.0",
+    "@ant-design/icons": "^5.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "@types/react": "^18.2.20",

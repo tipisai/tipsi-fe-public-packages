@@ -1,6 +1,8 @@
+import Icon from "@ant-design/icons"
+import { AddIcon, DeleteIcon } from "@illa-public/icon"
+import { Button, Input } from "antd"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
-import { AddIcon, Button, DeleteIcon, Input } from "@illa-design/react"
 import { RecordEditorProps } from "./interface"
 import {
   applyRecordEditorContainerStyle,
@@ -44,16 +46,18 @@ export const RecordEditor: FC<RecordEditorProps> = (props) => {
           return (
             <div css={recordStyle} key={index}>
               <Input
-                colorScheme={"techPurple"}
                 height="32px"
                 value={record.key}
                 readOnly={fillOnly || readOnly}
-                minW="160px"
-                width="0"
-                flexGrow="1"
-                bdRadius="8px 0 0 8px"
+                style={{
+                  minWidth: "160px",
+                  width: "0",
+                  flexGrow: 1,
+                  borderRadius: "8px 0 0 8px",
+                }}
                 placeholder="key"
-                onChange={(value) => {
+                onChange={(e) => {
+                  const value = e.target.value
                   onChangeKey?.(
                     index,
                     value.replace(/[ {}\s]/g, "").trim(),
@@ -63,17 +67,19 @@ export const RecordEditor: FC<RecordEditorProps> = (props) => {
                 }}
               />
               <Input
-                colorScheme={"techPurple"}
                 height="32px"
-                bdRadius={fillOnly || readOnly ? "0 8px 8px 0" : "0"}
-                ml="-1px"
+                style={{
+                  borderRadius: fillOnly || readOnly ? "0 8px 8px 0" : "0",
+                  marginLeft: "-1px",
+                  width: "0",
+                  flexGrow: "1",
+                  minWidth: "160px",
+                }}
                 readOnly={readOnly}
                 placeholder="value"
-                minW="160px"
-                width="0"
-                flexGrow="1"
                 value={record.value}
-                onChange={(value) => {
+                onChange={(e) => {
+                  const value = e.target.value
                   onChangeValue?.(
                     index,
                     record.key,
@@ -84,16 +90,15 @@ export const RecordEditor: FC<RecordEditorProps> = (props) => {
               />
               {!(fillOnly || readOnly) && (
                 <Button
-                  type="button"
-                  ml="-1px"
-                  minW="32px"
-                  variant="outline"
-                  bdRadius="0 8px 8px 0"
-                  colorScheme="grayBlue"
+                  style={{
+                    marginLeft: "-1px",
+                    minWidth: "32px",
+                    borderRadius: "0 8px 8px 0",
+                  }}
                   onClick={() => {
                     onDelete?.(index, record, name)
                   }}
-                  leftIcon={<DeleteIcon />}
+                  icon={<Icon component={DeleteIcon} />}
                 />
               )}
             </div>
@@ -102,16 +107,17 @@ export const RecordEditor: FC<RecordEditorProps> = (props) => {
         {!(fillOnly || readOnly) && (
           <span>
             <Button
-              type="button"
-              mb="8px"
-              pd="1px 8px"
-              colorScheme="techPurple"
-              size="medium"
-              variant="text"
+              style={{
+                marginBottom: "8px",
+                padding: "1px 8px",
+                minWidth: "32px",
+                borderRadius: "0 8px 8px 0",
+              }}
+              type="text"
               onClick={() => {
                 onAdd?.(name)
               }}
-              leftIcon={<AddIcon />}
+              icon={<Icon component={AddIcon} />}
             >
               {t("editor.action.panel.btn.new")}
             </Button>

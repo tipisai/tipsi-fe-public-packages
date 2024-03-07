@@ -3,8 +3,8 @@ import {
   MixpanelTrackContext,
 } from "@illa-public/mixpanel-utils"
 import { DOC_PREFIX } from "@illa-public/public-configs"
-import { TextLink } from "@illa-public/text-link"
 import { isCloudVersion } from "@illa-public/utils"
+import { Button } from "antd"
 import { FC, useContext } from "react"
 import { Trans, useTranslation } from "react-i18next"
 import { LayoutProps } from "../interface"
@@ -33,13 +33,15 @@ export const MobileUserLayout: FC<LayoutProps> = ({ children }) => {
           i18nKey="page.user.policy"
           t={t}
           components={[
-            <TextLink
+            <Button
+              type="link"
               key="text-link"
               onClick={() => {
                 handleLinkOpenClick("/privacy-policy")
               }}
             />,
-            <TextLink
+            <Button
+              type="link"
               key="text-link"
               onClick={() => {
                 handleLinkOpenClick("/terms-of-service")

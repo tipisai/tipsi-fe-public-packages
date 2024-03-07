@@ -1,18 +1,10 @@
+import Icon from "@ant-design/icons"
+import { DoubtIcon, DownIcon, SuccessIcon, UpIcon } from "@illa-public/icon"
 import { USER_ROLE } from "@illa-public/public-types"
 import { isBiggerThanTargetRole } from "@illa-public/user-role-utils"
+import { Button, Dropdown, MenuProps, Space, Tooltip } from "antd"
 import { FC, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
-import {
-  DoubtIcon,
-  DownIcon,
-  DropList,
-  DropListItem,
-  Dropdown,
-  SuccessIcon,
-  Trigger,
-  TriggerProvider,
-  UpIcon,
-} from "@illa-design/react"
 import { RoleSelectorProps } from "./interface"
 import {
   applyRoleOuterLabelStyle,
@@ -79,62 +71,72 @@ export const RoleSelector: FC<RoleSelectorProps> = (props) => {
     )
   }, [currentUserRole, excludeUserRole, showOwner, userRoleItems])
 
+  const menuItems: MenuProps["items"] = [{}]
+
   return (
-    <Dropdown
-      disabled={!canEdit || dropUserRole.length <= 1}
-      onVisibleChange={(visible) => {
-        setMenuVisible(visible)
-      }}
-      dropList={
-        <DropList
-          onClickItem={(value) => {
-            onClickItem?.(value as USER_ROLE)
-          }}
-        >
-          {dropUserRole.map((item) => (
-            <DropListItem
-              value={item.role}
-              title={
-                <div css={itemContainer}>
-                  <div>{item.name}</div>
-                  {!withoutTips && (
-                    <TriggerProvider zIndex={1000}>
-                      <Trigger
-                        trigger="hover"
-                        position="top"
-                        content={item.tips}
-                      >
-                        <div css={doubtStyle}>
-                          <DoubtIcon />
-                        </div>
-                      </Trigger>
-                    </TriggerProvider>
-                  )}
-                  {value === item.role && (
-                    <div css={successStyle}>
-                      <SuccessIcon />
-                    </div>
-                  )}
-                </div>
-              }
-              key={item.role}
-            />
-          ))}
-        </DropList>
-      }
-      position="bottom-end"
-      trigger="click"
-    >
-      <div css={roleSelectorRoleContainer}>
-        <div css={applyRoleOuterLabelStyle(inline)}>
+    <Dropdown>
+      <Button type="text">
+        <Space>
           {userRoleItems.find((item) => item.role === value)?.name}
-        </div>
-        {canEdit && dropUserRole.length > 1 && (
-          <div css={roleOuterIconStyle}>
-            {menuVisible ? <UpIcon /> : <DownIcon />}
-          </div>
-        )}
-      </div>
+          {canEdit && dropUserRole.length > 1 && <Icon component={DownIcon} />}
+        </Space>
+      </Button>
     </Dropdown>
   )
+  // <Dropdown
+  //   disabled={!canEdit || dropUserRole.length <= 1}
+  //   onVisibleChange={(visible) => {
+  //     setMenuVisible(visible)
+  //   }}
+  //   dropList={
+  //     <DropList
+  //       onClickItem={(value) => {
+  //         onClickItem?.(value as USER_ROLE)
+  //       }}
+  //     >
+  //       {dropUserRole.map((item) => (
+  //         <DropListItem
+  //           value={item.role}
+  //           title={
+  //             <div css={itemContainer}>
+  //               <div>{item.name}</div>
+  //               {!withoutTips && (
+  //                 <TriggerProvider zIndex={1000}>
+  //                   <Trigger
+  //                     trigger="hover"
+  //                     position="top"
+  //                     content={item.tips}
+  //                   >
+  //                     <div css={doubtStyle}>
+  //                       <DoubtIcon />
+  //                     </div>
+  //                   </Trigger>
+  //                 </TriggerProvider>
+  //               )}
+  //               {value === item.role && (
+  //                 <div css={successStyle}>
+  //                   <SuccessIcon />
+  //                 </div>
+  //               )}
+  //             </div>
+  //           }
+  //           key={item.role}
+  //         />
+  //       ))}
+  //     </DropList>
+  //   }
+  //   position="bottom-end"
+  //   trigger="click"
+  // >
+  //   <div css={roleSelectorRoleContainer}>
+  //     <div css={applyRoleOuterLabelStyle(inline)}>
+  //       {userRoleItems.find((item) => item.role === value)?.name}
+  //     </div>
+  //     {canEdit && dropUserRole.length > 1 && (
+  //       <div css={roleOuterIconStyle}>
+  //         {menuVisible ? <UpIcon /> : <DownIcon />}
+  //       </div>
+  //     )}
+  //   </div>
+  // </Dropdown>
 }

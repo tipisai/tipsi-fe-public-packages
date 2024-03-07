@@ -1,13 +1,12 @@
 import { SUBSCRIBE_PLAN, SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
-import { TextLink } from "@illa-public/text-link"
 import { getCurrentId } from "@illa-public/user-data"
 import { isMobileByWindowSize } from "@illa-public/utils"
+import { Button } from "antd"
 import { FC, useMemo, useState } from "react"
 import { Trans, useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { useWindowSize } from "react-use"
 import {
-  Button,
   CloseIcon,
   Divider,
   Drawer,
@@ -176,7 +175,7 @@ export const StorageDrawer: FC<StorageDrawerProps> = (props) => {
               </div>
             </div>
             <Button
-              w="100%"
+              block
               size="large"
               colorScheme="blackAlpha"
               disabled={actionDisabled}
@@ -194,7 +193,8 @@ export const StorageDrawer: FC<StorageDrawerProps> = (props) => {
               i18nKey={description}
               t={t}
               components={[
-                <TextLink
+                <Button
+                  type="link"
                   key="text-link"
                   onClick={() => {
                     window.open(LEARN_MORE_LINK, "_blank")

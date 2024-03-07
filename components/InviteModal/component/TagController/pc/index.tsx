@@ -7,7 +7,6 @@ import { fetchFuzzySearchHashTag } from "../../../service"
 import { TagControllerProps } from "../interface"
 import {
   fetchAgentDetailInfoByAgentID,
-  fetchAppDetailInfoByAppID,
   fetchRecommendHashtag,
 } from "../service"
 import {
@@ -39,11 +38,6 @@ export const TagControllerPC: FC<TagControllerProps> = (props) => {
       return
     }
     switch (productType) {
-      case HASHTAG_REQUEST_TYPE.UNIT_TYPE_APP:
-        fetchAppDetailInfoByAppID(productID).then((res) => {
-          setCurrentHashtags(res.data.marketplace.hashtags)
-        })
-        break
       case HASHTAG_REQUEST_TYPE.UNIT_TYPE_AI_AGENT:
         fetchAgentDetailInfoByAgentID(productID).then((res) => {
           setCurrentHashtags(res.data.marketplace.hashtags)
