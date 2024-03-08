@@ -2,6 +2,7 @@ import {
   ILLA_MIXPANEL_EVENT_TYPE,
   MixpanelTrackContext,
 } from "@illa-public/mixpanel-utils"
+import { App, Button, Modal, Spin } from "antd"
 import {
   ChangeEvent,
   FC,
@@ -13,7 +14,6 @@ import {
 } from "react"
 import EasyCropper, { Area } from "react-easy-crop"
 import { useTranslation } from "react-i18next"
-import { Button, CloseIcon, Modal, Spin, useMessage } from "@illa-design/react"
 import RotateRightIcon from "./assets/rotate-right.svg?react"
 import {
   FILE_INIT_ASPECT,
@@ -52,7 +52,7 @@ import { getCroppedImg } from "./utils"
 export const AvatarUpload: FC<AvatarUploadProps> = (props) => {
   const { isMobile, onOk, children, disabled = false } = props
   const { t } = useTranslation()
-  const message = useMessage()
+  const { message } = App.useApp()
   const inputRef = useRef<HTMLInputElement>(null)
   const controlRef = useRef<HTMLInputElement>(null)
   const [loading, setLoading] = useState(false)
@@ -248,18 +248,14 @@ export const AvatarUpload: FC<AvatarUploadProps> = (props) => {
       </div>
       {file && (
         <Modal
-          _css={applyModalStyle}
-          visible={modalVisible}
-          withoutPadding
+          css={applyModalStyle}
+          open={modalVisible}
           onCancel={onCloseModal}
           maskClosable={false}
           footer={false}
+          title={t("image.crop.modal.title")}
         >
-          <Spin _css={loadingStyle} loading={loading} colorScheme="techPurple">
-            <span css={applyModalTitleStyle}>
-              {t("image.crop.modal.title")}
-            </span>
-            <CloseIcon css={closeStyle} onClick={onCloseModal} />
+          <Spin css={loadingStyle} spinning={loading}>
             <div css={applyCropperContainerStyle}>
               <EasyCropper
                 restrictPosition
@@ -304,11 +300,7 @@ export const AvatarUpload: FC<AvatarUploadProps> = (props) => {
                   onClick={() => setRotation(rotation + 90)}
                 />
               </div>
-              <Button
-                _css={buttonStyle}
-                colorScheme="techPurple"
-                onClick={handleCrop}
-              >
+              <Button css={buttonStyle} onClick={handleCrop} block>
                 {t("image.crop.modal.save")}
               </Button>
             </div>
