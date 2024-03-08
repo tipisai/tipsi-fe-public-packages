@@ -17,6 +17,7 @@ import DownIcon from "./publicIcon/down.svg?react"
 import ForkIcon from "./publicIcon/fork.svg?react"
 import LoadingIcon from "./publicIcon/loading.svg?react"
 import PlayFillIcon from "./publicIcon/playFill.svg?react"
+import PlayOutlineIcon from "./publicIcon/playOutline.svg?react"
 import PlusIcon from "./publicIcon/plus.svg?react"
 import PreviousIcon from "./publicIcon/previous.svg?react"
 import ResetIcon from "./publicIcon/reset.svg?react"
@@ -66,4 +67,5 @@ export {
   DownIcon,
   DoubtIcon,
   UpIcon,
+  PlayOutlineIcon,
 }

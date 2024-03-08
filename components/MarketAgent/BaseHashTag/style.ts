@@ -1,15 +1,11 @@
 import { css } from "@emotion/react"
-import { getColor } from "@illa-design/react"
+import { getColor } from "@illa-public/color-scheme"
 
 export const cardTagsContainerStyle = css`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-`
-
-export const tagContainerCoverStyle = css`
-  padding: 1px 8px;
 `
 
 export const tagContentStyle = css`

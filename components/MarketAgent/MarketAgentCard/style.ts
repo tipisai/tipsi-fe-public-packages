@@ -1,6 +1,11 @@
 import { css } from "@emotion/react"
+import { getColor } from "@illa-public/color-scheme"
 import { applyMobileStyle } from "@illa-public/utils"
-import { getColor } from "@illa-design/react"
+
+export const iconStyle = css`
+  width: 16px;
+  height: 16px;
+`
 
 export const cardStyle = css`
   display: flex;

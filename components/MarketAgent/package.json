@@ -5,21 +5,23 @@
   "main": "index.ts",
   "dependencies": {
     "@illa-public/avatar": "workspace:*",
-    "@illa-public/utils": "workspace:*",
+    "@illa-public/color-scheme": "workspace:*",
+    "@illa-public/icon": "workspace:*",
     "@illa-public/illa-net": "workspace:*",
+    "@illa-public/public-types": "workspace:*",
     "@illa-public/record-editor": "workspace:*",
-    "@illa-public/card-hash-tags": "workspace:*",
-    "@illa-design/react": "workspace:*",
-    "@illa-public/public-types": "workspace:*"
+    "@illa-public/utils": "workspace:*"
   },
   "devDependencies": {
     "tsconfig": "workspace:*"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@emotion/react": "^11.11.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
-    "@emotion/react": "^11.11.1"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@ant-design/icons": "^5.3.1",
+    "antd": "^5.15.1"
   }
 }
