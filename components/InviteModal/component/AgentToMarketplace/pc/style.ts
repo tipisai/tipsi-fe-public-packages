@@ -1,17 +1,11 @@
 import { css } from "@emotion/react"
-import { getColor } from "@illa-design/react"
-
-
-export const publicContainerStyle = css`
-  display: flex;
-  flex-direction: column;
-`
+import { getColor } from "@illa-public/color-scheme"
 
 export const blockContainerStyle = css`
-  margin-top: 16px;
   display: flex;
   align-items: center;
   flex-direction: row;
+  justify-content: space-between;
 `
 
 export const blockLabelStyle = css`
@@ -22,16 +16,7 @@ export const blockLabelStyle = css`
   line-height: 22px;
 `
 
-export const linkCopyContainer = css`
-  margin-top: 8px;
-  display: flex;
-  flex-direction: row;
-  overflow: hidden;
-  align-items: center;
-`
-
 export const contributingDocStyle = css`
-  margin-top: 8px;
   color: ${getColor("grayBlue", "04")};
   margin-right: 54px;
   white-space: break-spaces;

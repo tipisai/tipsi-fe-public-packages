@@ -1,3 +1,4 @@
+import { Flex } from "antd"
 import React, { FC } from "react"
 import { useTranslation } from "react-i18next"
 import {
@@ -12,7 +13,6 @@ import {
   cardContainerStyle,
   cardIconStyle,
   cardNameStyle,
-  shareContainerStyle,
   shareGridLayoutStyle,
   shareLabelStyle,
 } from "./style"
@@ -23,7 +23,7 @@ export const ShareBlockPC: FC<ShareBlockProps> = (props) => {
   const { t } = useTranslation()
 
   return (
-    <div css={shareContainerStyle}>
+    <Flex vertical gap="small">
       <div css={shareLabelStyle}>
         {t("user_management.modal.social_media.label")}
       </div>
@@ -111,7 +111,7 @@ export const ShareBlockPC: FC<ShareBlockProps> = (props) => {
           }
         })}
       </div>
-    </div>
+    </Flex>
   )
 }
 

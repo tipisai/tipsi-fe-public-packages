@@ -4,18 +4,21 @@ import GithubIcon from "./assets/github.svg?react"
 import GoogleIcon from "./assets/google.svg?react"
 import UpgradeIcon from "./assets/upgradeButtonIcon.svg?react"
 import ZipIcon from "./assets/zip.svg?react"
+// public icon
 import AddIcon from "./publicIcon/add.svg?react"
 import AttachmentIcon from "./publicIcon/attachment.svg?react"
+import BindIcon from "./publicIcon/bind.svg?react"
 import CloseIcon from "./publicIcon/close.svg?react"
+import ConfigurationIcon from "./publicIcon/configuration.svg?react"
 import ContributeIcon from "./publicIcon/contribute.svg?react"
 import CopyIcon from "./publicIcon/copy.svg?react"
 import DeleteIcon from "./publicIcon/delete.svg?react"
-// public icon
 import DocsIcon from "./publicIcon/doc.svg?react"
 import DoubtIcon from "./publicIcon/doubt.svg?react"
 import DownIcon from "./publicIcon/down.svg?react"
 import ForkIcon from "./publicIcon/fork.svg?react"
 import LoadingIcon from "./publicIcon/loading.svg?react"
+import PenIcon from "./publicIcon/pen.svg?react"
 import PlayFillIcon from "./publicIcon/playFill.svg?react"
 import PlayOutlineIcon from "./publicIcon/playOutline.svg?react"
 import PlusIcon from "./publicIcon/plus.svg?react"
@@ -26,6 +29,9 @@ import Result404Icon from "./publicIcon/result404.svg?react"
 import Result500Icon from "./publicIcon/result500.svg?react"
 import SearchIcon from "./publicIcon/search.svg?react"
 import ShareIcon from "./publicIcon/share.svg?react"
+import SorterDefaultIcon from "./publicIcon/sorterDefault.svg?react"
+import SorterDownIcon from "./publicIcon/sorterDown.svg?react"
+import SorterUpIcon from "./publicIcon/sorterUp.svg?react"
 import StarFillIcon from "./publicIcon/starFill.svg?react"
 import StarOutlineIcon from "./publicIcon/starOutline.svg?react"
 import SuccessIcon from "./publicIcon/success.svg?react"
@@ -68,4 +74,10 @@ export {
   DoubtIcon,
   UpIcon,
   PlayOutlineIcon,
+  BindIcon,
+  PenIcon,
+  SorterDefaultIcon,
+  SorterDownIcon,
+  SorterUpIcon,
+  ConfigurationIcon,
 }

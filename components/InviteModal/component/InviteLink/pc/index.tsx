@@ -1,3 +1,5 @@
+import Icon from "@ant-design/icons"
+import { ConfigurationIcon } from "@illa-public/icon"
 import { USER_ROLE } from "@illa-public/public-types"
 import { RoleSelector } from "@illa-public/role-selector"
 import { useUpgradeModal } from "@illa-public/upgrade-modal"
@@ -5,21 +7,10 @@ import {
   isBiggerThanTargetRole,
   isSmallThanTargetRole,
 } from "@illa-public/user-role-utils"
-import { isCloudVersion } from "@illa-public/utils"
+import { isCloudVersion, useMergeValue } from "@illa-public/utils"
+import { App, Button, Dropdown, Flex, Input, Skeleton } from "antd"
 import { FC, useCallback, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import {
-  Button,
-  DropList,
-  DropListItem,
-  Dropdown,
-  Input,
-  Skeleton,
-  SortIcon,
-  getColor,
-  useMergeValue,
-  useMessage,
-} from "@illa-design/react"
 import { InviteLinkProps } from "../interface"
 import {
   disableInviteLink,
@@ -29,10 +20,7 @@ import {
 } from "../service"
 import {
   closeInviteLinkContainerStyle,
-  inviteLinkContainer,
-  inviteLinkCopyContainer,
   inviteLinkLabelStyle,
-  inviteLinkMenuButtonStyle,
   inviteLinkMenuContainer,
   secretLinkStyle,
 } from "./style"
@@ -64,7 +52,7 @@ export const InviteLinkPC: FC<InviteLinkProps> = (props) => {
     },
   )
 
-  const message = useMessage()
+  const { message } = App.useApp()
 
   const upgradeModal = useUpgradeModal()
 
@@ -176,7 +164,7 @@ export const InviteLinkPC: FC<InviteLinkProps> = (props) => {
 
   return isSmallThanTargetRole(USER_ROLE.ADMIN, currentUserRole, false) &&
     !allowInviteLink ? null : (
-    <div css={inviteLinkContainer}>
+    <Flex vertical gap="small">
       {(allowInviteLink ||
         (!allowInviteLink &&
           isBiggerThanTargetRole(USER_ROLE.ADMIN, currentUserRole))) && (
@@ -187,82 +175,65 @@ export const InviteLinkPC: FC<InviteLinkProps> = (props) => {
           {allowInviteLink &&
             isBiggerThanTargetRole(USER_ROLE.ADMIN, currentUserRole) && (
               <Dropdown
-                trigger="click"
-                position="bottom-end"
-                dropList={
-                  <DropList>
-                    <DropListItem
-                      key={t("user_management.modal.link.update")}
-                      value={t("user_management.modal.link.update")}
-                      title={t("user_management.modal.link.update")}
-                      onClick={async () => {
-                        await renewInviteLinkRequest(teamID, inviteUserRole)
-                      }}
-                    />
-                    <DropListItem
-                      key={t("user_management.modal.link.turn_off")}
-                      value={t("user_management.modal.link.turn_off")}
-                      title={t("user_management.modal.link.turn_off")}
-                      onClick={async () => {
-                        await disableInviteLinkRequest(teamID)
-                      }}
-                    />
-                  </DropList>
-                }
+                trigger={["click"]}
+                placement="bottomRight"
+                menu={{
+                  items: [
+                    {
+                      label: t("user_management.modal.link.update"),
+                      key: "update",
+                    },
+                    {
+                      label: t("user_management.modal.link.turn_off"),
+                      key: "turn_off",
+                    },
+                  ],
+                  onClick: ({ key }) => {
+                    if (key === "update") {
+                      renewInviteLinkRequest(teamID, inviteUserRole)
+                    } else if (key === "turn_off") {
+                      disableInviteLinkRequest(teamID)
+                    }
+                  },
+                }}
               >
-                <div css={inviteLinkMenuButtonStyle}>
-                  <SortIcon />
-                </div>
+                <Icon component={ConfigurationIcon} />
               </Dropdown>
             )}
         </div>
       )}
       {allowInviteLink ? (
-        <div css={inviteLinkCopyContainer}>
-          <Input
-            flexShrink="1"
-            flexGrow="1"
-            w="unset"
-            readOnly
-            colorScheme="techPurple"
-            value={
-              getLinkLoading ? (
-                <Skeleton
-                  text={{ rows: 1 }}
-                  opac={0.5}
-                  animation
-                  flexGrow="1"
+        <Flex gap="small">
+          {getLinkLoading ? (
+            <Skeleton.Input active block />
+          ) : (
+            <Input
+              size="small"
+              readOnly
+              value={currentInviteLink}
+              suffix={
+                <RoleSelector
+                  currentUserRole={currentUserRole}
+                  excludeUserRole={excludeUserRole}
+                  value={inviteUserRole}
+                  onClickItem={async (role) => {
+                    if (
+                      isBiggerThanTargetRole(USER_ROLE.VIEWER, role, false) &&
+                      defaultBalance === 0
+                    ) {
+                      upgradeModal({
+                        modalType: "upgrade",
+                        from: "invite_by_link",
+                      })
+                    } else {
+                      await renewInviteLinkRequest(teamID, role)
+                    }
+                  }}
                 />
-              ) : (
-                currentInviteLink
-              )
-            }
-            suffix={
-              <RoleSelector
-                inline
-                currentUserRole={currentUserRole}
-                excludeUserRole={excludeUserRole}
-                value={inviteUserRole}
-                onClickItem={async (role) => {
-                  if (
-                    isBiggerThanTargetRole(USER_ROLE.VIEWER, role, false) &&
-                    defaultBalance === 0
-                  ) {
-                    upgradeModal({
-                      modalType: "upgrade",
-                      from: "invite_by_link",
-                    })
-                  } else {
-                    await renewInviteLinkRequest(teamID, role)
-                  }
-                }}
-              />
-            }
-          />
+              }
+            />
+          )}
           <Button
-            ml="8px"
-            w="80px"
-            colorScheme={getColor("grayBlue", "02")}
             loading={getLinkLoading}
             onClick={() => {
               if (
@@ -288,7 +259,7 @@ export const InviteLinkPC: FC<InviteLinkProps> = (props) => {
           >
             {!getLinkLoading ? t("user_management.modal.link.copy") : undefined}
           </Button>
-        </div>
+        </Flex>
       ) : (
         isBiggerThanTargetRole(USER_ROLE.ADMIN, currentUserRole) && (
           <div css={closeInviteLinkContainerStyle}>
@@ -296,10 +267,9 @@ export const InviteLinkPC: FC<InviteLinkProps> = (props) => {
               {t("user_management.modal.link.description")}
             </div>
             <Button
-              variant="text"
+              type="text"
               size="small"
               loading={getLinkLoading}
-              colorScheme="techPurple"
               onClick={async () => {
                 await enableInviteLinkRequest(teamID)
               }}
@@ -309,7 +279,7 @@ export const InviteLinkPC: FC<InviteLinkProps> = (props) => {
           </div>
         )
       )}
-    </div>
+    </Flex>
   )
 }
 

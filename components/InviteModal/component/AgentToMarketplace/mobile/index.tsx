@@ -1,7 +1,7 @@
 import { getAgentPublicLink } from "@illa-public/utils"
+import { Button } from "antd"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
-import { Button } from "@illa-design/react"
 import InviteIcon from "../../../asset/InviteLink.svg?react"
 import { ShareBlockMobile } from "../../ShareBlock/mobile"
 import { AgentToMarketplaceProps } from "../interface"
@@ -31,9 +31,9 @@ export const AgentToMarketplaceMobile: FC<
       </div>
       <div css={inviteOptionsStyle}>
         <Button
-          _css={inviteButtonStyle}
-          colorScheme="techPurple"
-          fullWidth
+          css={inviteButtonStyle}
+          block
+          type="primary"
           onClick={() => {
             onCopyAgentMarketLink?.(getAgentPublicLink(agentID))
           }}

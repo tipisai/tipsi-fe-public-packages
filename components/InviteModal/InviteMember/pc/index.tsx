@@ -1,6 +1,8 @@
+import { CloseIcon } from "@illa-public/icon"
+import { Flex, Modal, Tabs } from "antd"
+import Icon from "antd"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
-import { CloseIcon, Modal, TabPane, Tabs } from "@illa-design/react"
 import { InviteByEmailPC } from "../../component/InviteByEmail/pc"
 import { InviteLinkPC } from "../../component/InviteLink/pc"
 import { InviteMemberProps } from "../interface"
@@ -10,29 +12,27 @@ import {
   headerContainerStyle,
 } from "./style"
 
-
 export const InviteMemberPC: FC<InviteMemberProps> = (props) => {
   const { t } = useTranslation()
 
   return (
     <Modal
-      withoutLine={false}
-      withoutPadding
-      w="498px"
       onCancel={() => {
         props.onClose?.()
       }}
       footer={false}
       maskClosable={false}
-      visible={true}
+      open={true}
     >
       <div css={headerContainerStyle}>
-        <Tabs variant="text" colorScheme="grayBlue" withoutBorderLine>
-          <TabPane
-            title={t("user_management.modal.title.invite_members")}
-            key={t("user_management.modal.title.invite_members")}
-          />
-        </Tabs>
+        <Tabs
+          items={[
+            {
+              label: t("user_management.modal.title.invite_members"),
+              key: t("user_management.modal.title.invite_members"),
+            },
+          ]}
+        />
         <div
           css={closeIconStyle}
           onClick={() => {
@@ -42,7 +42,7 @@ export const InviteMemberPC: FC<InviteMemberProps> = (props) => {
           <CloseIcon />
         </div>
       </div>
-      <div css={contentContainerStyle}>
+      <Flex vertical gap="small">
         <InviteLinkPC
           excludeUserRole={[]}
           redirectURL={props.redirectURL}
@@ -65,7 +65,7 @@ export const InviteMemberPC: FC<InviteMemberProps> = (props) => {
           onBalanceChange={props.onBalanceChange}
           onInvitedChange={props.onInvitedChange}
         />
-      </div>
+      </Flex>
     </Modal>
   )
 }

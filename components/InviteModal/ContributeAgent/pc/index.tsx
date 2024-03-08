@@ -1,6 +1,7 @@
+import { getColor } from "@illa-public/color-scheme"
+import { App, Modal } from "antd"
 import { FC, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Modal, getColor, useMessage } from "@illa-design/react"
 import { TagControllerPC } from "../../component/TagController/pc"
 import { ContributeAgentProps } from "../interface"
 import { contributeAgentWithHashtags, updateAgentContribute } from "../service"
@@ -9,25 +10,23 @@ export const ContributeAgentPC: FC<ContributeAgentProps> = (props) => {
   const [contributeLoading, setContributeLoading] = useState(false)
   const [currentHashtags, setCurrentHashtags] = useState<string[]>([])
   const { t } = useTranslation()
-  const message = useMessage()
+  const { message } = App.useApp()
 
   return (
     <Modal
-      withoutLine
-      w="498px"
       closable={true}
       onCancel={() => {
         props.onClose?.()
       }}
       maskClosable={false}
-      enableOnFormTags={false}
-      visible={true}
-      hideCancel={!props.productContributed}
+      open={true}
+      closeIcon={!props.productContributed ? null : undefined}
       okText={
         props.productContributed
           ? t("contribute.update_modal.button")
           : t("contribute.first_time_modal.button")
       }
+      centered
       onOk={async () => {
         setContributeLoading(true)
         try {
@@ -55,7 +54,7 @@ export const ContributeAgentPC: FC<ContributeAgentProps> = (props) => {
         }
       }}
       okButtonProps={{
-        colorScheme: getColor("grayBlue", "02"),
+        danger: true,
         loading: contributeLoading,
       }}
       title={

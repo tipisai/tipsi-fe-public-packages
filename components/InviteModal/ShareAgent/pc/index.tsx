@@ -1,3 +1,5 @@
+import Icon from "@ant-design/icons"
+import { CloseIcon } from "@illa-public/icon"
 import {
   ILLA_MIXPANEL_EVENT_TYPE,
   MixpanelTrackContext,
@@ -9,18 +11,14 @@ import {
   canManage,
   isBiggerThanTargetRole,
 } from "@illa-public/user-role-utils"
-import { FC, useContext, useEffect, useState } from "react"
+import { Flex, Modal, Tabs } from "antd"
+import { FC, useContext, useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { CloseIcon, Modal, TabPane, Tabs } from "@illa-design/react"
 import { AgentToMarketplacePC } from "../../component/AgentToMarketplace/pc"
 import { InviteByEmailPC } from "../../component/InviteByEmail/pc"
 import { InviteLinkPC } from "../../component/InviteLink/pc"
 import { ShareAgentProps, ShareAgentTab } from "../interface"
-import {
-  closeIconStyle,
-  contentContainerStyle,
-  headerContainerStyle,
-} from "./style"
+import { contentContainerStyle } from "./style"
 
 export const ShareAgentPC: FC<ShareAgentProps> = (props) => {
   let defTab = ShareAgentTab.TO_MARKETPLACE
@@ -50,26 +48,47 @@ export const ShareAgentPC: FC<ShareAgentProps> = (props) => {
 
   const { t } = useTranslation()
   const { track } = useContext(MixpanelTrackContext)
+  const tabItems = useMemo(() => {
+    const result = []
+    if (props.canInvite) {
+      result.push({
+        label: t("user_management.modal.tab.with_team"),
+        key: ShareAgentTab.SHARE_WITH_TEAM,
+      })
+    }
+    if (
+      canManage(
+        props.userRoleForThisAgent,
+        ATTRIBUTE_GROUP.AI_AGENT,
+        props.teamPlan,
+        ACTION_MANAGE.CREATE_AI_AGENT,
+      ) ||
+      props.defaultAgentContributed
+    ) {
+      result.push({
+        label: t("user_management.modal.title.contribute"),
+        key: ShareAgentTab.TO_MARKETPLACE,
+      })
+    }
+    return result
+  }, [])
 
   return (
     <Modal
-      withoutLine={false}
-      withoutPadding
-      enableOnFormTags={[]}
-      w="498px"
+      width="520px"
       onCancel={() => {
         props.onClose?.()
       }}
       footer={false}
       maskClosable={false}
-      visible={true}
-    >
-      <div css={headerContainerStyle}>
+      open={true}
+      closeIcon={<Icon component={CloseIcon} />}
+      centered
+      title={
         <Tabs
+          size="small"
+          items={tabItems}
           activeKey={activeTab}
-          variant="text"
-          colorScheme="grayBlue"
-          withoutBorderLine
           onChange={(activeKey) => {
             track?.(ILLA_MIXPANEL_EVENT_TYPE.CLICK, {
               element: "share_modal_tab",
@@ -78,36 +97,10 @@ export const ShareAgentPC: FC<ShareAgentProps> = (props) => {
             })
             setActiveTab(activeKey)
           }}
-        >
-          {props.canInvite && (
-            <TabPane
-              title={t("user_management.modal.tab.with_team")}
-              key={ShareAgentTab.SHARE_WITH_TEAM}
-            />
-          )}
-          {(canManage(
-            props.userRoleForThisAgent,
-            ATTRIBUTE_GROUP.AI_AGENT,
-            props.teamPlan,
-            ACTION_MANAGE.CREATE_AI_AGENT,
-          ) ||
-            props.defaultAgentContributed) && (
-            <TabPane
-              title={t("user_management.modal.title.contribute")}
-              key={ShareAgentTab.TO_MARKETPLACE}
-            />
-          )}
-        </Tabs>
-        <div
-          css={closeIconStyle}
-          onClick={() => {
-            props.onClose?.()
-          }}
-        >
-          <CloseIcon />
-        </div>
-      </div>
-      <div css={contentContainerStyle}>
+        />
+      }
+    >
+      <Flex vertical gap="middle">
         {activeTab === ShareAgentTab.TO_MARKETPLACE &&
           props.agentID !== "" &&
           props.agentID !== undefined && (
@@ -148,7 +141,7 @@ export const ShareAgentPC: FC<ShareAgentProps> = (props) => {
             />
           </>
         )}
-      </div>
+      </Flex>
     </Modal>
   )
 }

@@ -1,5 +1,5 @@
 import { css } from "@emotion/react"
-import { getColor } from "@illa-design/react"
+import { getColor } from "@illa-public/color-scheme"
 
 export const inviteHeaderContainerStyle = css`
   position: sticky;
@@ -30,7 +30,6 @@ export const closeIconContainerStyle = css`
     height: 24px;
   }
 `
-
 
 export const contentContainerStyle = css`
   padding-top: 60px;

@@ -1,4 +1,6 @@
+import Icon from "@ant-design/icons"
 import { Avatar } from "@illa-public/avatar"
+import { LoadingIcon } from "@illa-public/icon"
 import { ERROR_FLAG, isILLAAPiError } from "@illa-public/illa-net"
 import {
   ILLA_MIXPANEL_EVENT_TYPE,
@@ -9,9 +11,10 @@ import { RoleSelector } from "@illa-public/role-selector"
 import { useUpgradeModal } from "@illa-public/upgrade-modal"
 import { isBiggerThanTargetRole } from "@illa-public/user-role-utils"
 import { EMAIL_FORMAT } from "@illa-public/utils"
+import { useMergeValue } from "@illa-public/utils"
+import { App, Input } from "antd"
 import { FC, KeyboardEvent, useCallback, useContext, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Input, Loading, useMergeValue, useMessage } from "@illa-design/react"
 import { InviteByEmailProps, InvitedUser } from "../interface"
 import { changeUserRoleByTeamMemberID, inviteByEmail } from "../service"
 import {
@@ -40,7 +43,7 @@ export const InviteByEmailMobile: FC<InviteByEmailProps> = (props) => {
     itemID,
   } = props
 
-  const message = useMessage()
+  const { message } = App.useApp()
   const upgradeModal = useUpgradeModal()
   const { track } = useContext(MixpanelTrackContext)
   const { t } = useTranslation()
@@ -193,23 +196,19 @@ export const InviteByEmailMobile: FC<InviteByEmailProps> = (props) => {
       </span>
       <div css={inviteByEmailInputContainerStyle}>
         <Input
-          flexShrink="1"
-          _css={emailInputStyle}
+          css={emailInputStyle}
           readOnly={inviting}
-          flexGrow="1"
           size="large"
-          variant="fill"
+          variant="filled"
           value={currentValue}
-          onChange={(value) => {
+          onChange={(e) => {
+            const value = e.target.value
             setCurrentValue(value)
           }}
           onPressEnter={handleInvite}
-          w="unset"
-          colorScheme="techPurple"
           placeholder={t("user_management.modal.email.placeholder")}
           suffix={
             <RoleSelector
-              inline
               withoutTips
               excludeUserRole={excludeUserRole}
               currentUserRole={currentUserRole}
@@ -249,7 +248,7 @@ export const InviteByEmailMobile: FC<InviteByEmailProps> = (props) => {
       </div>
       {inviting && (
         <div css={loadingStyle}>
-          <Loading colorScheme="techPurple" />
+          <Icon component={LoadingIcon} spin />
         </div>
       )}
     </div>

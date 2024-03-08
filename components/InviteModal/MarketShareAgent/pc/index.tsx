@@ -1,6 +1,8 @@
+import Icon from "@ant-design/icons"
+import { CloseIcon } from "@illa-public/icon"
+import { Modal, Tabs } from "antd"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
-import { CloseIcon, Modal, TabPane, Tabs } from "@illa-design/react"
 import { ShareAgentTab } from "../../ShareAgent/interface"
 import { AgentToMarketplacePC } from "../../component/AgentToMarketplace/pc"
 import { MarketShareAgentProps } from "../interface"
@@ -15,30 +17,31 @@ export const MarketShareAgentPC: FC<MarketShareAgentProps> = (props) => {
 
   return (
     <Modal
-      withoutLine={false}
-      withoutPadding
-      w="498px"
+      width="498px"
       onCancel={() => {
         props.onClose?.()
       }}
       footer={false}
       maskClosable={false}
-      visible={true}
+      open={true}
+      centered
     >
       <div css={headerContainerStyle}>
-        <Tabs variant="text" colorScheme="grayBlue" withoutBorderLine>
-          <TabPane
-            title={t("user_management.modal.link.marketplace.label")}
-            key={ShareAgentTab.TO_MARKETPLACE}
-          />
-        </Tabs>
+        <Tabs
+          items={[
+            {
+              label: t("user_management.modal.title.share_agent"),
+              key: t("user_management.modal.title.share_agent"),
+            },
+          ]}
+        />
         <div
           css={closeIconStyle}
           onClick={() => {
             props.onClose?.()
           }}
         >
-          <CloseIcon />
+          <Icon component={CloseIcon} />
         </div>
       </div>
       <div css={contentContainerStyle}>

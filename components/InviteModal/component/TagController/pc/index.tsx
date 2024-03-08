@@ -1,7 +1,9 @@
+import Icon from "@ant-design/icons"
+import { LoadingIcon } from "@illa-public/icon"
+import { Select, Skeleton, Space, Tag } from "antd"
 import { debounce } from "lodash-es"
 import { FC, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Select, Skeleton, Space, Tag } from "@illa-design/react"
 import { HASHTAG_REQUEST_TYPE } from "../../../constants"
 import { fetchFuzzySearchHashTag } from "../../../service"
 import { TagControllerProps } from "../interface"
@@ -27,7 +29,12 @@ export const TagControllerPC: FC<TagControllerProps> = (props) => {
 
   const [recommendTags, setRecommendTags] = useState<string[]>([])
 
-  const [searchRecommendTags, setSearchRecommendTags] = useState<string[]>([])
+  const [searchRecommendTags, setSearchRecommendTags] = useState<
+    {
+      label: string
+      value: string
+    }[]
+  >([])
 
   const [searchRecommendTagsLoading, setSearchRecommendTagsLoading] =
     useState(false)
@@ -52,7 +59,13 @@ export const TagControllerPC: FC<TagControllerProps> = (props) => {
       try {
         const match = await fetchFuzzySearchHashTag(keywords)
         if (currentInputValue.current === keywords) {
-          setSearchRecommendTags(match.data.match)
+          console.log("match", match)
+          setSearchRecommendTags(
+            match.data.match.map((v) => ({
+              label: v,
+              value: v,
+            })),
+          )
         }
       } catch (e) {
       } finally {
@@ -65,7 +78,12 @@ export const TagControllerPC: FC<TagControllerProps> = (props) => {
     fetchRecommendHashtag(productType).then((res) => {
       setRecommendTags(res.data.hashtags)
       if (currentInputValue.current === "") {
-        setSearchRecommendTags(res.data.hashtags)
+        setSearchRecommendTags(
+          res.data.hashtags.map((v) => ({
+            label: v,
+            value: v,
+          })),
+        )
       }
     })
   }, [productType])
@@ -75,54 +93,50 @@ export const TagControllerPC: FC<TagControllerProps> = (props) => {
       <div css={titleStyle}>{t("contribute.tag.tag")}</div>
       <div css={tagInputContainerStyle}>
         <Select
+          mode="tags"
+          style={{
+            width: "100%",
+          }}
           loading={searchRecommendTagsLoading}
           options={searchRecommendTags}
-          multiple
-          flexShrink="1"
-          flexGrow="1"
           filterOption={(inputValue, option) => {
-            if (inputValue === option.value) {
+            if (inputValue === option?.value) {
               return true
             } else {
-              return searchRecommendTags.includes(option.value.toString())
+              return searchRecommendTags
+                .map((tag) => tag.value)
+                .includes(option?.value.toString() ?? "")
             }
           }}
-          defaultFilterOption={(inputValue, option) => {
-            return searchRecommendTags.includes(option.value.toString())
+          onSearch={(value) => {
+            currentInputValue.current = value
+            debounceSearchKeywords.current(value as string)
           }}
+          notFoundContent={
+            searchRecommendTagsLoading ? (
+              <Icon component={LoadingIcon} spin />
+            ) : null
+          }
           placeholder="Enter↵"
           value={currentHashtags}
           onChange={(value) => {
+            console.log("value", value)
             onTagChange?.(value as string[])
             setCurrentHashtags(value as string[])
           }}
-          onInputValueChange={(value) => {
-            currentInputValue.current = value as string
-            if (value === "") {
-              setSearchRecommendTags(recommendTags)
-            } else {
-              debounceSearchKeywords.current(value as string)
-            }
-          }}
-          colorScheme="techPurple"
           labelInValue={false}
-          inputAsOption
           showSearch
         />
       </div>
       <div css={recommendLabelStyle}>{t("contribute.tag.recommended")}</div>
       {recommendTags.length === 0 ? (
-        <Skeleton text={{ rows: 4 }} opac={0.5} animation />
+        <Skeleton active />
       ) : (
         <Space wrap>
           {recommendTags.map((tag) => (
             <Tag
-              clickable
-              variant={currentHashtags.includes(tag) ? "outline" : "light"}
+              bordered={currentHashtags.includes(tag) ? false : true}
               key={tag}
-              colorScheme={
-                currentHashtags.includes(tag) ? "techPurple" : "grayBlue"
-              }
               onClick={() => {
                 if (currentHashtags.includes(tag)) {
                   return

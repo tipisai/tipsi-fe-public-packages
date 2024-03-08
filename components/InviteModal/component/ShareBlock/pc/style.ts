@@ -1,11 +1,5 @@
 import { css } from "@emotion/react"
-import { getColor } from "@illa-design/react"
-
-export const shareContainerStyle = css`
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-`
+import { getColor } from "@illa-public/color-scheme"
 
 export const shareLabelStyle = css`
   color: ${getColor("grayBlue", "02")};
@@ -16,7 +10,6 @@ export const shareLabelStyle = css`
 `
 
 export const shareGridLayoutStyle = css`
-  margin-top: 8px;
   display: grid;
   grid-gap: 8px;
   grid-template-columns: repeat(auto-fill, minmax(146px, 1fr));

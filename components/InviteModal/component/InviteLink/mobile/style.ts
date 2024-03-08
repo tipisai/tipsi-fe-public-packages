@@ -1,6 +1,5 @@
 import { css } from "@emotion/react"
-import { getColor } from "@illa-design/react"
-
+import { getColor } from "@illa-public/color-scheme"
 
 export const inviteLinkContainer = css`
   width: 100%;
@@ -41,7 +40,6 @@ export const inviteOptionsStyle = css`
   flex-direction: column;
   align-items: center;
   gap: 8px;
-
 `
 
 export const inviteButtonStyle = css`

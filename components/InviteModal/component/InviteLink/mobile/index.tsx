@@ -2,9 +2,10 @@ import { USER_ROLE } from "@illa-public/public-types"
 import { RoleSelector } from "@illa-public/role-selector"
 import { useUpgradeModal } from "@illa-public/upgrade-modal"
 import { isBiggerThanTargetRole } from "@illa-public/user-role-utils"
+import { useMergeValue } from "@illa-public/utils"
+import { App, Button } from "antd"
 import { FC, useCallback, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Button, useMergeValue, useMessage } from "@illa-design/react"
 import DisableInviteIcon from "../../../asset/DisableInviteLink.svg?react"
 import InviteIcon from "../../../asset/InviteLink.svg?react"
 import { InviteLinkProps } from "../interface"
@@ -50,7 +51,7 @@ export const InviteLinkMobile: FC<InviteLinkProps> = (props) => {
     },
   )
 
-  const message = useMessage()
+  const { message } = App.useApp()
 
   const upgradeModal = useUpgradeModal()
 
@@ -183,9 +184,8 @@ export const InviteLinkMobile: FC<InviteLinkProps> = (props) => {
           </div>
           <div css={inviteOptionsStyle}>
             <Button
-              _css={inviteButtonStyle}
-              colorScheme="techPurple"
-              fullWidth
+              css={inviteButtonStyle}
+              block
               loading={getLinkLoading}
               disabled={enableInviteLoading}
               onClick={() => {
@@ -197,10 +197,9 @@ export const InviteLinkMobile: FC<InviteLinkProps> = (props) => {
               {t("user_management.modal.link.copy")}
             </Button>
             <Button
-              _css={inviteButtonStyle}
-              colorScheme="grayBlue"
-              variant="text"
-              fullWidth
+              css={inviteButtonStyle}
+              type="text"
+              block
               loading={enableInviteLoading}
               disabled={getLinkLoading}
               onClick={() => {
@@ -215,9 +214,8 @@ export const InviteLinkMobile: FC<InviteLinkProps> = (props) => {
         <div css={disInviteLinkContainer}>
           <DisableInviteIcon />
           <Button
-            _css={inviteButtonStyle}
-            colorScheme="techPurple"
-            fullWidth
+            css={inviteButtonStyle}
+            block
             loading={enableInviteLoading}
             disabled={getLinkLoading}
             onClick={() => {

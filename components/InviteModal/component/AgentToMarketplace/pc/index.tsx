@@ -1,21 +1,15 @@
+import Icon from "@ant-design/icons"
+import { BindIcon, PenIcon } from "@illa-public/icon"
 import {
   ILLA_MIXPANEL_EVENT_TYPE,
   MixpanelTrackContext,
 } from "@illa-public/mixpanel-utils"
 import { USER_ROLE } from "@illa-public/public-types"
 import { isBiggerThanTargetRole } from "@illa-public/user-role-utils"
-import { getAgentPublicLink } from "@illa-public/utils"
+import { getAgentPublicLink, useMergeValue } from "@illa-public/utils"
+import { App, Button, Flex, Space, Switch } from "antd"
 import { FC, useContext, useState } from "react"
 import { useTranslation } from "react-i18next"
-import {
-  BindIcon,
-  Button,
-  PenIcon,
-  Switch,
-  getColor,
-  useMergeValue,
-  useMessage,
-} from "@illa-design/react"
 import { ContributeAgentPC } from "../../../ContributeAgent/pc"
 import { HASHTAG_REQUEST_TYPE } from "../../../constants"
 import { ShareBlockPC } from "../../ShareBlock/pc"
@@ -25,8 +19,6 @@ import {
   blockContainerStyle,
   blockLabelStyle,
   contributingDocStyle,
-  linkCopyContainer,
-  publicContainerStyle,
 } from "./style"
 
 export const AgentToMarketplacePC: FC<AgentToMarketplaceProps> = (props) => {
@@ -55,101 +47,95 @@ export const AgentToMarketplacePC: FC<AgentToMarketplaceProps> = (props) => {
 
   const { t } = useTranslation()
 
-  const message = useMessage()
+  const { message } = App.useApp()
 
   return (
     <>
-      <div css={publicContainerStyle}>
-        {(isBiggerThanTargetRole(
-          USER_ROLE.VIEWER,
-          userRoleForThisAgent,
-          false,
-        ) ||
-          agentContributed) && (
-          <div css={blockContainerStyle}>
-            <div css={blockLabelStyle}>
-              {t("user_management.modal.contribute.label")}
-            </div>
-            <div
-              style={{
-                flexGrow: 1,
-              }}
-            />
-            {isBiggerThanTargetRole(
-              USER_ROLE.VIEWER,
-              userRoleForThisAgent,
-              false,
-            ) && (
-              <Switch
-                checked={agentContributed}
-                colorScheme={getColor("grayBlue", "02")}
-                onChange={async (value) => {
-                  track?.(ILLA_MIXPANEL_EVENT_TYPE.CLICK, {
-                    element: "share_modal_contribute_switch",
-                    parameter2: !value,
-                    parameter5: agentID,
-                  })
-                  setAgentContributed(value)
-                  try {
-                    setAgentContributedLoading(true)
-                    if (value) {
-                      await makeAgentContribute(ownerTeamID, agentID)
-                    } else {
-                      await fetchRemoveToMarketplace(ownerTeamID, agentID)
-                    }
-                    onAgentContributed?.(value)
-                  } catch (e) {
-                    message.error({
-                      content: t(
-                        "user_management.modal.message.make_public_failed",
-                      ),
+      <Flex vertical gap="middle">
+        <Flex vertical gap="small">
+          {(isBiggerThanTargetRole(
+            USER_ROLE.VIEWER,
+            userRoleForThisAgent,
+            false,
+          ) ||
+            agentContributed) && (
+            <div css={blockContainerStyle}>
+              <div css={blockLabelStyle}>
+                {t("user_management.modal.contribute.label")}
+              </div>
+
+              {isBiggerThanTargetRole(
+                USER_ROLE.VIEWER,
+                userRoleForThisAgent,
+                false,
+              ) && (
+                <Switch
+                  size="small"
+                  checked={agentContributed}
+                  loading={agentContributedLoading}
+                  onChange={async (value) => {
+                    track?.(ILLA_MIXPANEL_EVENT_TYPE.CLICK, {
+                      element: "share_modal_contribute_switch",
+                      parameter2: !value,
+                      parameter5: agentID,
                     })
-                    setAgentContributed(!value)
-                  } finally {
-                    setAgentContributedLoading(false)
-                  }
-                }}
-              />
-            )}
-          </div>
-        )}
-        {agentContributed ? (
-          <div css={linkCopyContainer}>
-            {isBiggerThanTargetRole(
-              USER_ROLE.VIEWER,
-              userRoleForThisAgent,
-              false,
-            ) && (
+                    setAgentContributed(value)
+                    try {
+                      setAgentContributedLoading(true)
+                      if (value) {
+                        await makeAgentContribute(ownerTeamID, agentID)
+                      } else {
+                        await fetchRemoveToMarketplace(ownerTeamID, agentID)
+                      }
+                      onAgentContributed?.(value)
+                    } catch (e) {
+                      message.error({
+                        content: t(
+                          "user_management.modal.message.make_public_failed",
+                        ),
+                      })
+                      setAgentContributed(!value)
+                    } finally {
+                      setAgentContributedLoading(false)
+                    }
+                  }}
+                />
+              )}
+            </div>
+          )}
+          {agentContributed ? (
+            <Flex gap="small">
+              {isBiggerThanTargetRole(
+                USER_ROLE.VIEWER,
+                userRoleForThisAgent,
+                false,
+              ) && (
+                <Button
+                  block
+                  icon={<Icon component={PenIcon} />}
+                  onClick={() => {
+                    setIsOpenContributeModal(true)
+                  }}
+                >
+                  {t("contribute.update")}
+                </Button>
+              )}
               <Button
-                mr="8px"
-                flexGrow="1"
-                variant="outline"
-                colorScheme="grayBlue"
-                leftIcon={<PenIcon />}
+                block
+                icon={<Icon component={BindIcon} />}
                 onClick={() => {
-                  setIsOpenContributeModal(true)
+                  onCopyAgentMarketLink?.(getAgentPublicLink(agentID))
                 }}
               >
-                {t("contribute.update")}
+                {t("user_management.modal.link.copy")}
               </Button>
-            )}
-            <Button
-              flexGrow="1"
-              variant="outline"
-              leftIcon={<BindIcon />}
-              colorScheme="grayBlue"
-              onClick={() => {
-                onCopyAgentMarketLink?.(getAgentPublicLink(agentID))
-              }}
-            >
-              {t("user_management.modal.link.copy")}
-            </Button>
-          </div>
-        ) : (
-          <div css={contributingDocStyle}>
-            {t("user_management.modal.contribute.desc")}
-          </div>
-        )}
+            </Flex>
+          ) : (
+            <div css={contributingDocStyle}>
+              {t("user_management.modal.contribute.desc")}
+            </div>
+          )}
+        </Flex>
         {agentContributed && (
           <ShareBlockPC
             onShare={onShare}
@@ -157,7 +143,7 @@ export const AgentToMarketplacePC: FC<AgentToMarketplaceProps> = (props) => {
             shareUrl={getAgentPublicLink(agentID)}
           />
         )}
-      </div>
+      </Flex>
       {isOpenContributeModal && (
         <ContributeAgentPC
           onContributed={props.onAgentContributed}
