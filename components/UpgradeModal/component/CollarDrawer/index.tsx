@@ -1,3 +1,6 @@
+import Icon from "@ant-design/icons"
+import { getColor } from "@illa-public/color-scheme"
+import { CloseIcon } from "@illa-public/icon"
 import { ILLA_MIXPANEL_EVENT_TYPE } from "@illa-public/mixpanel-utils"
 import {
   SUBSCRIBE_PLAN,
@@ -6,21 +9,12 @@ import {
 } from "@illa-public/public-types"
 import { getCurrentTeamInfo, getCurrentUserID } from "@illa-public/user-data"
 import { isMobileByWindowSize } from "@illa-public/utils"
+import { App, ConfigProvider, Divider, Drawer, InputNumber, Select } from "antd"
 import { Button } from "antd"
 import { FC, useEffect, useRef, useState } from "react"
 import { Trans, useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { useWindowSize } from "react-use"
-import {
-  CloseIcon,
-  Divider,
-  Drawer,
-  InputNumber,
-  Select,
-  SelectValue,
-  useMessage,
-  zIndex,
-} from "@illa-design/react"
 import { COLLAR_TYPE, PURCHASE_TYPE } from "../../interface"
 import { cancelSubscribe, modifySubscribe, subscribe } from "../../service"
 import {
@@ -45,8 +39,6 @@ import {
   closeIconStyle,
   descriptionStyle,
   drawerContentStyle,
-  drawerMaskStyle,
-  drawerStyle,
   manageContentStyle,
   manageHeaderStyle,
   manageItemStyle,
@@ -69,7 +61,7 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
   const isMobile = isMobileByWindowSize(width)
 
   const [loading, setLoading] = useState<boolean>(false)
-  const message = useMessage()
+  const { message } = App.useApp()
 
   const paymentOptions = [
     {
@@ -125,7 +117,7 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
 
   const reportElement = isSubScribe ? "colla_manage" : "colla_subscribe"
 
-  const handleNumChange = (value?: number) => {
+  const handleNumChange = (value: number | null) => {
     setCurrentQuantity(value ?? 1)
     if (currentTeamInfo?.colla?.cycle !== cycle && isSubScribe) {
       setBtnText(COLLAR_BUTTON_TEXT.MONTH_YEAR_UPDATE)
@@ -137,7 +129,7 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
     }
   }
 
-  const handleOnSelectChange = (value?: SelectValue) => {
+  const handleOnSelectChange = (value?: SUBSCRIPTION_CYCLE) => {
     setCycle(value as SUBSCRIPTION_CYCLE)
     if (currentTeamInfo?.colla?.cycle !== value && isSubScribe) {
       setBtnText(COLLAR_BUTTON_TEXT.MONTH_YEAR_UPDATE)
@@ -283,17 +275,28 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
 
   return (
     <Drawer
-      z={2100}
-      visible={visible}
-      css={drawerStyle}
-      w={isMobile ? "100%" : "520px"}
+      open={visible}
+      width={isMobile ? "100%" : "520px"}
       placement={isMobile ? "bottom" : "right"}
-      maskStyle={drawerMaskStyle}
+      styles={{
+        content: {
+          boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.08)",
+        },
+        body: {
+          padding: 0,
+        },
+        mask: {
+          backgroundColor: getColor("white", "05"),
+          backdropFilter: "blur(5px)",
+        },
+      }}
       closable={false}
       footer={false}
       autoFocus={false}
-      onCancel={handleCancel}
-      afterClose={afterClose}
+      onClose={handleCancel}
+      afterOpenChange={(open: boolean) => {
+        !open && afterClose?.()
+      }}
     >
       <div css={drawerContentStyle}>
         <div>
@@ -302,7 +305,7 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
               {t("billing.payment_sidebar.title.colla")}
             </div>
             <div css={closeIconContainerStyle} onClick={onCancel}>
-              <CloseIcon containerStyle={closeIconStyle} />
+              <Icon component={CloseIcon} css={closeIconStyle} />
             </div>
           </div>
           <div css={manageContentStyle}>
@@ -323,23 +326,25 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
             </div>
             <div css={manageItemStyle}>
               <Select
-                w="auto"
-                colorScheme="techPurple"
                 value={cycle}
                 options={paymentOptions}
-                dropdownProps={{ triggerProps: { zIndex: zIndex.drawer } }}
                 onChange={handleOnSelectChange}
               />
               <InputNumber
-                mode="button"
-                colorScheme="techPurple"
+                style={{
+                  width: "100%",
+                }}
                 value={currentQuantity}
                 onChange={handleNumChange}
                 min={isSubScribe ? 0 : 1}
               />
             </div>
           </div>
-          <Divider />
+          <Divider
+            style={{
+              margin: 0,
+            }}
+          />
           <div css={accountsStyle}>
             <div css={subTotalStyle}>
               <div>{t("billing.payment_sidebar.price_label.total")}</div>
@@ -355,16 +360,39 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
                 </div>
               </div>
             </div>
-            <Button
-              block
-              size="large"
-              colorScheme="blackAlpha"
-              disabled={disabledSubscribe}
-              loading={loading}
-              onClick={handleSubscribe}
+            <ConfigProvider
+              theme={{
+                components: {
+                  Button: {
+                    contentFontSizeLG: 14,
+                    defaultBg: getColor("grayBlue", "02"),
+                    defaultColor: "#fff",
+                    defaultBorderColor: getColor("grayBlue", "02"),
+                    defaultActiveBorderColor: getColor("grayBlue", "01"),
+                    defaultActiveBg: getColor("grayBlue", "01"),
+                    defaultActiveColor: "#fff",
+                    defaultHoverBg: getColor("grayBlue", "03"),
+                    defaultHoverColor: "#fff",
+                    defaultHoverBorderColor: getColor("grayBlue", "03"),
+                  },
+                },
+              }}
             >
-              {t(btnText, { changeNum: `${changeNum * unitCollaByCycle}k` })}
-            </Button>
+              <Button
+                block
+                size="large"
+                disabled={disabledSubscribe}
+                loading={loading}
+                style={{
+                  marginTop: "16px",
+                }}
+                onClick={handleSubscribe}
+              >
+                {t(btnText, {
+                  changeNum: `${changeNum * unitCollaByCycle}k`,
+                })}
+              </Button>
+            </ConfigProvider>
           </div>
           {!hiddenCalculator && (
             <Calculator
@@ -374,21 +402,32 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
           )}
         </div>
         <div css={descriptionStyle}>
-          <Trans
-            i18nKey={t(description, {
-              changeNum: `${changeNum * unitCollaByCycle}k`,
-            })}
-            t={t}
-            components={[
-              <Button
-                type="link"
-                key="text-link"
-                onClick={() => {
-                  window.open(LEARN_MORE_LINK, "_blank")
-                }}
-              />,
-            ]}
-          />
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  fontSize: 12,
+                  paddingBlock: 0,
+                  paddingInline: 0,
+                },
+              },
+            }}
+          >
+            <Trans
+              i18nKey={t(description, {
+                changeNum: `${changeNum * unitCollaByCycle}k`,
+              })}
+              t={t}
+              components={[
+                <Button
+                  type="link"
+                  key={LEARN_MORE_LINK}
+                  href={LEARN_MORE_LINK}
+                  target="__blank"
+                />,
+              ]}
+            />
+          </ConfigProvider>
         </div>
       </div>
     </Drawer>

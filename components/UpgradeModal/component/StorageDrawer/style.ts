@@ -1,15 +1,6 @@
 import { css } from "@emotion/react"
+import { getColor } from "@illa-public/color-scheme"
 import { applyMobileStyle } from "@illa-public/utils"
-import { getColor } from "@illa-design/react"
-
-export const drawerMaskStyle = css`
-  background-color: ${getColor("white", "05")};
-  backdrop-filter: blur(5px);
-`
-
-export const drawerStyle = css`
-  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
-`
 
 export const drawerPaddingStyle = css`
   position: relative;

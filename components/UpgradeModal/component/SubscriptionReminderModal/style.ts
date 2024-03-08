@@ -1,28 +1,6 @@
 import { css } from "@emotion/react"
+import { getColor } from "@illa-public/color-scheme"
 import { applyMobileStyle } from "@illa-public/utils"
-import { getColor } from "@illa-design/react"
-
-export const modalMaskStyle = css`
-  background-color: ${getColor("white", "05")};
-  backdrop-filter: blur(5px);
-`
-
-export const modalStyle = css`
-  border: unset;
-  width: 486px;
-  min-width: 486px;
-  background: ${getColor("white", "01")};
-  border: 1px solid ${getColor("grayBlue", "08")};
-  box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
-  border-radius: 8px;
-  overflow: hidden;
-
-  ${applyMobileStyle(css`
-    width: 358px;
-    min-width: 358px;
-    border-radius: 8px;
-  `)}
-`
 
 export const modalCloseIconStyle = css`
   position: absolute;
@@ -36,6 +14,7 @@ export const modalCloseIconStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 12px;
   color: ${getColor("grayBlue", "02")};
 `
 
@@ -85,10 +64,6 @@ export const footerStyle = css`
   flex-direction: row;
   justify-content: space-between;
   padding: 16px;
-`
-
-export const upgradeButtonStyle = css`
-  align-self: center;
 `
 
 export const priceContentStyle = css`

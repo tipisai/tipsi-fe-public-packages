@@ -1,4 +1,7 @@
+import Icon from "@ant-design/icons"
+import { getColor } from "@illa-public/color-scheme"
 import { UpgradeIcon } from "@illa-public/icon"
+import { CloseIcon, DoubtIcon } from "@illa-public/icon"
 import { ILLA_MIXPANEL_EVENT_TYPE } from "@illa-public/mixpanel-utils"
 import {
   SUBSCRIBE_PLAN,
@@ -7,17 +10,10 @@ import {
 } from "@illa-public/public-types"
 import { getCurrentTeamInfo, getCurrentUserID } from "@illa-public/user-data"
 import { getILLACloudURL } from "@illa-public/utils"
+import { Button, ConfigProvider, Modal, Tooltip } from "antd"
 import { FC, useCallback, useEffect, useMemo } from "react"
 import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
-import {
-  Button,
-  CloseIcon,
-  DoubtIcon,
-  Link,
-  Modal,
-  Trigger,
-} from "@illa-design/react"
 import { isSubscribeForDrawer, track } from "../../utils"
 import TipIcon from "./assets/pricing-tip.svg?react"
 import ModalDecorate from "./assets/upgrad-modal-bg.svg?react"
@@ -37,12 +33,9 @@ import {
   highlightStyle,
   iconStyle,
   modalCloseIconStyle,
-  modalMaskStyle,
-  modalStyle,
   priceContentStyle,
   priceStyle,
   titleStyle,
-  upgradeButtonStyle,
 } from "./style"
 
 export const SubscriptionReminderModal: FC<UpgradeModalProps> = (props) => {
@@ -109,18 +102,31 @@ export const SubscriptionReminderModal: FC<UpgradeModalProps> = (props) => {
 
   return (
     <Modal
-      z={2000}
-      visible={visible}
-      _css={modalStyle}
-      withoutPadding
+      open={visible}
       maskClosable={false}
       footer={false}
       onCancel={onCancel}
-      maskStyle={modalMaskStyle}
       afterClose={afterClose}
+      closeIcon={false}
+      centered
+      styles={{
+        content: {
+          padding: 0,
+          width: "100%",
+          maxWidth: 486,
+          boxShadow: "0 4px 16px rgb(0 0 0 / 8%)",
+          border: `1px solid ${getColor("grayBlue", "08")}`,
+          overflow: "hidden",
+          borderRadius: 8,
+        },
+        mask: {
+          backgroundColor: getColor("white", "05"),
+          backdropFilter: "blur(5px)",
+        },
+      }}
     >
       <div css={modalCloseIconStyle} onClick={onCancel}>
-        <CloseIcon size="12px" />
+        <Icon component={CloseIcon} />
       </div>
       <ModalDecorate css={decorateStyle} />
       <div css={headerStyle}>
@@ -137,23 +143,34 @@ export const SubscriptionReminderModal: FC<UpgradeModalProps> = (props) => {
               {label && <TipIcon css={iconStyle} />}
               <span>{t(label)}</span>
               {tip && (
-                <Trigger
+                <Tooltip
                   trigger="hover"
-                  colorScheme="techPurple"
-                  content={t(tip)}
+                  title={t(tip)}
+                  color={getColor("techPurple", "03")}
                 >
                   <span css={doubtStyle}>
-                    <DoubtIcon css={iconStyle} />
+                    <Icon component={DoubtIcon} css={iconStyle} />
                   </span>
-                </Trigger>
+                </Tooltip>
               )}
             </div>
           )
         })}
         <div css={applyCardListStyle("learn_more")}>
-          <Link colorScheme="techPurple" href={billingUrl}>
-            {t("billing.modal.upgrade_now_admin.learn_more")}
-          </Link>
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  paddingContentHorizontal: 4,
+                  paddingInline: 1,
+                },
+              },
+            }}
+          >
+            <Button type="link" href={billingUrl} target="__blank">
+              {t("billing.modal.upgrade_now_admin.learn_more")}
+            </Button>
+          </ConfigProvider>
         </div>
         <div css={footerStyle}>
           <div>
@@ -163,9 +180,9 @@ export const SubscriptionReminderModal: FC<UpgradeModalProps> = (props) => {
             </div>
           </div>
           <Button
-            css={upgradeButtonStyle}
-            leftIcon={<UpgradeIcon />}
-            colorScheme="techPurple"
+            size="large"
+            type="primary"
+            icon={<UpgradeIcon />}
             onClick={openDrawer}
           >
             {t(buttonText)}

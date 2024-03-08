@@ -6,7 +6,7 @@ export const purchase = async (
   teamID: string,
   requestData: {
     item: PurchaseItem
-    quantity: number // 需要购买的物品数量, 比如 ITEM_DRIVE_TRAFFIC_1GB 购买4GB, 就填写4
+    quantity: number
     successRedirect: string // Success redirect URL
     cancelRedirect: string // Cancel redirect URL
   },

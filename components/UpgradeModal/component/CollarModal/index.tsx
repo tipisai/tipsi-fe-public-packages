@@ -1,11 +1,13 @@
-import { UpgradeIcon } from "@illa-public/icon"
+import Icon from "@ant-design/icons"
+import { getColor } from "@illa-public/color-scheme"
+import { CloseIcon, UpgradeIcon } from "@illa-public/icon"
 import { ILLA_MIXPANEL_EVENT_TYPE } from "@illa-public/mixpanel-utils"
 import { SUBSCRIPTION_CYCLE, USER_ROLE } from "@illa-public/public-types"
 import { getCurrentTeamInfo, getCurrentUserID } from "@illa-public/user-data"
+import { Button, Modal } from "antd"
 import { FC, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
-import { Button, CloseIcon, Modal } from "@illa-design/react"
 import { useCollarDrawer } from "../../hook"
 import { CollarModalType } from "../../interface"
 import { COLLAR_UNIT_PRICE } from "../../service/interface"
@@ -18,12 +20,9 @@ import {
   footerStyle,
   headerStyle,
   modalCloseIconStyle,
-  modalMaskStyle,
-  modalStyle,
   priceContentStyle,
   priceStyle,
   titleStyle,
-  upgradeButtonStyle,
 } from "./style"
 import { getUnitDetailByPrice } from "./utils"
 
@@ -67,18 +66,31 @@ export const CollarModal: FC<CollarModalProps> = (props) => {
 
   return (
     <Modal
-      z={2000}
-      visible={visible}
-      _css={modalStyle}
-      withoutPadding
+      open={visible}
       maskClosable={false}
       footer={false}
+      centered
+      styles={{
+        content: {
+          padding: 0,
+          width: "100%",
+          maxWidth: 486,
+          boxShadow: "0 4px 16px rgb(0 0 0 / 8%)",
+          border: `1px solid ${getColor("grayBlue", "08")}`,
+          overflow: "hidden",
+          borderRadius: 8,
+        },
+        mask: {
+          backgroundColor: getColor("white", "05"),
+          backdropFilter: "blur(5px)",
+        },
+      }}
+      closeIcon={false}
       onCancel={onCancel}
-      maskStyle={modalMaskStyle}
       afterClose={afterClose}
     >
       <div css={modalCloseIconStyle} onClick={onCancel}>
-        <CloseIcon size="12px" />
+        <Icon component={CloseIcon} />
       </div>
       <CollarBg css={decorateStyle} />
       <div css={headerStyle}>
@@ -100,9 +112,9 @@ export const CollarModal: FC<CollarModalProps> = (props) => {
             </div>
           </div>
           <Button
-            css={upgradeButtonStyle}
-            leftIcon={<UpgradeIcon />}
-            colorScheme="techPurple"
+            size="large"
+            type="primary"
+            icon={<UpgradeIcon />}
             onClick={handleClick}
           >
             {t("billing.modal.colla_insufficient_modal.button")}

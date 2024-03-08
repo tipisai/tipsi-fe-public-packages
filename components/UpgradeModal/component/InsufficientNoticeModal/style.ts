@@ -1,21 +1,7 @@
 import { css } from "@emotion/react"
-import { getColor } from "@illa-design/react"
+import { getColor } from "@illa-public/color-scheme"
 import { applyMobileStyle } from "@illa-public/utils"
 
-export const modalStyle = css`
-  width: 320px;
-  min-width: unset;
-  background: ${getColor("white", "01")};
-  border: 1px solid ${getColor("grayBlue", "08")};
-  box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
-  border-radius: 4px;
-
-  ${applyMobileStyle(css`
-    width: 358px;
-    min-width: 358px;
-    border-radius: 8px;
-  `)}
-`
 export const titleStyle = css`
   text-align: center;
   font-weight: 500;
@@ -53,11 +39,6 @@ export const actionAreaStyle = css`
   ${applyMobileStyle(css`
     padding: 16px;
   `)}
-`
-
-export const modalMaskStyle = css`
-  background-color: ${getColor("white", "05")};
-  backdrop-filter: blur(5px);
 `
 
 export const modalCloseIconStyle = css`

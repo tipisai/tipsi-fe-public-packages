@@ -1,3 +1,6 @@
+import Icon from "@ant-design/icons"
+import { getColor } from "@illa-public/color-scheme"
+import { CloseIcon } from "@illa-public/icon"
 import { ILLA_MIXPANEL_EVENT_TYPE } from "@illa-public/mixpanel-utils"
 import {
   PROMOTION_CODE_USAGE,
@@ -12,20 +15,19 @@ import {
   getCurrentUserID,
 } from "@illa-public/user-data"
 import { isMobileByWindowSize } from "@illa-public/utils"
-import { Button } from "antd"
+import {
+  App,
+  Button,
+  ConfigProvider,
+  Divider,
+  Drawer,
+  InputNumber,
+  Radio,
+} from "antd"
 import { FC, useEffect, useMemo, useState } from "react"
 import { Trans, useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { useWindowSize } from "react-use"
-import {
-  CloseIcon,
-  Divider,
-  Drawer,
-  InputNumber,
-  Link,
-  Radio,
-  useMessage,
-} from "@illa-design/react"
 import { PURCHASE_TYPE } from "../../interface"
 import { cancelSubscribe, modifySubscribe, subscribe } from "../../service"
 import {
@@ -40,14 +42,11 @@ import {
 import { LEARN_MORE_LINK } from "./constants"
 import { UpgradeDrawerProps } from "./interface"
 import {
-  appSumoLinkStyle,
   closeIconStyle,
   descriptionStyle,
   discountStyle,
   drawerContentStyle,
-  drawerMaskStyle,
   drawerPaddingStyle,
-  drawerStyle,
   extraStyle,
   hasExtraRadioStyle,
   labelStyle,
@@ -72,7 +71,7 @@ export const UpgradeDrawer: FC<UpgradeDrawerProps> = (props) => {
 
   const { width } = useWindowSize()
   const isMobile = isMobileByWindowSize(width)
-  const message = useMessage()
+  const { message } = App.useApp()
   const teamID = useSelector(getCurrentId)
   const userID = useSelector(getCurrentUserID)
   const currentTeamInfo = useSelector(getCurrentTeamInfo)!
@@ -182,7 +181,7 @@ export const UpgradeDrawer: FC<UpgradeDrawerProps> = (props) => {
     return t(statusLabelKeys[status], { changeNum }) ?? ""
   }, [defaultConfig, quantity, cycle, t])
 
-  const handleNumberChange = (value?: number) => {
+  const handleNumberChange = (value: number | null) => {
     setQuantity(value ?? 0)
   }
 
@@ -221,9 +220,7 @@ export const UpgradeDrawer: FC<UpgradeDrawerProps> = (props) => {
       if (subscribeInfo?.plan && isSubscribeForDrawer(subscribeInfo?.plan)) {
         if (quantity === 0) {
           await cancelSubscribe(teamID, subscribeInfo?.plan)
-          message.success({
-            content: t("billing.message.unsubscription_suc"),
-          })
+          message.success(t("billing.message.unsubscription_suc"))
           defaultConfig?.onSubscribeCallback?.(teamID)
         } else {
           await modifySubscribe(teamID, {
@@ -231,9 +228,7 @@ export const UpgradeDrawer: FC<UpgradeDrawerProps> = (props) => {
             quantity,
             cycle,
           })
-          message.success({
-            content: t("billing.message.successfully_changed"),
-          })
+          message.success(t("billing.message.successfully_changed"))
           defaultConfig?.onSubscribeCallback?.(teamID)
         }
       } else {
@@ -251,18 +246,12 @@ export const UpgradeDrawer: FC<UpgradeDrawerProps> = (props) => {
     } catch (error) {
       if (subscribeInfo?.plan && isSubscribeForDrawer(subscribeInfo?.plan)) {
         if (quantity === 0) {
-          message.error({
-            content: t("billing.message.failed_to_unsubscrib"),
-          })
+          message.error(t("billing.message.failed_to_unsubscrib"))
         } else {
-          message.error({
-            content: t("billing.message.failed_to_change"),
-          })
+          message.error(t("billing.message.failed_to_change"))
         }
       } else {
-        message.error({
-          content: t("billing.message.error_subscribe"),
-        })
+        message.error(t("billing.message.error_subscribe"))
       }
     } finally {
       setLoading(false)
@@ -295,54 +284,76 @@ export const UpgradeDrawer: FC<UpgradeDrawerProps> = (props) => {
 
   return (
     <Drawer
-      z={2100}
-      visible={visible}
-      css={drawerStyle}
-      w={isMobile ? "100%" : "520px"}
+      open={visible}
+      width={isMobile ? "100%" : "520px"}
       placement={isMobile ? "bottom" : "right"}
-      maskStyle={drawerMaskStyle}
+      styles={{
+        content: {
+          boxShadow: "0px 4px 16px rgba(0, 0, 0, 0.08)",
+        },
+        body: {
+          padding: 0,
+        },
+        mask: {
+          backgroundColor: getColor("white", "05"),
+          backdropFilter: "blur(5px)",
+        },
+      }}
       closable={false}
       footer={false}
       autoFocus={false}
-      onCancel={handleOnClose}
-      afterClose={afterClose}
+      onClose={handleOnClose}
+      afterOpenChange={(open: boolean) => {
+        !open && afterClose?.()
+      }}
     >
       <div css={drawerContentStyle}>
         <div>
           <div css={drawerPaddingStyle}>
-            <CloseIcon
-              containerStyle={closeIconStyle}
+            <Icon
+              component={CloseIcon}
+              css={closeIconStyle}
               onClick={handleOnClose}
             />
             <div css={titleStyle}>
               {t("billing.payment_sidebar.title.manage_licenses")}
             </div>
             <div css={manageItemStyle}>
-              <div css={radioContainerStyle}>
-                <Radio
-                  colorScheme="grayBlue"
-                  checked={cycle === SUBSCRIPTION_CYCLE.MONTHLY}
-                  onChange={() => setCycle(SUBSCRIPTION_CYCLE.MONTHLY)}
-                >
-                  <span css={labelStyle}>
-                    {t("billing.payment_sidebar.select_option.Monthly")}
-                  </span>
-                </Radio>
-                <div css={hasExtraRadioStyle}>
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Radio: {
+                      colorPrimary: getColor("grayBlue", "02"),
+                    },
+                  },
+                }}
+              >
+                <div css={radioContainerStyle}>
                   <Radio
-                    colorScheme="grayBlue"
-                    checked={cycle === SUBSCRIPTION_CYCLE.YEARLY}
-                    onChange={() => setCycle(SUBSCRIPTION_CYCLE.YEARLY)}
+                    checked={cycle === SUBSCRIPTION_CYCLE.MONTHLY}
+                    onChange={() => setCycle(SUBSCRIPTION_CYCLE.MONTHLY)}
                   >
                     <span css={labelStyle}>
-                      {t("billing.payment_sidebar.select_option.Yearly")}
+                      {t("billing.payment_sidebar.select_option.Monthly")}
                     </span>
                   </Radio>
-                  <span css={extraStyle}>
-                    {t("billing.new_pricing.buy_10_months")}
-                  </span>
+
+                  <div css={hasExtraRadioStyle}>
+                    <Radio
+                      checked={cycle === SUBSCRIPTION_CYCLE.YEARLY}
+                      onChange={() => setCycle(SUBSCRIPTION_CYCLE.YEARLY)}
+                    >
+                      <span css={labelStyle}>
+                        {t("billing.payment_sidebar.select_option.Yearly")}
+                      </span>
+                    </Radio>
+                    <span css={extraStyle}>
+                      {t("billing.new_pricing.buy_10_months")}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </ConfigProvider>
+
               <div>
                 <span css={monthPriceStyle}>{monthUnitePrice}</span>
                 <span css={monthUnitStyle}>
@@ -350,8 +361,9 @@ export const UpgradeDrawer: FC<UpgradeDrawerProps> = (props) => {
                 </span>
               </div>
               <InputNumber
-                mode="button"
-                colorScheme="techPurple"
+                style={{
+                  width: "100%",
+                }}
                 value={quantity}
                 onChange={handleNumberChange}
                 min={
@@ -362,7 +374,11 @@ export const UpgradeDrawer: FC<UpgradeDrawerProps> = (props) => {
               />
             </div>
           </div>
-          <Divider />
+          <Divider
+            style={{
+              margin: 0,
+            }}
+          />
           <div css={drawerPaddingStyle}>
             <div css={subTotalStyle}>
               <span css={subTotalLeftStyle}>
@@ -387,45 +403,87 @@ export const UpgradeDrawer: FC<UpgradeDrawerProps> = (props) => {
                 </span>
               </div>
             </div>
-            <Button
-              block
-              size="large"
-              colorScheme="blackAlpha"
-              disabled={actionDisabled}
-              loading={loading}
-              mt={"16px"}
-              onClick={handleSubscribe}
+            <ConfigProvider
+              theme={{
+                components: {
+                  Button: {
+                    contentFontSizeLG: 14,
+                    defaultBg: getColor("grayBlue", "02"),
+                    defaultColor: "#fff",
+                    defaultBorderColor: getColor("grayBlue", "02"),
+                    defaultActiveBorderColor: getColor("grayBlue", "01"),
+                    defaultActiveBg: getColor("grayBlue", "01"),
+                    defaultActiveColor: "#fff",
+                    defaultHoverBg: getColor("grayBlue", "03"),
+                    defaultHoverColor: "#fff",
+                    defaultHoverBorderColor: getColor("grayBlue", "03"),
+                  },
+                },
+              }}
             >
-              {actionButtonText}
-            </Button>
+              <Button
+                block
+                size="large"
+                disabled={actionDisabled}
+                loading={loading}
+                style={{
+                  marginTop: "16px",
+                }}
+                onClick={handleSubscribe}
+              >
+                {actionButtonText}
+              </Button>
+            </ConfigProvider>
           </div>
         </div>
         <div css={drawerPaddingStyle}>
           {defaultConfig?.appSumoInvoiceURL ? (
             <div css={textCenterStyle}>
-              <Link
-                _css={appSumoLinkStyle}
-                colorScheme="techPurple"
-                href={defaultConfig?.appSumoInvoiceURL}
+              <ConfigProvider
+                theme={{
+                  components: {
+                    Button: {
+                      paddingContentHorizontal: 4,
+                      paddingInline: 1,
+                    },
+                  },
+                }}
               >
-                {t("billing.appsumo.update")}
-              </Link>
+                <Button
+                  type="link"
+                  href={defaultConfig?.appSumoInvoiceURL}
+                  target="__blank"
+                >
+                  {t("billing.appsumo.update")}
+                </Button>
+              </ConfigProvider>
             </div>
           ) : null}
           <div css={descriptionStyle}>
-            <Trans
-              i18nKey={description}
-              t={t}
-              components={[
-                <Button
-                  type="link"
-                  key="text-link"
-                  onClick={() => {
-                    window.open(LEARN_MORE_LINK, "_blank")
-                  }}
-                />,
-              ]}
-            />
+            <ConfigProvider
+              theme={{
+                components: {
+                  Button: {
+                    fontSize: 12,
+                    paddingBlock: 0,
+                    paddingInline: 0,
+                  },
+                },
+              }}
+            >
+              <Trans
+                i18nKey={description}
+                t={t}
+                components={[
+                  <Button
+                    type="link"
+                    key={LEARN_MORE_LINK}
+                    href={LEARN_MORE_LINK}
+                    target="__blank"
+                  />,
+                ]}
+              />
+            </ConfigProvider>
           </div>
         </div>
       </div>
