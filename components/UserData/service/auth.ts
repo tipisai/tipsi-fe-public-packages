@@ -1,7 +1,13 @@
-import { HTTP_REQUEST_PUBLIC_BASE_URL } from "@illa-public/illa-net"
-import { CurrentUserInfo, TeamInfo } from "@illa-public/public-types"
-import { getAuthToken } from "@illa-public/utils"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { HTTP_REQUEST_PUBLIC_BASE_URL } from "@illa-public/illa-net"
+import {
+  BaseUserInfo,
+  CurrentUserInfo,
+  TeamInfo,
+} from "@illa-public/public-types"
+import { getAuthToken } from "@illa-public/utils"
+import { OAUTH_REDIRECT_URL } from "../constants"
+import { IForgetPasswordRequestBody, ISignInRequestData } from "./interface"
 
 export const authAPI = createApi({
   reducerPath: "authAPI",
@@ -54,7 +60,119 @@ export const authAPI = createApi({
         }
       },
     }),
+    signIn: builder.mutation<
+      {
+        token?: string | null
+      },
+      {
+        email: string
+        password: string
+      }
+    >({
+      query: ({ email, password }) => ({
+        url: "/auth/signin",
+        method: "POST",
+        body: {
+          email,
+          password,
+        },
+      }),
+      transformResponse: (_, meta) => {
+        return {
+          token: meta?.response?.headers.get("illa-token"),
+        }
+      },
+    }),
+    getOAuthURI: builder.query<
+      {
+        uri: string
+      },
+      {
+        oauthAgency: "github" | "google"
+        landing: "signin" | "signup" | "connect"
+        redirectURI?: string
+      }
+    >({
+      query: ({ oauthAgency, redirectURI, landing }) =>
+        `/oauth/${oauthAgency}/uri/redirectTo/${encodeURIComponent(
+          redirectURI ?? OAUTH_REDIRECT_URL,
+        )}/landing/${landing}`,
+    }),
+    signUp: builder.mutation<
+      CurrentUserInfo & { token?: string | null },
+      ISignInRequestData
+    >({
+      query: (...data) => ({
+        method: "POST",
+        url: "/auth/signup",
+        body: {
+          ...data,
+        },
+      }),
+      transformResponse: (res: { data: CurrentUserInfo }, meta) => {
+        return {
+          ...res?.data,
+          token: meta?.response?.headers.get("illa-token"),
+        }
+      },
+    }),
+    sendVerificationCodeToEmail: builder.mutation<
+      {
+        verificationToken: string
+      },
+      {
+        email: string
+        usage: "signup" | "forgetpwd"
+      }
+    >({
+      query: ({ email, usage }) => ({
+        method: "POST",
+        url: "/auth/verification",
+        body: {
+          email,
+          usage,
+        },
+      }),
+    }),
+    forgetPassword: builder.mutation<undefined, IForgetPasswordRequestBody>({
+      query: (data) => ({
+        method: "POST",
+        url: "/auth/forgetPassword",
+        body: data,
+      }),
+    }),
+    exchangeToken: builder.mutation<
+      BaseUserInfo & { token?: string | null },
+      {
+        oauthAgency: "github" | "google"
+        code: string
+        state: string
+      }
+    >({
+      query: ({ oauthAgency, code, state }) => ({
+        url: `/oauth/${oauthAgency}/exchange`,
+        method: "POST",
+        body: {
+          code,
+          state,
+        },
+      }),
+      transformResponse: (res: { data: BaseUserInfo }, meta) => {
+        return {
+          ...res?.data,
+          token: meta?.response?.headers.get("illa-token"),
+        }
+      },
+    }),
   }),
 })
 
-export const { useGetUserInfoAndTeamsInfoByTokenQuery } = authAPI
+export const {
+  useGetUserInfoAndTeamsInfoByTokenQuery,
+  useSignInMutation,
+  useLazyGetOAuthURIQuery,
+  useSignUpMutation,
+  useSendVerificationCodeToEmailMutation,
+  useForgetPasswordMutation,
+  useExchangeTokenMutation,
+} = authAPI
