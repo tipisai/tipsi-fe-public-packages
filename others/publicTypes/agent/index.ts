@@ -18,7 +18,7 @@ export interface AgentAdvanceConfig {
   stream: boolean
 }
 
-export interface KnowledgeFile {
+export interface IKnowledgeFile {
   name: string
   type: string
   value?: string
@@ -33,7 +33,7 @@ export interface AgentRaw {
   modelConfig: AgentAdvanceConfig
   icon: string
   description: string
-  knowledge: KnowledgeFile[]
+  knowledge: IKnowledgeFile[]
 }
 
 export interface AgentEditor {

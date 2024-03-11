@@ -17,8 +17,11 @@ import DocsIcon from "./publicIcon/doc.svg?react"
 import DoubtIcon from "./publicIcon/doubt.svg?react"
 import DownIcon from "./publicIcon/down.svg?react"
 import ForkIcon from "./publicIcon/fork.svg?react"
+import InfoIcon from "./publicIcon/info.svg?react"
 import LoadingIcon from "./publicIcon/loading.svg?react"
+import MoreIcon from "./publicIcon/more.svg?react"
 import PenIcon from "./publicIcon/pen.svg?react"
+import PinIcon from "./publicIcon/pin.svg?react"
 import PlayFillIcon from "./publicIcon/playFill.svg?react"
 import PlayOutlineIcon from "./publicIcon/playOutline.svg?react"
 import PlusIcon from "./publicIcon/plus.svg?react"
@@ -80,4 +83,7 @@ export {
   SorterDownIcon,
   SorterUpIcon,
   ConfigurationIcon,
+  MoreIcon,
+  PinIcon,
+  InfoIcon,
 }
