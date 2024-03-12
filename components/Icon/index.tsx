@@ -26,6 +26,7 @@ import PlayFillIcon from "./publicIcon/playFill.svg?react"
 import PlayOutlineIcon from "./publicIcon/playOutline.svg?react"
 import PlusIcon from "./publicIcon/plus.svg?react"
 import PreviousIcon from "./publicIcon/previous.svg?react"
+import PreviousDoubleIcon from "./publicIcon/previousDouble.svg?react"
 import ResetIcon from "./publicIcon/reset.svg?react"
 import Result403Icon from "./publicIcon/result403.svg?react"
 import Result404Icon from "./publicIcon/result404.svg?react"
@@ -86,4 +87,5 @@ export {
   MoreIcon,
   PinIcon,
   InfoIcon,
+  PreviousDoubleIcon,
 }
