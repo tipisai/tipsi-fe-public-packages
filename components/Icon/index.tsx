@@ -20,6 +20,7 @@ import ErrorIcon from "./publicIcon/error.svg?react"
 import ForkIcon from "./publicIcon/fork.svg?react"
 import InfoIcon from "./publicIcon/info.svg?react"
 import LoadingIcon from "./publicIcon/loading.svg?react"
+import MinusIcon from "./publicIcon/minus.svg?react"
 import MoreIcon from "./publicIcon/more.svg?react"
 import PenIcon from "./publicIcon/pen.svg?react"
 import PinIcon from "./publicIcon/pin.svg?react"
@@ -90,4 +91,5 @@ export {
   InfoIcon,
   PreviousDoubleIcon,
   ErrorIcon,
+  MinusIcon,
 }
