@@ -1,8 +1,8 @@
 import Icon from "@ant-design/icons"
-import { AddIcon, DeleteIcon } from "@illa-public/icon"
-import { Button, Input } from "antd"
+import { Button, Input, Space } from "antd"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
+import { AddIcon, DeleteIcon } from "@illa-public/icon"
 import { RecordEditorProps } from "./interface"
 import {
   applyRecordEditorContainerStyle,
@@ -44,16 +44,13 @@ export const RecordEditor: FC<RecordEditorProps> = (props) => {
       <div css={recordEditorStyle}>
         {records?.map((record, index) => {
           return (
-            <div css={recordStyle} key={index}>
+            <Space.Compact block key={index}>
               <Input
                 height="32px"
                 value={record.key}
                 readOnly={fillOnly || readOnly}
                 style={{
                   minWidth: "160px",
-                  width: "0",
-                  flexGrow: 1,
-                  borderRadius: "8px 0 0 8px",
                 }}
                 placeholder="key"
                 onChange={(e) => {
@@ -69,10 +66,6 @@ export const RecordEditor: FC<RecordEditorProps> = (props) => {
               <Input
                 height="32px"
                 style={{
-                  borderRadius: fillOnly || readOnly ? "0 8px 8px 0" : "0",
-                  marginLeft: "-1px",
-                  width: "0",
-                  flexGrow: "1",
                   minWidth: "160px",
                 }}
                 readOnly={readOnly}
@@ -91,9 +84,7 @@ export const RecordEditor: FC<RecordEditorProps> = (props) => {
               {!(fillOnly || readOnly) && (
                 <Button
                   style={{
-                    marginLeft: "-1px",
                     minWidth: "32px",
-                    borderRadius: "0 8px 8px 0",
                   }}
                   onClick={() => {
                     onDelete?.(index, record, name)
@@ -101,7 +92,7 @@ export const RecordEditor: FC<RecordEditorProps> = (props) => {
                   icon={<Icon component={DeleteIcon} />}
                 />
               )}
-            </div>
+            </Space.Compact>
           )
         })}
         {!(fillOnly || readOnly) && (

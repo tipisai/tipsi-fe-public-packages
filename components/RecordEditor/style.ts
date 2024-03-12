@@ -13,6 +13,7 @@ export const recordEditorStyle = css`
   display: flex;
   flex-grow: 1;
   flex-direction: column;
+  gap: 8px;
 `
 
 export const recordStyle = css`
