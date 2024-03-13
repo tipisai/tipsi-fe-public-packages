@@ -545,3 +545,12 @@ export const canEditApp = (
   ).manageAttribute
   return !!manageAttribute?.[ACTION_MANAGE.EDIT_APP]
 }
+
+export const canAccessMember = (teamInfo?: TeamInfo) => {
+  if (!teamInfo) return false
+  return canManageInvite(
+    teamInfo.myRole,
+    teamInfo.permission.allowEditorManageTeamMember,
+    teamInfo.permission.allowViewerManageTeamMember,
+  )
+}

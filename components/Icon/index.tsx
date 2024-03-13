@@ -8,6 +8,7 @@ import ZipIcon from "./assets/zip.svg?react"
 import AddIcon from "./publicIcon/add.svg?react"
 import AttachmentIcon from "./publicIcon/attachment.svg?react"
 import BindIcon from "./publicIcon/bind.svg?react"
+import CameraIcon from "./publicIcon/camera.svg?react"
 import CloseIcon from "./publicIcon/close.svg?react"
 import ConfigurationIcon from "./publicIcon/configuration.svg?react"
 import ContributeIcon from "./publicIcon/contribute.svg?react"
@@ -22,6 +23,7 @@ import InfoIcon from "./publicIcon/info.svg?react"
 import LoadingIcon from "./publicIcon/loading.svg?react"
 import MinusIcon from "./publicIcon/minus.svg?react"
 import MoreIcon from "./publicIcon/more.svg?react"
+import NextIcon from "./publicIcon/next.svg?react"
 import PenIcon from "./publicIcon/pen.svg?react"
 import PinIcon from "./publicIcon/pin.svg?react"
 import PlayFillIcon from "./publicIcon/playFill.svg?react"
@@ -92,4 +94,6 @@ export {
   PreviousDoubleIcon,
   ErrorIcon,
   MinusIcon,
+  NextIcon,
+  CameraIcon,
 }

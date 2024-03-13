@@ -1,5 +1,5 @@
-import { CurrentUserInfo } from "@illa-public/public-types"
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit"
+import { CurrentUserInfo } from "@illa-public/public-types"
 
 export const updateCurrentUserReducer: CaseReducer<
   CurrentUserInfo,

@@ -7,7 +7,12 @@ import {
 } from "@illa-public/public-types"
 import { getAuthToken } from "@illa-public/utils"
 import { OAUTH_REDIRECT_URL } from "../constants"
-import { IForgetPasswordRequestBody, ISignInRequestData } from "./interface"
+import {
+  IForgetPasswordRequestBody,
+  ISignInRequestData,
+  ITeamSubscription,
+  IWooUsageInfoResponse,
+} from "./interface"
 
 export const authAPI = createApi({
   reducerPath: "authAPI",
@@ -24,6 +29,7 @@ export const authAPI = createApi({
       return headers
     },
   }),
+  tagTypes: ["teamsInfo", "userInfo"],
   endpoints: (builder) => ({
     getUserInfoAndTeamsInfoByToken: builder.query<
       {
@@ -59,7 +65,9 @@ export const authAPI = createApi({
           },
         }
       },
+      providesTags: ["teamsInfo", "userInfo"],
     }),
+
     signIn: builder.mutation<
       {
         token?: string | null
@@ -83,6 +91,7 @@ export const authAPI = createApi({
         }
       },
     }),
+
     getOAuthURI: builder.query<
       {
         uri: string
@@ -98,6 +107,7 @@ export const authAPI = createApi({
           redirectURI ?? OAUTH_REDIRECT_URL,
         )}/landing/${landing}`,
     }),
+
     signUp: builder.mutation<
       CurrentUserInfo & { token?: string | null },
       ISignInRequestData
@@ -116,6 +126,7 @@ export const authAPI = createApi({
         }
       },
     }),
+
     sendVerificationCodeToEmail: builder.mutation<
       {
         verificationToken: string
@@ -134,6 +145,26 @@ export const authAPI = createApi({
         },
       }),
     }),
+
+    changeTeamConfig: builder.mutation<
+      undefined,
+      {
+        teamID: string
+        data: {
+          name?: string
+          identifier?: string
+          icon?: string
+        }
+      }
+    >({
+      query: ({ teamID, data }) => ({
+        method: "PATCH",
+        url: `/teams/${teamID}/config`,
+        body: data,
+      }),
+      invalidatesTags: ["teamsInfo"],
+    }),
+
     forgetPassword: builder.mutation<undefined, IForgetPasswordRequestBody>({
       query: (data) => ({
         method: "POST",
@@ -141,6 +172,7 @@ export const authAPI = createApi({
         body: data,
       }),
     }),
+
     exchangeToken: builder.mutation<
       BaseUserInfo & { token?: string | null },
       {
@@ -164,6 +196,169 @@ export const authAPI = createApi({
         }
       },
     }),
+
+    getPortalURL: builder.query<
+      {
+        url: string
+      },
+      {
+        teamID: string
+        returningURL: string
+      }
+    >({
+      query: ({ teamID, returningURL }) => ({
+        url: `/teams/${teamID}/billing/getPortalURL`,
+        method: "POST",
+        body: { returningURL },
+      }),
+    }),
+
+    getWooUsageInfo: builder.query<
+      IWooUsageInfoResponse,
+      {
+        teamID: string
+        fromDate: string
+        toDate: string
+      }
+    >({
+      query: ({ teamID, fromDate, toDate }) => ({
+        url: `/teams/${teamID}/billing/collaUsageInfo?fromDate=${encodeURI(
+          fromDate,
+        )}&toDate=${encodeURI(toDate)}`,
+        method: "GET",
+      }),
+    }),
+
+    getTeamSubscription: builder.query<ITeamSubscription, string>({
+      query: (teamID) => ({
+        url: `/teams/${teamID}/billing`,
+        method: "GET",
+      }),
+    }),
+
+    getTeamsInfo: builder.query<TeamInfo[], {}>({
+      query: () => ({
+        url: "/teams/my",
+        method: "GET",
+      }),
+    }),
+
+    deleteTeamByID: builder.mutation<undefined, string>({
+      query: (teamID) => ({
+        method: "DELETE",
+        url: `/teams/${teamID}`,
+      }),
+    }),
+
+    removeTeamMemberByID: builder.mutation<
+      undefined,
+      {
+        teamID: string
+        teamMemberID: string
+      }
+    >({
+      query: ({ teamID, teamMemberID }) => ({
+        method: "DELETE",
+        url: `/teams/${teamID}/teamMembers/${teamMemberID}`,
+      }),
+    }),
+
+    getTeamIconUploadAddress: builder.query<
+      {
+        uploadAddress: string
+      },
+      {
+        fileName: string
+        teamID: string
+        type: string
+      }
+    >({
+      query: ({ teamID, type, fileName }) => {
+        return {
+          url: `/teams/${teamID}icon/uploadAddress/fileName/${fileName}.${type}`,
+          method: "GET",
+        }
+      },
+    }),
+
+    updateUserLanguage: builder.mutation<undefined, string>({
+      query: (language) => ({
+        url: "/users/language",
+        method: "PATCH",
+        body: {
+          language,
+        },
+      }),
+      invalidatesTags: ["userInfo"],
+    }),
+
+    cancelLinked: builder.mutation<undefined, "github" | "google">({
+      query: (oauthAgency) => ({
+        url: `/users/oauth/${oauthAgency}`,
+        method: "DELETE",
+      }),
+    }),
+
+    updateUserPassword: builder.mutation<
+      undefined,
+      {
+        currentPassword: string
+        newPassword: string
+      }
+    >({
+      query: (data) => ({
+        url: "/users/password",
+        method: "PATCH",
+        data,
+      }),
+    }),
+
+    updateNickName: builder.mutation<undefined, string>({
+      query: (nickname) => ({
+        url: "/users/nickname",
+        method: "PATCH",
+        body: {
+          nickname,
+        },
+      }),
+    }),
+
+    updateUserAvatar: builder.mutation<undefined, string>({
+      query: (avatar) => ({
+        url: "/users/avatar",
+        method: "PATCH",
+        body: {
+          avatar,
+        },
+      }),
+    }),
+
+    getUserAvatarUploadAddress: builder.query<
+      {
+        uploadAddress: string
+      },
+      {
+        fileName: string
+        type: string
+      }
+    >({
+      query: ({ type, fileName }) => {
+        return {
+          url: `/users/avatar/uploadAddress/fileName/${fileName}.${type}`,
+          method: "GET",
+        }
+      },
+    }),
+
+    logout: builder.mutation<undefined, string>({
+      query: (token) => ({
+        method: "POST",
+        url: "/users/logout",
+        headers: {
+          Authorization: token,
+        },
+      }),
+    }),
   }),
 })
 
@@ -175,4 +370,20 @@ export const {
   useSendVerificationCodeToEmailMutation,
   useForgetPasswordMutation,
   useExchangeTokenMutation,
+  useChangeTeamConfigMutation,
+  useLazyGetPortalURLQuery,
+  useLazyGetWooUsageInfoQuery,
+  useLazyGetTeamSubscriptionQuery,
+  useGetTeamSubscriptionQuery,
+  useLazyGetTeamsInfoQuery,
+  useDeleteTeamByIDMutation,
+  useRemoveTeamMemberByIDMutation,
+  useLazyGetTeamIconUploadAddressQuery,
+  useUpdateUserLanguageMutation,
+  useCancelLinkedMutation,
+  useUpdateUserPasswordMutation,
+  useUpdateNickNameMutation,
+  useLazyGetUserAvatarUploadAddressQuery,
+  useUpdateUserAvatarMutation,
+  useLogoutMutation,
 } = authAPI

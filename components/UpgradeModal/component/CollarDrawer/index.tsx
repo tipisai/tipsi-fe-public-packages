@@ -1,4 +1,10 @@
 import Icon from "@ant-design/icons"
+import { App, ConfigProvider, Divider, Drawer, InputNumber, Select } from "antd"
+import { Button } from "antd"
+import { FC, useEffect, useRef, useState } from "react"
+import { Trans, useTranslation } from "react-i18next"
+import { useSelector } from "react-redux"
+import { useWindowSize } from "react-use"
 import { getColor } from "@illa-public/color-scheme"
 import { CloseIcon } from "@illa-public/icon"
 import { ILLA_MIXPANEL_EVENT_TYPE } from "@illa-public/mixpanel-utils"
@@ -9,12 +15,6 @@ import {
 } from "@illa-public/public-types"
 import { getCurrentTeamInfo, getCurrentUserID } from "@illa-public/user-data"
 import { isMobileByWindowSize } from "@illa-public/utils"
-import { App, ConfigProvider, Divider, Drawer, InputNumber, Select } from "antd"
-import { Button } from "antd"
-import { FC, useEffect, useRef, useState } from "react"
-import { Trans, useTranslation } from "react-i18next"
-import { useSelector } from "react-redux"
-import { useWindowSize } from "react-use"
 import { COLLAR_TYPE, PURCHASE_TYPE } from "../../interface"
 import { cancelSubscribe, modifySubscribe, subscribe } from "../../service"
 import {
@@ -277,6 +277,7 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
     <Drawer
       open={visible}
       width={isMobile ? "100%" : "520px"}
+      height="100%"
       placement={isMobile ? "bottom" : "right"}
       styles={{
         content: {

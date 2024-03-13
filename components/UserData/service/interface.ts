@@ -1,3 +1,5 @@
+import { CollarInfo } from "@illa-public/public-types"
+
 export interface ISignInRequestData {
   nickname: string
   email: string
@@ -12,4 +14,20 @@ export interface IForgetPasswordRequestBody {
   email: string
   verificationToken: string
   newPassword: string
+}
+
+export interface IWooUsageInfoResponse {
+  driveVolumeUsage: number
+  driveVolumeUsagePercent: number
+  driveTrafficUsage: number
+  driveTrafficUsagePercent: number
+  aiTokenGeneralUsage: number
+  aiTokenGeneralUsagePercent: number
+  totalCollaUsage: number
+}
+
+export interface ITeamSubscription {
+  colla: {
+    current: CollarInfo
+  }
 }
