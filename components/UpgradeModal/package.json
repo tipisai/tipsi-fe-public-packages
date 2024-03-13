@@ -29,7 +29,7 @@
     "react-i18next": "^13.5.0",
     "i18next": "^23.7.6",
     "react-redux": "^9.0.4",
-    "antd": "^5.15.0",
+    "antd": "^5.15.2",
     "@ant-design/icons": "^5.3.1"
   }
 }

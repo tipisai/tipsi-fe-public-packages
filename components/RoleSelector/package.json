@@ -13,7 +13,7 @@
     "tsconfig": "workspace:*"
   },
   "peerDependencies": {
-    "antd": "^5.15.0",
+    "antd": "^5.15.2",
     "@ant-design/icons": "^5.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
