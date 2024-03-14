@@ -3,7 +3,9 @@ import { HTTP_REQUEST_PUBLIC_BASE_URL } from "@illa-public/illa-net"
 import {
   BaseUserInfo,
   CurrentUserInfo,
+  MemberInfo,
   TeamInfo,
+  USER_ROLE,
 } from "@illa-public/public-types"
 import { getAuthToken } from "@illa-public/utils"
 import { OAUTH_REDIRECT_URL } from "../constants"
@@ -11,6 +13,7 @@ import {
   IForgetPasswordRequestBody,
   ISignInRequestData,
   ITeamSubscription,
+  IUpdateTeamPermissionConfigRequest,
   IWooUsageInfoResponse,
 } from "./interface"
 
@@ -29,7 +32,7 @@ export const authAPI = createApi({
       return headers
     },
   }),
-  tagTypes: ["teamsInfo", "userInfo"],
+  tagTypes: ["teamsInfo", "userInfo", "members"],
   endpoints: (builder) => ({
     getUserInfoAndTeamsInfoByToken: builder.query<
       {
@@ -261,6 +264,39 @@ export const authAPI = createApi({
         method: "DELETE",
         url: `/teams/${teamID}/teamMembers/${teamMemberID}`,
       }),
+      invalidatesTags: ["members"],
+    }),
+
+    changeTeamMemberRole: builder.mutation<
+      undefined,
+      {
+        teamID: string
+        teamMemberID: string
+        userRole: USER_ROLE
+      }
+    >({
+      query: ({ teamID, teamMemberID, userRole }) => ({
+        method: "PATCH",
+        url: `/teams/${teamID}/teamMembers/${teamMemberID}/role`,
+        body: {
+          userRole,
+        },
+      }),
+      invalidatesTags: ["members"],
+    }),
+
+    updateTeamPermissionConfig: builder.mutation<
+      undefined,
+      {
+        teamID: string
+        data: IUpdateTeamPermissionConfigRequest
+      }
+    >({
+      query: ({ teamID, data }) => ({
+        method: "PATCH",
+        url: `/teams/${teamID}/permission`,
+        body: data,
+      }),
     }),
 
     getTeamIconUploadAddress: builder.query<
@@ -359,6 +395,16 @@ export const authAPI = createApi({
         },
       }),
     }),
+
+    getMemberList: builder.query<MemberInfo[], string>({
+      query: (teamID) => {
+        return {
+          url: `/teams/${teamID}/members`,
+          method: "GET",
+        }
+      },
+      providesTags: ["members"],
+    }),
   }),
 })
 
@@ -386,4 +432,7 @@ export const {
   useLazyGetUserAvatarUploadAddressQuery,
   useUpdateUserAvatarMutation,
   useLogoutMutation,
+  useChangeTeamMemberRoleMutation,
+  useUpdateTeamPermissionConfigMutation,
+  useGetMemberListQuery,
 } = authAPI

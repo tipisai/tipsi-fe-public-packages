@@ -31,3 +31,9 @@ export interface ITeamSubscription {
     current: CollarInfo
   }
 }
+
+export interface IUpdateTeamPermissionConfigRequest {
+  allowEditorManageTeamMember?: boolean
+  allowViewerManageTeamMember?: boolean
+  blockRegister?: boolean
+}
