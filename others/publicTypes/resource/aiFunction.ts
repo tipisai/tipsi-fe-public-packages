@@ -21,13 +21,52 @@ export type TAIFunctionAuthType = "none" | "basic" | "bearer" | "digest"
 
 export type TAIFunctionVerifyMode = "verify-full" | "verify-ca" | "skip"
 
-interface IBaseAIFunctionResourceContent {
+export type IAIFunctionMethod =
+  | "GET"
+  | "POST"
+  | "PUT"
+  | "DELETE"
+  | "PATCH"
+  | "HEAD"
+  | "OPTIONS"
+
+export type IAIFunctionBodyType =
+  | "none"
+  | "form-data"
+  | "x-www-form-urlencoded"
+  | "raw"
+  | "binary"
+
+export type IAIFunctionRawBodyType =
+  | "text"
+  | "json"
+  | "xml"
+  | "javascript"
+  | "html"
+
+export interface IAIFunctionRawBody {
+  type: IAIFunctionRawBodyType
+  content: string
+}
+
+export type IAIFunctionBodyContent =
+  | null
+  | Params[]
+  | string
+  | IAIFunctionRawBody
+
+interface IBaseAIFunctionResourceContent<
+  T extends IAIFunctionBodyContent = null,
+> {
+  method: IAIFunctionMethod
   baseUrl: string
   urlParams: Params[]
   headers: Params[]
   cookies: Params[]
   authentication: TAIFunctionAuthType
   selfSignedCert: boolean
+  bodyType: IAIFunctionBodyType
+  body: T
   certs: {
     caCert: string
     clientKey: string
@@ -35,38 +74,41 @@ interface IBaseAIFunctionResourceContent {
     mode: TAIFunctionVerifyMode
   }
 }
-
-export interface INoneAuthAIFunctionResourceContent
-  extends IBaseAIFunctionResourceContent {
+export interface INoneAuthAIFunctionResourceContent<
+  T extends IAIFunctionBodyContent,
+> extends IBaseAIFunctionResourceContent<T> {
   authentication: "none"
   authContent: IAIFunctionNoneAuth
 }
 
-export interface IBasicAuthAIFunctionResourceContent
-  extends IBaseAIFunctionResourceContent {
+export interface IBasicAuthAIFunctionResourceContent<
+  T extends IAIFunctionBodyContent,
+> extends IBaseAIFunctionResourceContent<T> {
   authentication: "basic"
   authContent: IAIFunctionBasicAuth
 }
 
-export interface IBearerAuthAIFunctionResourceContent
-  extends IBaseAIFunctionResourceContent {
+export interface IBearerAuthAIFunctionResourceContent<
+  T extends IAIFunctionBodyContent,
+> extends IBaseAIFunctionResourceContent<T> {
   authentication: "bearer"
   authContent: IAIFunctionAPIBearerAuth
 }
 
-export interface IDigestAuthAIFunctionResourceContent
-  extends IBaseAIFunctionResourceContent {
+export interface IDigestAuthAIFunctionResourceContent<
+  T extends IAIFunctionBodyContent,
+> extends IBaseAIFunctionResourceContent<T> {
   authentication: "digest"
   authContent: IAIFunctionDigestAuth
 }
 
-export type TAIFunctionResourceContent =
-  | INoneAuthAIFunctionResourceContent
-  | IBasicAuthAIFunctionResourceContent
-  | IBearerAuthAIFunctionResourceContent
-  | IDigestAuthAIFunctionResourceContent
+export type TAIFunctionResourceContent<T extends IAIFunctionBodyContent> =
+  | INoneAuthAIFunctionResourceContent<T>
+  | IBasicAuthAIFunctionResourceContent<T>
+  | IBearerAuthAIFunctionResourceContent<T>
+  | IDigestAuthAIFunctionResourceContent<T>
 
-export interface IAIFunctionResource
-  extends IBaseResource<TAIFunctionResourceContent> {
+export interface IAIFunctionResource<T extends IAIFunctionBodyContent = null>
+  extends IBaseResource<TAIFunctionResourceContent<T>> {
   resourceType: "function"
 }
