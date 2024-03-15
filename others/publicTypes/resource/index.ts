@@ -41,6 +41,7 @@ export * from "./restapi"
 export * from "./s3"
 export * from "./smtp"
 export * from "./snowflake"
+export * from "./aiFunction"
 
 export type ResourceType =
   | "huggingface"
@@ -71,6 +72,7 @@ export type ResourceType =
   | "upstash"
   | "airtable"
   | "oracle9i"
+  | "function"
 
 export type ResourceContent =
   | HuggingFaceResource
@@ -95,7 +97,24 @@ export type ResourceContent =
   | SnowflakeResource<SnowflakeAuthenticationType>
   | AirtableResource
 
-export interface Resource<T extends ResourceContent = ResourceContent> {
+export enum E_VARIABLE_TYPE {
+  STRING = "string",
+  NUMBER = "number",
+  ARRAY = "array",
+  OBJECT = "object",
+  BOOLEAN = "boolean",
+}
+
+export interface IResourceVariable {
+  id: string
+  name: string
+  required: boolean
+  description: string
+  type: E_VARIABLE_TYPE
+  item?: IResourceVariable[]
+}
+
+export interface IBaseResource<T extends ResourceContent = ResourceContent> {
   resourceID: string
   resourceName: string
   resourceType: ResourceType
@@ -104,4 +123,8 @@ export interface Resource<T extends ResourceContent = ResourceContent> {
   createdAt: string
   updatedAt: string
   content: T
+  config: {
+    icon: string
+    variables: IResourceVariable[]
+  }
 }
