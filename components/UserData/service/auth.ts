@@ -115,12 +115,10 @@ export const authAPI = createApi({
       CurrentUserInfo & { token?: string | null },
       ISignInRequestData
     >({
-      query: (...data) => ({
+      query: (data) => ({
         method: "POST",
         url: "/auth/signup",
-        body: {
-          ...data,
-        },
+        body: data,
       }),
       transformResponse: (res: { data: CurrentUserInfo }, meta) => {
         return {
