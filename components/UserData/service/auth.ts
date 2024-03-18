@@ -68,7 +68,7 @@ export const authAPI = createApi({
           },
         }
       },
-      providesTags: ["teamsInfo", "userInfo"],
+      providesTags: ["teamsInfo"],
     }),
 
     signIn: builder.mutation<
@@ -174,6 +174,7 @@ export const authAPI = createApi({
         url: "/auth/forgetPassword",
         body: data,
       }),
+      invalidatesTags: ["userInfo"],
     }),
 
     exchangeToken: builder.mutation<
@@ -264,7 +265,7 @@ export const authAPI = createApi({
         method: "DELETE",
         url: `/teams/${teamID}/teamMembers/${teamMemberID}`,
       }),
-      invalidatesTags: ["members"],
+      invalidatesTags: ["members", "teamsInfo"],
     }),
 
     changeTeamMemberRole: builder.mutation<
@@ -297,6 +298,7 @@ export const authAPI = createApi({
         url: `/teams/${teamID}/permission`,
         body: data,
       }),
+      invalidatesTags: ["teamsInfo"],
     }),
 
     getTeamIconUploadAddress: builder.query<
@@ -333,6 +335,7 @@ export const authAPI = createApi({
         url: `/users/oauth/${oauthAgency}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["userInfo"],
     }),
 
     updateUserPassword: builder.mutation<
@@ -357,6 +360,7 @@ export const authAPI = createApi({
           nickname,
         },
       }),
+      invalidatesTags: ["userInfo"],
     }),
 
     updateUserAvatar: builder.mutation<undefined, string>({
@@ -367,6 +371,7 @@ export const authAPI = createApi({
           avatar,
         },
       }),
+      invalidatesTags: ["userInfo"],
     }),
 
     getUserAvatarUploadAddress: builder.query<
@@ -405,6 +410,57 @@ export const authAPI = createApi({
       },
       providesTags: ["members"],
     }),
+
+    createTeam: builder.mutation<
+      {
+        teams: TeamInfo[]
+        currentTeamID?: string
+      },
+      {
+        name: string
+        identifier: string
+      }
+    >({
+      // query: (body) => {
+      //   return {
+      //     url: "/teams",
+      //     method: "POST",
+      //     body,
+      //   }
+      // },
+      async queryFn(
+        { name, identifier },
+        _queryAPI,
+        _extraOptions,
+        fetchWithBQ,
+      ) {
+        await fetchWithBQ({
+          url: "/teams",
+          method: "POST",
+          body: {
+            name,
+            identifier,
+          },
+        })
+        const teamInfoResult = await fetchWithBQ("teams/my")
+        if (teamInfoResult.error) {
+          return {
+            error: teamInfoResult.error,
+          }
+        }
+        const teamInfos = teamInfoResult.data as TeamInfo[]
+        const currentTeamID = teamInfos.find(
+          (info) => info.identifier === identifier,
+        )?.id
+        return {
+          data: {
+            teams: teamInfos,
+            currentTeamID,
+          },
+        }
+      },
+      invalidatesTags: ["teamsInfo"],
+    }),
   }),
 })
 
@@ -435,4 +491,5 @@ export const {
   useChangeTeamMemberRoleMutation,
   useUpdateTeamPermissionConfigMutation,
   useGetMemberListQuery,
+  useCreateTeamMutation,
 } = authAPI

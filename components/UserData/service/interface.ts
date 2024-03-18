@@ -13,7 +13,9 @@ export interface ISignInRequestData {
 export interface IForgetPasswordRequestBody {
   email: string
   verificationToken: string
+  verificationCode: string
   newPassword: string
+  isFirstSet?: boolean
 }
 
 export interface IWooUsageInfoResponse {

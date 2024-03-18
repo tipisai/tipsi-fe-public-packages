@@ -55,6 +55,69 @@ const teamSlice = createSlice({
         state.currentId = action.payload.currentTeamID
       },
     )
+
+    builder.addMatcher(
+      authAPI.endpoints.deleteTeamByID.matchFulfilled,
+      (state, action) => {
+        const teamID = action.meta.arg.originalArgs
+
+        const currentTeams =
+          state.items?.filter((item) => item.id !== teamID) || []
+
+        return {
+          ...state,
+          currentId: currentTeams.length === 0 ? undefined : currentTeams[0].id,
+          items: currentTeams,
+        }
+      },
+    )
+
+    builder.addMatcher(
+      authAPI.endpoints.getTeamsInfo.matchFulfilled,
+      (state, action) => {
+        return {
+          ...state,
+          items: action.payload,
+        }
+      },
+    )
+
+    builder.addMatcher(
+      authAPI.endpoints.createTeam.matchFulfilled,
+      (state, action) => {
+        const { teams, currentTeamID } = action.payload
+        return {
+          ...state,
+          items: teams,
+          currentId: currentTeamID,
+        }
+      },
+    )
+
+    builder.addMatcher(
+      authAPI.endpoints.updateTeamPermissionConfig.matchFulfilled,
+      (state, action) => {
+        const value = action.meta.arg.originalArgs
+        const newPermission = {
+          allowEditorManageTeamMember: value,
+          allowViewerManageTeamMember: value,
+        }
+        return {
+          ...state,
+          newPermission,
+        }
+      },
+    )
+
+    builder.addMatcher(
+      authAPI.endpoints.changeTeamConfig.matchFulfilled,
+      (state, action) => {
+        return {
+          ...state,
+          ...action.meta.arg.originalArgs.data,
+        }
+      },
+    )
   },
 })
 
