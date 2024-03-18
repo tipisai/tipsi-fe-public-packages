@@ -19,9 +19,9 @@ export interface AgentAdvanceConfig {
 }
 
 export interface IKnowledgeFile {
-  name: string
-  type: string
-  value?: string
+  fileName: string
+  contentType: string
+  value: string
 }
 
 export interface AgentRaw {
@@ -56,4 +56,5 @@ export interface Agent extends AgentRaw {
   updatedBy: string
   updatedAt: string
   editedBy: AgentEditor[]
+  knowledge: IKnowledgeFile[]
 }
