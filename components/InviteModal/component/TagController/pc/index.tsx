@@ -1,9 +1,9 @@
 import Icon from "@ant-design/icons"
-import { LoadingIcon } from "@illa-public/icon"
 import { Select, Skeleton, Space, Tag } from "antd"
 import { debounce } from "lodash-es"
 import { FC, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { LoadingIcon } from "@illa-public/icon"
 import { HASHTAG_REQUEST_TYPE } from "../../../constants"
 import { fetchFuzzySearchHashTag } from "../../../service"
 import { TagControllerProps } from "../interface"
@@ -59,7 +59,6 @@ export const TagControllerPC: FC<TagControllerProps> = (props) => {
       try {
         const match = await fetchFuzzySearchHashTag(keywords)
         if (currentInputValue.current === keywords) {
-          console.log("match", match)
           setSearchRecommendTags(
             match.data.match.map((v) => ({
               label: v,
@@ -120,7 +119,6 @@ export const TagControllerPC: FC<TagControllerProps> = (props) => {
           placeholder="Enter↵"
           value={currentHashtags}
           onChange={(value) => {
-            console.log("value", value)
             onTagChange?.(value as string[])
             setCurrentHashtags(value as string[])
           }}
