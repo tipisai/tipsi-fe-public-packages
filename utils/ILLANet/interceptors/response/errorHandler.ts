@@ -1,9 +1,5 @@
-import {
-  getILLABuilderURL,
-  getILLACloudURL,
-  removeAuthToken,
-} from "@illa-public/utils"
 import { AxiosError } from "axios"
+import { getILLACloudURL, removeAuthToken } from "@illa-public/utils"
 
 export const errorHandlerInterceptor = (error: AxiosError) => {
   const { response } = error
@@ -18,16 +14,16 @@ export const errorHandlerInterceptor = (error: AxiosError) => {
       break
     }
     case 403: {
-      window.location.href = `${getILLABuilderURL(window.customDomain)}/403`
+      window.location.href = `${getILLACloudURL(window.customDomain)}/403`
       break
     }
     case 500: {
-      window.location.href = `${getILLABuilderURL(window.customDomain)}/500`
+      window.location.href = `${getILLACloudURL(window.customDomain)}/500`
       break
     }
     default: {
       if (status >= 500) {
-        window.location.href = `${getILLABuilderURL(window.customDomain)}/500`
+        window.location.href = `${getILLACloudURL(window.customDomain)}/500`
         break
       }
       break
