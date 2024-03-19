@@ -15,23 +15,16 @@ import {
 } from "@illa-public/public-types"
 import { getCurrentTeamInfo, getCurrentUserID } from "@illa-public/user-data"
 import { isMobileByWindowSize } from "@illa-public/utils"
-import { COLLAR_TYPE, PURCHASE_TYPE } from "../../interface"
+import { PURCHASE_TYPE, WOO_TYPE } from "../../interface"
 import { cancelSubscribe, modifySubscribe, subscribe } from "../../service"
-import {
-  COLLAR_UNIT_BY_CYCLE,
-  COLLAR_UNIT_PRICE,
-} from "../../service/interface"
+import { WOO_UNIT_BY_CYCLE, WOO_UNIT_PRICE } from "../../service/interface"
 import {
   getSuccessRedirectWithParams,
   isSubscribeForDrawer,
   track,
 } from "../../utils"
 import { Calculator } from "../Calculator"
-import {
-  COLLAR_BUTTON_TEXT,
-  COLLAR_MORE_TEXT,
-  LEARN_MORE_LINK,
-} from "./constants"
+import { LEARN_MORE_LINK, WOO_BUTTON_TEXT, WOO_MORE_TEXT } from "./constants"
 import { CollarDrawerProps } from "./interface"
 import {
   accountsStyle,
@@ -77,28 +70,28 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
   const currentTeamInfo = useSelector(getCurrentTeamInfo)!
   const userID = useSelector(getCurrentUserID)
 
-  const isSubScribe = isSubscribeForDrawer(currentTeamInfo?.colla?.plan)
+  const isSubScribe = isSubscribeForDrawer(currentTeamInfo?.woo?.plan)
   const isCancelSubscribe =
-    currentTeamInfo?.colla?.plan === SUBSCRIBE_PLAN.COLLA_SUBSCRIBE_CANCELED
+    currentTeamInfo?.woo?.plan === SUBSCRIBE_PLAN.WOO_SUBSCRIBE_CANCELED
 
-  const teamQuantity = isSubScribe ? currentTeamInfo?.colla?.quantity ?? 0 : 0
+  const teamQuantity = isSubScribe ? currentTeamInfo?.woo?.quantity ?? 0 : 0
   const [currentQuantity, setCurrentQuantity] = useState<number>(
     teamQuantity + 1,
   )
   const [cycle, setCycle] = useState<SUBSCRIPTION_CYCLE>(
     isSubScribe
-      ? currentTeamInfo?.colla?.cycle ?? SUBSCRIPTION_CYCLE.MONTHLY
+      ? currentTeamInfo?.woo?.cycle ?? SUBSCRIPTION_CYCLE.MONTHLY
       : subCycle ?? SUBSCRIPTION_CYCLE.MONTHLY,
   )
 
-  const currentCollarType = useRef<COLLAR_TYPE>(
+  const currentCollarType = useRef<WOO_TYPE>(
     getCurrentCollarType(teamQuantity, currentQuantity, isCancelSubscribe),
   )
 
   const disabledSubscribe =
     (currentQuantity === teamQuantity &&
-      cycle === currentTeamInfo?.colla?.cycle) ||
-    (currentQuantity === 0 && cycle !== currentTeamInfo?.colla?.cycle)
+      cycle === currentTeamInfo?.woo?.cycle) ||
+    (currentQuantity === 0 && cycle !== currentTeamInfo?.woo?.cycle)
 
   const changeNum = Math.abs(teamQuantity - currentQuantity)
 
@@ -108,20 +101,20 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
 
   const [btnText, setBtnText] = useState(getBtnText(currentCollarType.current))
 
-  const unitPrice = COLLAR_UNIT_PRICE[cycle ?? SUBSCRIPTION_CYCLE.MONTHLY]
+  const unitPrice = WOO_UNIT_PRICE[cycle ?? SUBSCRIPTION_CYCLE.MONTHLY]
   const unitCollaByCycle =
-    COLLAR_UNIT_BY_CYCLE[cycle ?? SUBSCRIPTION_CYCLE.MONTHLY]
+    WOO_UNIT_BY_CYCLE[cycle ?? SUBSCRIPTION_CYCLE.MONTHLY]
 
   const calculatorNum =
-    currentTeamInfo?.colla?.cycle === cycle ? changeNum : currentQuantity
+    currentTeamInfo?.woo?.cycle === cycle ? changeNum : currentQuantity
 
   const reportElement = isSubScribe ? "colla_manage" : "colla_subscribe"
 
   const handleNumChange = (value: number | null) => {
     setCurrentQuantity(value ?? 1)
-    if (currentTeamInfo?.colla?.cycle !== cycle && isSubScribe) {
-      setBtnText(COLLAR_BUTTON_TEXT.MONTH_YEAR_UPDATE)
-      setDescription(COLLAR_MORE_TEXT.MONTH_YEAR_UPDATE)
+    if (currentTeamInfo?.woo?.cycle !== cycle && isSubScribe) {
+      setBtnText(WOO_BUTTON_TEXT.MONTH_YEAR_UPDATE)
+      setDescription(WOO_MORE_TEXT.MONTH_YEAR_UPDATE)
     } else {
       currentCollarType.current = getCurrentCollarType(teamQuantity, value ?? 1)
       setBtnText(getBtnText(currentCollarType.current))
@@ -131,9 +124,9 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
 
   const handleOnSelectChange = (value?: SUBSCRIPTION_CYCLE) => {
     setCycle(value as SUBSCRIPTION_CYCLE)
-    if (currentTeamInfo?.colla?.cycle !== value && isSubScribe) {
-      setBtnText(COLLAR_BUTTON_TEXT.MONTH_YEAR_UPDATE)
-      setDescription(COLLAR_MORE_TEXT.MONTH_YEAR_UPDATE)
+    if (currentTeamInfo?.woo?.cycle !== value && isSubScribe) {
+      setBtnText(WOO_BUTTON_TEXT.MONTH_YEAR_UPDATE)
+      setDescription(WOO_MORE_TEXT.MONTH_YEAR_UPDATE)
     } else {
       setBtnText(getBtnText(currentCollarType.current))
       setDescription(getDescription(currentCollarType.current))
@@ -148,9 +141,9 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
   const hiddenCalculator =
     currentQuantity === 0 ||
     // not modify cycle
-    (changeNum === 0 && currentTeamInfo?.colla?.cycle === cycle)
+    (changeNum === 0 && currentTeamInfo?.woo?.cycle === cycle)
   // not cancel subscribe
-  currentCollarType.current !== COLLAR_TYPE.CANCEL_SUBSCRIPTION
+  currentCollarType.current !== WOO_TYPE.CANCEL_SUBSCRIPTION
 
   const handleSubscribe = async () => {
     if (loading || !currentTeamInfo || !currentTeamInfo?.id) return
@@ -169,7 +162,7 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
     const successRedirect = getSuccessRedirectWithParams({
       returnTo: window.location.href,
       purchaseStatus: "success",
-      purchaseType: PURCHASE_TYPE.COLLA,
+      purchaseType: PURCHASE_TYPE.WOO,
       userID,
       purchaseCount: currentQuantity,
       purchaseValue: unitPrice * currentQuantity,
@@ -177,19 +170,19 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
     const cancelRedirect = window.location.href
     try {
       switch (currentCollarType.current) {
-        case COLLAR_TYPE.CANCEL_SUBSCRIPTION:
+        case WOO_TYPE.CANCEL_SUBSCRIPTION:
           await cancelSubscribe(
             currentTeamInfo.id,
-            currentTeamInfo.colla?.plan || SUBSCRIBE_PLAN.COLLA_SUBSCRIBE_PAID,
+            currentTeamInfo.woo?.plan || SUBSCRIBE_PLAN.WOO_SUBSCRIBE_PAID,
           )
           onSuccessCallback?.(currentTeamInfo.id, currentCollarType.current)
           message.success({
             content: t("billing.message.unsubscription_suc"),
           })
           break
-        case COLLAR_TYPE.MODIFY_SUBSCRIPTION:
+        case WOO_TYPE.MODIFY_SUBSCRIPTION:
           await modifySubscribe(currentTeamInfo.id, {
-            plan: SUBSCRIBE_PLAN.COLLA_SUBSCRIBE_PAID,
+            plan: SUBSCRIBE_PLAN.WOO_SUBSCRIBE_PAID,
             quantity: currentQuantity,
             cycle,
           })
@@ -198,12 +191,11 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
             content: t("billing.message.successfully_changed"),
           })
           break
-        case COLLAR_TYPE.ADD_COLLAR:
-        case COLLAR_TYPE.REMOVE_COLLAR:
+        case WOO_TYPE.ADD_WOO:
+        case WOO_TYPE.REMOVE_WOO:
           await modifySubscribe(currentTeamInfo.id, {
             plan:
-              currentTeamInfo.colla?.plan ??
-              SUBSCRIBE_PLAN.COLLA_SUBSCRIBE_PAID,
+              currentTeamInfo.woo?.plan ?? SUBSCRIBE_PLAN.WOO_SUBSCRIBE_PAID,
             quantity: currentQuantity,
             cycle,
           })
@@ -213,9 +205,9 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
           })
           break
         default:
-        case COLLAR_TYPE.SUBSCRIBE:
+        case WOO_TYPE.SUBSCRIBE:
           const res = await subscribe(currentTeamInfo.id, {
-            plan: SUBSCRIBE_PLAN.COLLA_SUBSCRIBE_PAID,
+            plan: SUBSCRIBE_PLAN.WOO_SUBSCRIBE_PAID,
             quantity: currentQuantity,
             cycle,
             successRedirect,
@@ -227,18 +219,18 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
       }
     } catch (error) {
       switch (currentCollarType.current) {
-        case COLLAR_TYPE.CANCEL_SUBSCRIPTION:
+        case WOO_TYPE.CANCEL_SUBSCRIPTION:
           message.error({
             content: t("billing.message.failed_to_unsubscrib"),
           })
           break
-        case COLLAR_TYPE.ADD_COLLAR:
-        case COLLAR_TYPE.REMOVE_COLLAR:
+        case WOO_TYPE.ADD_WOO:
+        case WOO_TYPE.REMOVE_WOO:
           message.error({
             content: t("billing.message.failed_to_change"),
           })
           break
-        case COLLAR_TYPE.SUBSCRIBE:
+        case WOO_TYPE.SUBSCRIBE:
         default:
           message.error({
             content: t("billing.message.error_subscribe"),
@@ -315,12 +307,12 @@ export const CollarDrawer: FC<CollarDrawerProps> = (props) => {
               <div css={managePriceStyle}>
                 <span>
                   {t("billing.payment_sidebar.price.colla_monthly", {
-                    price: `$${COLLAR_UNIT_PRICE[SUBSCRIPTION_CYCLE.MONTHLY]}`,
+                    price: `$${WOO_UNIT_PRICE[SUBSCRIPTION_CYCLE.MONTHLY]}`,
                   })}
                 </span>
                 <span>
                   {t("billing.payment_sidebar.price.colla_yearly", {
-                    price: `$${COLLAR_UNIT_PRICE[SUBSCRIPTION_CYCLE.YEARLY]}`,
+                    price: `$${WOO_UNIT_PRICE[SUBSCRIPTION_CYCLE.YEARLY]}`,
                   })}
                 </span>
               </div>

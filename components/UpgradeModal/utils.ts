@@ -8,7 +8,7 @@ import {
 import { SUBSCRIBE_PLAN } from "@illa-public/public-types"
 import { getILLACloudURL, isIllaErrorInterface } from "@illa-public/utils"
 import { createCollarModal, createTeamLimitModal } from "./hook"
-import { CollarModalType, FREE_TEAM_LIMIT_TYPE } from "./interface"
+import { FREE_TEAM_LIMIT_TYPE, WooModalType } from "./interface"
 
 export function getSuccessRedirectWithParams(
   params: Record<string, string | number>,
@@ -24,9 +24,9 @@ export function getSuccessRedirectWithParams(
   return `${getILLACloudURL(window.customDomain)}${redirectPath}?${paramString}`
 }
 
-export const handleCollaPurchaseError = (
+export const handleWooPurchaseError = (
   e: unknown,
-  modalType: CollarModalType,
+  modalType: WooModalType,
   from: string,
 ) => {
   const collaModal = createCollarModal()
@@ -55,7 +55,7 @@ export const handleCollaPurchaseError = (
 
 export const handleCollaPurchaseErrorByILLAInnerError = (
   e: unknown,
-  modalType: CollarModalType,
+  modalType: WooModalType,
   from: string,
 ) => {
   const collaModal = createCollarModal()
@@ -105,8 +105,8 @@ export const isSubscribeForDrawer = (subscribePlan?: SUBSCRIBE_PLAN) => {
     subscribePlan === SUBSCRIBE_PLAN.TEAM_LICENSE_INSUFFICIENT ||
     subscribePlan === SUBSCRIBE_PLAN.DRIVE_VOLUME_PAID ||
     subscribePlan === SUBSCRIBE_PLAN.DRIVE_VOLUME_INSUFFICIENT ||
-    subscribePlan === SUBSCRIBE_PLAN.COLLA_SUBSCRIBE_INSUFFICIENT ||
-    subscribePlan === SUBSCRIBE_PLAN.COLLA_SUBSCRIBE_PAID
+    subscribePlan === SUBSCRIBE_PLAN.WOO_SUBSCRIBE_INSUFFICIENT ||
+    subscribePlan === SUBSCRIBE_PLAN.WOO_SUBSCRIBE_PAID
   )
 }
 

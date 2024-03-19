@@ -20,4 +20,4 @@ export const UpgradeModalGroup = () => {
 export * from "./hook"
 export * from "./service/interface"
 export * from "./interface"
-export { handleCollaPurchaseError, handleFreeTeamLimitError } from "./utils"
+export { handleWooPurchaseError, handleFreeTeamLimitError } from "./utils"

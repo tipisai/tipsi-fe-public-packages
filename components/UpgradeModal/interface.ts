@@ -49,16 +49,16 @@ export interface StorageDrawerConfig {
   successCallBack?: (teamID: string) => void
 }
 
-export enum CollarModalType {
+export enum WooModalType {
   STORAGE = "storage",
   TOKEN = "token",
   TRAFFIC = "traffic",
 }
 
-export enum COLLAR_TYPE {
+export enum WOO_TYPE {
   SUBSCRIBE = "subscribe",
-  ADD_COLLAR = "addCollar",
-  REMOVE_COLLAR = "removeCollar",
+  ADD_WOO = "addCollar",
+  REMOVE_WOO = "removeCollar",
   CANCEL_SUBSCRIPTION = "cancelSubscription",
   MODIFY_SUBSCRIPTION = "modifySubscription",
 }
@@ -69,6 +69,6 @@ export enum FREE_TEAM_LIMIT_TYPE {
 }
 
 export enum PURCHASE_TYPE {
-  COLLA = "colla",
+  WOO = "woo",
   LICENSE = "license",
 }

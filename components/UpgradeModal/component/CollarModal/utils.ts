@@ -1,9 +1,9 @@
-import { CollarModalType } from "../../interface"
+import { WooModalType } from "../../interface"
 import { ModalDetail } from "./interface"
 
-export const getUnitDetailByPrice = (type: CollarModalType): ModalDetail => {
+export const getUnitDetailByPrice = (type: WooModalType): ModalDetail => {
   switch (type) {
-    case CollarModalType.STORAGE:
+    case WooModalType.STORAGE:
       return {
         title: "billing.modal.colla_insufficient_modal.storage.title",
         desc: [
@@ -11,7 +11,7 @@ export const getUnitDetailByPrice = (type: CollarModalType): ModalDetail => {
           "billing.modal.colla_insufficient_modal.storage.desc.2",
         ],
       }
-    case CollarModalType.TRAFFIC:
+    case WooModalType.TRAFFIC:
       return {
         title: "billing.modal.colla_insufficient_modal.traffic.title",
         desc: [
@@ -20,7 +20,7 @@ export const getUnitDetailByPrice = (type: CollarModalType): ModalDetail => {
         ],
       }
     default:
-    case CollarModalType.TOKEN:
+    case WooModalType.TOKEN:
       return {
         title: "billing.modal.colla_insufficient_modal.token.title",
         desc: [

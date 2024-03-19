@@ -1,8 +1,8 @@
-import { CollarModalType } from "../../interface"
+import { WooModalType } from "../../interface"
 
 export interface CollarModalProps {
   visible?: boolean
-  modalType: CollarModalType
+  modalType: WooModalType
   from: string
   onCancel: () => void
   afterClose?: () => void

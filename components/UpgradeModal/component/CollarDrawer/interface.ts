@@ -1,5 +1,5 @@
 import { SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
-import { COLLAR_TYPE } from "../../interface"
+import { WOO_TYPE } from "../../interface"
 
 export interface CollarDrawerProps {
   from: string
@@ -7,5 +7,5 @@ export interface CollarDrawerProps {
   visible?: boolean
   onCancel?: () => void
   afterClose?: () => void
-  onSuccessCallback?: (teamID: string, operationType: COLLAR_TYPE) => void
+  onSuccessCallback?: (teamID: string, operationType: WOO_TYPE) => void
 }

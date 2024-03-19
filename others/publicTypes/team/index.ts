@@ -49,11 +49,11 @@ export enum SUBSCRIBE_PLAN {
   DRIVE_VOLUME_INSUFFICIENT = "drive_volume_insufficient",
   DRIVE_VOLUME_EXPIRED = "drive_volume_expired",
   DRIVE_VOLUME_CANCELED = "drive_volume_canceled",
-  COLLA_FREE = "colla_free",
-  COLLA_SUBSCRIBE_PAID = "colla_subscribe_paid",
-  COLLA_SUBSCRIBE_INSUFFICIENT = "colla_subscribe_insufficient",
-  COLLA_SUBSCRIBE_CANCELED = "colla_subscribe_canceled",
-  COLLA_SUBSCRIBE_EXPIRED = "colla_subscribe_expired",
+  WOO_FREE = "woo_free",
+  WOO_SUBSCRIBE_PAID = "woo_subscribe_paid",
+  WOO_SUBSCRIBE_INSUFFICIENT = "woo_subscribe_insufficient",
+  WOO_SUBSCRIBE_CANCELED = "woo_subscribe_canceled",
+  WOO_SUBSCRIBE_EXPIRED = "woo_subscribe_expired",
 }
 
 export enum SUBSCRIPTION_CYCLE {
@@ -82,7 +82,7 @@ export interface TotalTeamLicense {
   teamLicenseAllPaid: boolean
 }
 
-export interface CollarInfo {
+export interface IWooInfo {
   volume: number
   balance: number
   balanceConverted: number
@@ -116,7 +116,7 @@ export interface TeamInfo {
   myRole: USER_ROLE
   permission: TeamMemberPermission
   teamMemberPermission: TeamMemberPermissionConfig
-  colla: CollarInfo
+  woo: IWooInfo
   customInfo: ITeamCustomInfo
 }
 

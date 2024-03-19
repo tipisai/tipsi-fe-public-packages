@@ -1,16 +1,16 @@
 import Icon from "@ant-design/icons"
+import { Button, Modal } from "antd"
+import { FC, useEffect } from "react"
+import { useTranslation } from "react-i18next"
+import { useSelector } from "react-redux"
 import { getColor } from "@illa-public/color-scheme"
 import { CloseIcon, UpgradeIcon } from "@illa-public/icon"
 import { ILLA_MIXPANEL_EVENT_TYPE } from "@illa-public/mixpanel-utils"
 import { SUBSCRIPTION_CYCLE, USER_ROLE } from "@illa-public/public-types"
 import { getCurrentTeamInfo, getCurrentUserID } from "@illa-public/user-data"
-import { Button, Modal } from "antd"
-import { FC, useEffect } from "react"
-import { useTranslation } from "react-i18next"
-import { useSelector } from "react-redux"
 import { useCollarDrawer } from "../../hook"
-import { CollarModalType } from "../../interface"
-import { COLLAR_UNIT_PRICE } from "../../service/interface"
+import { WooModalType } from "../../interface"
+import { WOO_UNIT_PRICE } from "../../service/interface"
 import { isSubscribeForDrawer, track } from "../../utils"
 import CollarBg from "./assets/collarBg.svg?react"
 import { CollarModalProps } from "./interface"
@@ -30,7 +30,7 @@ export const CollarModal: FC<CollarModalProps> = (props) => {
   const {
     visible,
     from,
-    modalType = CollarModalType.TOKEN,
+    modalType = WooModalType.TOKEN,
     onCancel,
     afterClose,
   } = props
@@ -40,7 +40,7 @@ export const CollarModal: FC<CollarModalProps> = (props) => {
   const { title, desc } = getUnitDetailByPrice(modalType)
   const teamInfo = useSelector(getCurrentTeamInfo)
   const userID = useSelector(getCurrentUserID)
-  const isSubscribe = isSubscribeForDrawer(teamInfo?.colla?.plan)
+  const isSubscribe = isSubscribeForDrawer(teamInfo?.woo?.plan)
 
   const reportElement = isSubscribe
     ? "colla_increase_modal"
@@ -105,7 +105,7 @@ export const CollarModal: FC<CollarModalProps> = (props) => {
         <div css={footerStyle}>
           <div>
             <div css={priceStyle}>
-              {`$${COLLAR_UNIT_PRICE[SUBSCRIPTION_CYCLE.MONTHLY]}`}
+              {`$${WOO_UNIT_PRICE[SUBSCRIPTION_CYCLE.MONTHLY]}`}
             </div>
             <div css={priceContentStyle}>
               {t("billing.modal.colla_insufficient_modal.cycle")}

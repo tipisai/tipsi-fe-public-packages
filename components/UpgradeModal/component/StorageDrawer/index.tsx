@@ -1,19 +1,19 @@
 import Icon from "@ant-design/icons"
-import { getColor } from "@illa-public/color-scheme"
-import { CloseIcon } from "@illa-public/icon"
-import { SUBSCRIBE_PLAN, SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
-import { getCurrentId } from "@illa-public/user-data"
-import { isMobileByWindowSize } from "@illa-public/utils"
 import { Button } from "antd"
 import { App, ConfigProvider, Divider, Drawer, InputNumber } from "antd"
 import { FC, useMemo, useState } from "react"
 import { Trans, useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { useWindowSize } from "react-use"
-import { CollarModalType } from "../../interface"
+import { getColor } from "@illa-public/color-scheme"
+import { CloseIcon } from "@illa-public/icon"
+import { SUBSCRIBE_PLAN, SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
+import { getCurrentId } from "@illa-public/user-data"
+import { isMobileByWindowSize } from "@illa-public/utils"
+import { WooModalType } from "../../interface"
 import { modifySubscribe, subscribe } from "../../service"
-import { UNIT_COLLA_BY_STORAGE } from "../../service/interface"
-import { handleCollaPurchaseError, isSubscribeForDrawer } from "../../utils"
+import { UNIT_WOO_BY_STORAGE } from "../../service/interface"
+import { handleWooPurchaseError, isSubscribeForDrawer } from "../../utils"
 import { LEARN_MORE_LINK } from "./constants"
 import { StorageDrawerProps } from "./interface"
 import {
@@ -86,9 +86,9 @@ export const StorageDrawer: FC<StorageDrawerProps> = (props) => {
       }
       successCallBack?.(teamID)
     } catch (error) {
-      const res = handleCollaPurchaseError(
+      const res = handleWooPurchaseError(
         error,
-        CollarModalType.STORAGE,
+        WooModalType.STORAGE,
         "billing_storage_balance_manage",
       )
       if (res) return
@@ -168,13 +168,13 @@ export const StorageDrawer: FC<StorageDrawerProps> = (props) => {
               <div>{t("billing.payment_sidebar.price_label.total")}</div>
               <div css={priceStyle}>
                 <div css={priceTotalStyle}>
-                  {UNIT_COLLA_BY_STORAGE * quantity}K Colla
+                  {UNIT_WOO_BY_STORAGE * quantity}K Woo
                 </div>
                 <div css={priceTotalLabelStyle}>
                   {t(
                     "billing.payment_sidebar.price_cal.next_period_monthly_remove_storage",
                     {
-                      unitPrice: `${UNIT_COLLA_BY_STORAGE}K Colla`,
+                      unitPrice: `${UNIT_WOO_BY_STORAGE}K Woo`,
                       storageNum: quantity,
                     },
                   )}

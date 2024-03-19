@@ -49,6 +49,7 @@ export const authAPI = createApi({
             error: userInfoResult.error,
           }
         }
+        console.log(222)
         const userInfo = userInfoResult.data as CurrentUserInfo
         const teamInfoResult = await fetchWithBQ("teams/my")
         if (teamInfoResult.error) {

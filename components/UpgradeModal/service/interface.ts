@@ -1,5 +1,5 @@
 import {
-  CollarInfo,
+  IWooInfo,
   SUBSCRIPTION_CYCLE,
   SubscribeInfo,
   TotalTeamLicense,
@@ -46,8 +46,8 @@ export interface TeamSubscription {
     current: DriveSubscribeInfo
   }
   driveTraffic: TrafficSubscribeInfo
-  colla: {
-    current: CollarInfo
+  woo: {
+    current: IWooInfo
   }
 }
 
@@ -59,7 +59,7 @@ export interface SubscribeResponse {
   url: string
 }
 
-export interface CollaUsageInfoResponse {
+export interface WooUsageInfoResponse {
   driveVolumeUsage: number
   driveVolumeUsagePercent: number
   driveTrafficUsage: number
@@ -83,24 +83,24 @@ export const ENTERPRISE_UNIT_PRICE = {
   [SUBSCRIPTION_CYCLE.LIFETIME]: -1,
 }
 
-export const COLLAR_UNIT_PRICE = {
+export const WOO_UNIT_PRICE = {
   [SUBSCRIPTION_CYCLE.FREE]: 0,
   [SUBSCRIPTION_CYCLE.MONTHLY]: 10,
   [SUBSCRIPTION_CYCLE.YEARLY]: 100,
   [SUBSCRIPTION_CYCLE.LIFETIME]: -1,
 }
 
-export const COLLAR_UNIT_BY_CYCLE = {
+export const WOO_UNIT_BY_CYCLE = {
   [SUBSCRIPTION_CYCLE.FREE]: 0,
   [SUBSCRIPTION_CYCLE.MONTHLY]: 5, // unit collar by month
   [SUBSCRIPTION_CYCLE.YEARLY]: 60, // unit collar by year
   [SUBSCRIPTION_CYCLE.LIFETIME]: -1,
 }
 
-export const UNIT_COLLA_BY_STORAGE = 1 // 1GB storage = 1k colla
+export const UNIT_WOO_BY_STORAGE = 1 // 1GB storage = 1k colla
 
-export const UNIT_COLLA_CONVERSION_STORAGE = 1
-export const UNIT_COLLA_CONVERSION_TRAFFIC = 1
-export const UNIT_COLLA_CONVERSION_TOKEN = 20
+export const UNIT_WOO_CONVERSION_STORAGE = 1
+export const UNIT_WOO_CONVERSION_TRAFFIC = 1
+export const UNIT_WOO_CONVERSION_TOKEN = 20
 
 export const LICENSE_NEW_USER_DISCOUNT = 0.8 // 20% off for new user

@@ -1,4 +1,4 @@
-import { CollarInfo } from "@illa-public/public-types"
+import { IWooInfo } from "@illa-public/public-types"
 
 export interface ISignInRequestData {
   nickname: string
@@ -29,8 +29,8 @@ export interface IWooUsageInfoResponse {
 }
 
 export interface ITeamSubscription {
-  colla: {
-    current: CollarInfo
+  woo: {
+    current: IWooInfo
   }
 }
 
