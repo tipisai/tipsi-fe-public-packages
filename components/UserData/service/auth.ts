@@ -40,9 +40,17 @@ export const authAPI = createApi({
         teams: TeamInfo[]
         currentTeamID: string | undefined
       },
-      string | undefined
+      {
+        teamIdentifier?: string
+        strictMode?: boolean
+      }
     >({
-      async queryFn(teamIdentifier, _queryAPI, _extraOptions, fetchWithBQ) {
+      async queryFn(
+        { teamIdentifier, strictMode },
+        _queryAPI,
+        _extraOptions,
+        fetchWithBQ,
+      ) {
         const userInfoResult = await fetchWithBQ("users")
         if (userInfoResult.error) {
           return {
@@ -57,9 +65,16 @@ export const authAPI = createApi({
           }
         }
         const teamInfos = teamInfoResult.data as TeamInfo[]
-        const currentTeamID = teamInfos.find(
-          (info) => info.identifier === teamIdentifier,
-        )?.id
+        let currentTeamID
+        if (strictMode) {
+          currentTeamID = teamInfos.find(
+            (info) => info.identifier === teamIdentifier,
+          )?.id
+        } else {
+          if (teamInfos.length > 0) {
+            currentTeamID = teamInfos[0].id
+          }
+        }
         return {
           data: {
             user: userInfo,
@@ -89,7 +104,7 @@ export const authAPI = createApi({
       }),
       transformResponse: (_, meta) => {
         return {
-          token: meta?.response?.headers.get("illa-token"),
+          token: meta?.response?.headers.get("tipisai-token"),
         }
       },
     }),
@@ -122,7 +137,7 @@ export const authAPI = createApi({
       transformResponse: (res: { data: CurrentUserInfo }, meta) => {
         return {
           ...res?.data,
-          token: meta?.response?.headers.get("illa-token"),
+          token: meta?.response?.headers.get("tipisai-token"),
         }
       },
     }),
@@ -219,7 +234,7 @@ export const authAPI = createApi({
       transformResponse: (res: { data: BaseUserInfo }, meta) => {
         return {
           ...res?.data,
-          token: meta?.response?.headers.get("illa-token"),
+          token: meta?.response?.headers.get("tipisai-token"),
         }
       },
     }),

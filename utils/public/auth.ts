@@ -1,6 +1,6 @@
 import ILLAStorage from "@illa-public/illa-storage"
 
-export const ILLAPublicStorage = new ILLAStorage(`ILLAPublic`, -1)
+export const ILLAPublicStorage = new ILLAStorage(`tipis.ai-public`, -1)
 
 export const setAuthToken = (token: string) => {
   ILLAPublicStorage.setLocalStorage("token", token, -1)
