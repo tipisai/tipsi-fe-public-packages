@@ -46,6 +46,16 @@ const currentUserSlice = createSlice({
     )
 
     builder.addMatcher(
+      authAPI.endpoints.updateUserLanguage.matchFulfilled,
+      (state, action) => {
+        return {
+          ...state,
+          language: action.meta.arg.originalArgs,
+        }
+      },
+    )
+
+    builder.addMatcher(
       authAPI.endpoints.cancelLinked.matchFulfilled,
       (state, action) => {
         const type = action.meta.arg.originalArgs

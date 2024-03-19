@@ -64,21 +64,16 @@ const teamSlice = createSlice({
         const currentTeams =
           state.items?.filter((item) => item.id !== teamID) || []
 
-        return {
-          ...state,
-          currentId: currentTeams.length === 0 ? undefined : currentTeams[0].id,
-          items: currentTeams,
-        }
+        state.currentId =
+          currentTeams.length === 0 ? undefined : currentTeams[0].id
+        state.items = currentTeams
       },
     )
 
     builder.addMatcher(
       authAPI.endpoints.getTeamsInfo.matchFulfilled,
       (state, action) => {
-        return {
-          ...state,
-          items: action.payload,
-        }
+        state.items = action.payload
       },
     )
 
@@ -86,36 +81,33 @@ const teamSlice = createSlice({
       authAPI.endpoints.createTeam.matchFulfilled,
       (state, action) => {
         const { teams, currentTeamID } = action.payload
-        return {
-          ...state,
-          items: teams,
-          currentId: currentTeamID,
-        }
+        state.items = teams
+        state.currentId = currentTeamID
       },
     )
 
     builder.addMatcher(
       authAPI.endpoints.updateTeamPermissionConfig.matchFulfilled,
       (state, action) => {
-        const value = action.meta.arg.originalArgs
-        const newPermission = {
-          allowEditorManageTeamMember: value,
-          allowViewerManageTeamMember: value,
-        }
-        return {
-          ...state,
-          newPermission,
-        }
+        const { data, teamID } = action.meta.arg.originalArgs
+        const teams = state.items || []
+        const index = teams.findIndex((team) => team.id === teamID)
+        const targetTeam = teams[index]
+        const items = teams.splice(index, 1, {
+          ...targetTeam,
+          permission: {
+            ...targetTeam.permission,
+            ...data,
+          },
+        })
+        state.items = items
       },
     )
 
     builder.addMatcher(
       authAPI.endpoints.changeTeamConfig.matchFulfilled,
       (state, action) => {
-        return {
-          ...state,
-          ...action.meta.arg.originalArgs.data,
-        }
+        state.items = action.payload?.teams ?? state.items
       },
     )
   },

@@ -32,7 +32,7 @@ export const authAPI = createApi({
       return headers
     },
   }),
-  tagTypes: ["teamsInfo", "userInfo", "members"],
+  tagTypes: ["members"],
   endpoints: (builder) => ({
     getUserInfoAndTeamsInfoByToken: builder.query<
       {
@@ -49,7 +49,6 @@ export const authAPI = createApi({
             error: userInfoResult.error,
           }
         }
-        console.log(222)
         const userInfo = userInfoResult.data as CurrentUserInfo
         const teamInfoResult = await fetchWithBQ("teams/my")
         if (teamInfoResult.error) {
@@ -69,7 +68,6 @@ export const authAPI = createApi({
           },
         }
       },
-      providesTags: ["teamsInfo"],
     }),
 
     signIn: builder.mutation<
@@ -149,7 +147,10 @@ export const authAPI = createApi({
     }),
 
     changeTeamConfig: builder.mutation<
-      undefined,
+      | undefined
+      | {
+          teams?: TeamInfo[]
+        },
       {
         teamID: string
         data: {
@@ -159,12 +160,36 @@ export const authAPI = createApi({
         }
       }
     >({
-      query: ({ teamID, data }) => ({
-        method: "PATCH",
-        url: `/teams/${teamID}/config`,
-        body: data,
-      }),
-      invalidatesTags: ["teamsInfo"],
+      async queryFn({ teamID, data }, _queryAPI, _extraOptions, fetchWithBQ) {
+        const updateResult = await fetchWithBQ({
+          method: "PATCH",
+          url: `/teams/${teamID}/config`,
+          body: data,
+        })
+        if (updateResult.error) {
+          return {
+            error: updateResult.error,
+          }
+        }
+
+        if (data.identifier) {
+          const teamInfoResult = await fetchWithBQ("teams/my")
+          if (teamInfoResult.error) {
+            return {
+              error: teamInfoResult.error,
+            }
+          }
+          const teamInfos = teamInfoResult.data as TeamInfo[]
+          return {
+            data: {
+              teams: teamInfos,
+            },
+          }
+        }
+        return {
+          data: undefined,
+        }
+      },
     }),
 
     forgetPassword: builder.mutation<undefined, IForgetPasswordRequestBody>({
@@ -173,7 +198,6 @@ export const authAPI = createApi({
         url: "/auth/forgetPassword",
         body: data,
       }),
-      invalidatesTags: ["userInfo"],
     }),
 
     exchangeToken: builder.mutation<
@@ -264,7 +288,7 @@ export const authAPI = createApi({
         method: "DELETE",
         url: `/teams/${teamID}/teamMembers/${teamMemberID}`,
       }),
-      invalidatesTags: ["members", "teamsInfo"],
+      invalidatesTags: ["members"],
     }),
 
     changeTeamMemberRole: builder.mutation<
@@ -297,7 +321,6 @@ export const authAPI = createApi({
         url: `/teams/${teamID}/permission`,
         body: data,
       }),
-      invalidatesTags: ["teamsInfo"],
     }),
 
     getTeamIconUploadAddress: builder.query<
@@ -326,7 +349,6 @@ export const authAPI = createApi({
           language,
         },
       }),
-      invalidatesTags: ["userInfo"],
     }),
 
     cancelLinked: builder.mutation<undefined, "github" | "google">({
@@ -334,7 +356,6 @@ export const authAPI = createApi({
         url: `/users/oauth/${oauthAgency}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["userInfo"],
     }),
 
     updateUserPassword: builder.mutation<
@@ -359,7 +380,6 @@ export const authAPI = createApi({
           nickname,
         },
       }),
-      invalidatesTags: ["userInfo"],
     }),
 
     updateUserAvatar: builder.mutation<undefined, string>({
@@ -370,7 +390,6 @@ export const authAPI = createApi({
           avatar,
         },
       }),
-      invalidatesTags: ["userInfo"],
     }),
 
     getUserAvatarUploadAddress: builder.query<
@@ -433,7 +452,7 @@ export const authAPI = createApi({
         _extraOptions,
         fetchWithBQ,
       ) {
-        await fetchWithBQ({
+        const createResult = await fetchWithBQ({
           url: "/teams",
           method: "POST",
           body: {
@@ -441,6 +460,11 @@ export const authAPI = createApi({
             identifier,
           },
         })
+        if (createResult.error) {
+          return {
+            error: createResult.error,
+          }
+        }
         const teamInfoResult = await fetchWithBQ("teams/my")
         if (teamInfoResult.error) {
           return {
@@ -458,7 +482,6 @@ export const authAPI = createApi({
           },
         }
       },
-      invalidatesTags: ["teamsInfo"],
     }),
   }),
 })
