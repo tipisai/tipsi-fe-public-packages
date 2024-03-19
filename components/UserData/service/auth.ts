@@ -34,6 +34,12 @@ export const authAPI = createApi({
   }),
   tagTypes: ["members"],
   endpoints: (builder) => ({
+    getUserInfo: builder.query<CurrentUserInfo, void>({
+      query: () => ({
+        url: "/users",
+        method: "GET",
+      }),
+    }),
     getUserInfoAndTeamsInfoByToken: builder.query<
       {
         user: CurrentUserInfo
@@ -282,6 +288,13 @@ export const authAPI = createApi({
       query: () => ({
         url: "/teams/my",
         method: "GET",
+      }),
+    }),
+
+    joinTeam: builder.mutation<TeamInfo, string>({
+      query: (inviteToken) => ({
+        url: `/join/${inviteToken}`,
+        method: "PUT",
       }),
     }),
 

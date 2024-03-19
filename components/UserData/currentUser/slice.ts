@@ -86,6 +86,13 @@ const currentUserSlice = createSlice({
         }
       },
     )
+
+    builder.addMatcher(
+      authAPI.endpoints.getUserInfo.matchFulfilled,
+      (state, action) => {
+        return action.payload
+      },
+    )
   },
 })
 
