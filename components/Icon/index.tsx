@@ -25,6 +25,7 @@ import LoadingIcon from "./publicIcon/loading.svg?react"
 import MinusIcon from "./publicIcon/minus.svg?react"
 import MoreIcon from "./publicIcon/more.svg?react"
 import NextIcon from "./publicIcon/next.svg?react"
+import NextDoubleIcon from "./publicIcon/nextDouble.svg?react"
 import PenIcon from "./publicIcon/pen.svg?react"
 import PinIcon from "./publicIcon/pin.svg?react"
 import PlayFillIcon from "./publicIcon/playFill.svg?react"
@@ -98,4 +99,5 @@ export {
   NextIcon,
   CameraIcon,
   DragPointIcon,
+  NextDoubleIcon,
 }
