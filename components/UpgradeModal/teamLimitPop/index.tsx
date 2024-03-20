@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react"
-import { TeamLimitModal } from "../../component/TeamLimitModal"
+import { TeamLimitModal } from "../component/TeamLimitModal"
 import { ModalShowProps } from "./interface"
 import { modalStore } from "./store"
 

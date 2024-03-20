@@ -1,4 +1,7 @@
 import Icon from "@ant-design/icons"
+import { App, Input } from "antd"
+import { FC, KeyboardEvent, useCallback, useContext, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { Avatar } from "@illa-public/avatar"
 import { LoadingIcon } from "@illa-public/icon"
 import { ERROR_FLAG, isILLAAPiError } from "@illa-public/illa-net"
@@ -8,13 +11,9 @@ import {
 } from "@illa-public/mixpanel-utils"
 import { USER_ROLE } from "@illa-public/public-types"
 import { RoleSelector } from "@illa-public/role-selector"
-import { useUpgradeModal } from "@illa-public/upgrade-modal"
 import { isBiggerThanTargetRole } from "@illa-public/user-role-utils"
 import { EMAIL_FORMAT } from "@illa-public/utils"
 import { useMergeValue } from "@illa-public/utils"
-import { App, Input } from "antd"
-import { FC, KeyboardEvent, useCallback, useContext, useState } from "react"
-import { useTranslation } from "react-i18next"
 import { InviteByEmailProps, InvitedUser } from "../interface"
 import { changeUserRoleByTeamMemberID, inviteByEmail } from "../service"
 import {
@@ -44,7 +43,6 @@ export const InviteByEmailMobile: FC<InviteByEmailProps> = (props) => {
   } = props
 
   const { message } = App.useApp()
-  const upgradeModal = useUpgradeModal()
   const { track } = useContext(MixpanelTrackContext)
   const { t } = useTranslation()
 
@@ -86,10 +84,11 @@ export const InviteByEmailMobile: FC<InviteByEmailProps> = (props) => {
           currentBalance === 0) ||
         currentBalance < 0
       ) {
-        upgradeModal({
-          modalType: "upgrade",
-          from: "invite_by_email",
-        })
+        // TODO: billing
+        // upgradeModal({
+        //   modalType: "upgrade",
+        //   from: "invite_by_email",
+        // })
         return
       }
       if (!handleValidateEmail(currentValue)) {
@@ -160,7 +159,6 @@ export const InviteByEmailMobile: FC<InviteByEmailProps> = (props) => {
       t,
       teamID,
       track,
-      upgradeModal,
     ],
   )
 

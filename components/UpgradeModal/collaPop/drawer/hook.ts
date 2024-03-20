@@ -1,13 +1,13 @@
 import { v4 } from "uuid"
-import { CollarDrawerShowProps } from "./interface"
+import { WooDrawerShowProps } from "./interface"
 import { collarDrawerStore } from "./store"
 
 // collar
 const showCollarDrawerImpl = (
   from: string,
-  config?: Pick<CollarDrawerShowProps, "onSuccessCallback" | "subCycle">,
+  config?: Pick<WooDrawerShowProps, "onSuccessCallback" | "subCycle">,
 ) => {
-  let drawer: CollarDrawerShowProps = {
+  let drawer: WooDrawerShowProps = {
     id: v4(),
     from,
     subCycle: config?.subCycle,
@@ -23,7 +23,7 @@ const showCollarDrawerImpl = (
 
 const collarDrawerHandler = (
   from: string,
-  config?: Pick<CollarDrawerShowProps, "onSuccessCallback" | "subCycle">,
+  config?: Pick<WooDrawerShowProps, "onSuccessCallback" | "subCycle">,
 ) => {
   return showCollarDrawerImpl(from, config)
 }

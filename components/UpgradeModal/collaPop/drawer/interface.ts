@@ -1,7 +1,7 @@
 import { SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
 import { WOO_TYPE } from "../../interface"
 
-export interface CollarDrawerShowProps {
+export interface WooDrawerShowProps {
   from: string
   visible?: boolean
   id: string

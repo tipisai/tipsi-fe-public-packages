@@ -1,64 +1,14 @@
-import {
-  IWooInfo,
-  SUBSCRIPTION_CYCLE,
-  SubscribeInfo,
-  TotalTeamLicense,
-} from "@illa-public/public-types"
-
-export enum CUSTOM_CYCLE {
-  LIFETIME = 3,
-}
-export enum REDIRECT_PAGE_TYPE {
-  EDIT = "edit",
-  RELEASE = "release",
-}
-
-export enum PurchaseItem {
-  DRIVE_TRAFFIC_1GB = 1,
-}
-
-export interface LicenseSubscribeInfo extends SubscribeInfo {}
-
-export interface AppSumoSubscribeInfo extends Omit<SubscribeInfo, "plan"> {
-  volume: number
-  balance: number
-  plan: CUSTOM_CYCLE
-}
-
-export interface DriveSubscribeInfo extends SubscribeInfo {
-  volume: number
-  volumeConverted: number
-  balance: number
-  balanceConverted: number
-}
-
-export interface TrafficSubscribeInfo {
-  balance: number
-}
-
-export interface TeamSubscription {
-  teamLicense: {
-    current: LicenseSubscribeInfo
-    appSumo: AppSumoSubscribeInfo
-    total: TotalTeamLicense
-  }
-  driveVolume: {
-    current: DriveSubscribeInfo
-  }
-  driveTraffic: TrafficSubscribeInfo
-  woo: {
-    current: IWooInfo
-  }
-}
-
-export interface PortalURLResponse {
-  url: string
-}
+import { IWooInfo, SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
 
 export interface SubscribeResponse {
   url: string
 }
 
+export interface ITeamSubscription {
+  woo: {
+    current: IWooInfo
+  }
+}
 export interface WooUsageInfoResponse {
   driveVolumeUsage: number
   driveVolumeUsagePercent: number
@@ -67,20 +17,6 @@ export interface WooUsageInfoResponse {
   aiTokenGeneralUsage: number
   aiTokenGeneralUsagePercent: number
   totalCollaUsage: number
-}
-
-export const LICENSE_UNIT_PRICE = {
-  [SUBSCRIPTION_CYCLE.FREE]: 0,
-  [SUBSCRIPTION_CYCLE.MONTHLY]: 20,
-  [SUBSCRIPTION_CYCLE.YEARLY]: 200,
-  [SUBSCRIPTION_CYCLE.LIFETIME]: -1,
-}
-
-export const ENTERPRISE_UNIT_PRICE = {
-  [SUBSCRIPTION_CYCLE.FREE]: 0,
-  [SUBSCRIPTION_CYCLE.MONTHLY]: 50,
-  [SUBSCRIPTION_CYCLE.YEARLY]: 500,
-  [SUBSCRIPTION_CYCLE.LIFETIME]: -1,
 }
 
 export const WOO_UNIT_PRICE = {
@@ -97,10 +33,6 @@ export const WOO_UNIT_BY_CYCLE = {
   [SUBSCRIPTION_CYCLE.LIFETIME]: -1,
 }
 
-export const UNIT_WOO_BY_STORAGE = 1 // 1GB storage = 1k colla
-
 export const UNIT_WOO_CONVERSION_STORAGE = 1
 export const UNIT_WOO_CONVERSION_TRAFFIC = 1
 export const UNIT_WOO_CONVERSION_TOKEN = 20
-
-export const LICENSE_NEW_USER_DISCOUNT = 0.8 // 20% off for new user

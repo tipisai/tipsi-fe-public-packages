@@ -1,27 +1,6 @@
 import { authCloudRequest } from "@illa-public/illa-net"
 import { SUBSCRIBE_PLAN, SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
-import { PurchaseItem, SubscribeResponse, TeamSubscription } from "./interface"
-
-export const purchase = async (
-  teamID: string,
-  requestData: {
-    item: PurchaseItem
-    quantity: number
-    successRedirect: string // Success redirect URL
-    cancelRedirect: string // Cancel redirect URL
-  },
-) => {
-  return await authCloudRequest<SubscribeResponse>(
-    {
-      url: `/billing/purchase`,
-      method: "POST",
-      data: requestData,
-    },
-    {
-      teamID,
-    },
-  )
-}
+import { SubscribeResponse } from "./interface"
 
 export const subscribe = async (
   teamID: string,
@@ -71,22 +50,6 @@ export const cancelSubscribe = async (teamID: string, plan: SUBSCRIBE_PLAN) => {
       url: `/billing/subscribe`,
       method: "DELETE",
       data: { plan },
-    },
-    {
-      teamID,
-    },
-  )
-}
-
-export const fetchTeamSubscription = async (
-  teamID: string,
-  signal?: AbortSignal,
-) => {
-  return await authCloudRequest<TeamSubscription>(
-    {
-      url: `/billing`,
-      method: "GET",
-      signal,
     },
     {
       teamID,

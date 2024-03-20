@@ -1,3 +1,6 @@
+import { App, Button, Flex, Select } from "antd"
+import { FC, useContext, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { Avatar } from "@illa-public/avatar"
 import { ERROR_FLAG, isILLAAPiError } from "@illa-public/illa-net"
 import {
@@ -6,12 +9,8 @@ import {
 } from "@illa-public/mixpanel-utils"
 import { USER_ROLE } from "@illa-public/public-types"
 import { RoleSelector } from "@illa-public/role-selector"
-import { useUpgradeModal } from "@illa-public/upgrade-modal"
 import { isBiggerThanTargetRole } from "@illa-public/user-role-utils"
 import { EMAIL_FORMAT, useMergeValue } from "@illa-public/utils"
-import { App, Button, Flex, Select } from "antd"
-import { FC, useContext, useState } from "react"
-import { useTranslation } from "react-i18next"
 import { InviteByEmailProps, InvitedUser } from "../interface"
 import { changeUserRoleByTeamMemberID, inviteByEmail } from "../service"
 import {
@@ -39,7 +38,6 @@ export const InviteByEmailPC: FC<InviteByEmailProps> = (props) => {
 
   const { t } = useTranslation()
 
-  const upgradeModal = useUpgradeModal()
   const { track } = useContext(MixpanelTrackContext)
 
   const [inviteUserRole, setInviteUserRole] = useMergeValue(
@@ -68,10 +66,11 @@ export const InviteByEmailPC: FC<InviteByEmailProps> = (props) => {
       isBiggerThanTargetRole(USER_ROLE.EDITOR, inviteUserRole) &&
       currentBalance < currentValue.length
     ) {
-      upgradeModal({
-        modalType: "add-license",
-        from: "invite_by_email",
-      })
+      // TODO: billing
+      // upgradeModal({
+      //   modalType: "add-license",
+      //   from: "invite_by_email",
+      // })
       return
     }
     setInviting(true)

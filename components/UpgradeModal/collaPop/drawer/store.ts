@@ -1,18 +1,18 @@
 import { v4 } from "uuid"
 import { ModalStore, ModalStoreHandler, SubListener } from "../../interface"
-import { CollarDrawerShowProps } from "./interface"
+import { WooDrawerShowProps } from "./interface"
 
 const collarDrawerState = {
   listener: [],
   modal: null,
-} as ModalStore<CollarDrawerShowProps>
+} as ModalStore<WooDrawerShowProps>
 
-function createCollarDrawerStore(): ModalStoreHandler<CollarDrawerShowProps> {
+function createCollarDrawerStore(): ModalStoreHandler<WooDrawerShowProps> {
   return {
     getModal: () => {
       return collarDrawerState.modal
     },
-    setModal: (modal: CollarDrawerShowProps) => {
+    setModal: (modal: WooDrawerShowProps) => {
       collarDrawerState.modal = modal
       collarDrawerState.listener.forEach((listener) => {
         listener.onStoreChange()
@@ -47,7 +47,7 @@ function createCollarDrawerStore(): ModalStoreHandler<CollarDrawerShowProps> {
         listener.onStoreChange()
       })
     },
-  } as ModalStoreHandler<CollarDrawerShowProps>
+  } as ModalStoreHandler<WooDrawerShowProps>
 }
 
 export const collarDrawerStore = createCollarDrawerStore()

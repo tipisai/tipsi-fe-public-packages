@@ -1,5 +1,5 @@
 import { v4 } from "uuid"
-import { ModalStore, ModalStoreHandler, SubListener } from "../../interface"
+import { ModalStore, ModalStoreHandler, SubListener } from "../interface"
 import { ModalShowProps } from "./interface"
 
 // modal

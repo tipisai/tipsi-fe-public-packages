@@ -1,16 +1,15 @@
 import Icon from "@ant-design/icons"
+import { App, Button, Dropdown, Flex, Input, Skeleton } from "antd"
+import { FC, useCallback, useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { ConfigurationIcon } from "@illa-public/icon"
 import { USER_ROLE } from "@illa-public/public-types"
 import { RoleSelector } from "@illa-public/role-selector"
-import { useUpgradeModal } from "@illa-public/upgrade-modal"
 import {
   isBiggerThanTargetRole,
   isSmallThanTargetRole,
 } from "@illa-public/user-role-utils"
 import { isCloudVersion, useMergeValue } from "@illa-public/utils"
-import { App, Button, Dropdown, Flex, Input, Skeleton } from "antd"
-import { FC, useCallback, useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
 import { InviteLinkProps } from "../interface"
 import {
   disableInviteLink,
@@ -53,8 +52,6 @@ export const InviteLinkPC: FC<InviteLinkProps> = (props) => {
   )
 
   const { message } = App.useApp()
-
-  const upgradeModal = useUpgradeModal()
 
   const { t } = useTranslation()
   const [currentInviteLink, setCurrentInviteLink] = useState<string>("")
@@ -221,10 +218,11 @@ export const InviteLinkPC: FC<InviteLinkProps> = (props) => {
                       isBiggerThanTargetRole(USER_ROLE.VIEWER, role, false) &&
                       defaultBalance === 0
                     ) {
-                      upgradeModal({
-                        modalType: "upgrade",
-                        from: "invite_by_link",
-                      })
+                      // TODO: billing
+                      // upgradeModal({
+                      //   modalType: "upgrade",
+                      //   from: "invite_by_link",
+                      // })
                     } else {
                       await renewInviteLinkRequest(teamID, role)
                     }
@@ -244,10 +242,11 @@ export const InviteLinkPC: FC<InviteLinkProps> = (props) => {
                 ) &&
                 defaultBalance === 0
               ) {
-                upgradeModal({
-                  modalType: "upgrade",
-                  from: "invite_by_link",
-                })
+                // TODO: billing
+                // upgradeModal({
+                //   modalType: "upgrade",
+                //   from: "invite_by_link",
+                // })
                 return
               }
               const newUrl = new URL(currentInviteLink)

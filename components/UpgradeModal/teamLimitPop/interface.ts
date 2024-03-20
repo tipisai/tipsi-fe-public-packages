@@ -1,4 +1,4 @@
-import { FREE_TEAM_LIMIT_TYPE } from "../../interface"
+import { FREE_TEAM_LIMIT_TYPE } from "../interface"
 
 export interface ModalShowProps {
   visible?: boolean

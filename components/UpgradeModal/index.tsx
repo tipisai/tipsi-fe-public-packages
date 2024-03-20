@@ -1,19 +1,13 @@
 import { UpgradeCollarDrawer } from "./collaPop/drawer"
 import { UpgradeCollarModal } from "./collaPop/modal"
-import { UpgradeLicenseDrawer } from "./licensePop/drawer"
-import { UpgradeLicenseModal } from "./licensePop/modal"
-import { TeamLimitPop } from "./licensePop/teamLimit"
-import { StoragePop } from "./storagePop/index"
+import { TeamLimitPop } from "./teamLimitPop"
 
 export const UpgradeModalGroup = () => {
   return (
     <>
-      <UpgradeLicenseModal />
-      <UpgradeLicenseDrawer />
       <UpgradeCollarDrawer />
       <UpgradeCollarModal />
       <TeamLimitPop />
-      <StoragePop />
     </>
   )
 }

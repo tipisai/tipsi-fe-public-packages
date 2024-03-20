@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react"
 import { CollarDrawer } from "../../component/CollarDrawer"
-import { CollarDrawerShowProps } from "./interface"
+import { WooDrawerShowProps } from "./interface"
 import { collarDrawerStore } from "./store"
 
 export const UpgradeCollarDrawer: FC = () => {
-  const [drawer, setDrawer] = useState<CollarDrawerShowProps | null>(null)
+  const [drawer, setDrawer] = useState<WooDrawerShowProps | null>(null)
 
   useEffect(() => {
     const listener = collarDrawerStore.subscribe(() => {

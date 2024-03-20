@@ -1,7 +1,3 @@
-import { SUBSCRIBE_PLAN, SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
-import { DrawerSubscribeInfo } from "./component/UpgradeDrawer/interface"
-import { PurchaseItem } from "./service/interface"
-
 export interface ModalStoreHandler<T> {
   getModal: () => T
   setModal: (modal: T) => void
@@ -25,30 +21,6 @@ export interface SubListener {
   onStoreChange: () => void
 }
 
-export interface DrawerDefaultConfig {
-  subscribeInfo?: DrawerSubscribeInfo
-  purchaseInfo?: {
-    item: PurchaseItem
-    quantity: number
-  }
-  appSumoInvoiceURL?: string
-  onSubscribeCallback?: (teamID: string) => void
-}
-
-export interface DriveVolumeInfo {
-  plan: SUBSCRIBE_PLAN
-  balanceConverted: number
-  volumeConverted: number
-  quantity: number
-  cycle: SUBSCRIPTION_CYCLE
-  cancelAtPeriodEnd: boolean
-}
-
-export interface StorageDrawerConfig {
-  driveVolume?: DriveVolumeInfo
-  successCallBack?: (teamID: string) => void
-}
-
 export enum WooModalType {
   STORAGE = "storage",
   TOKEN = "token",
@@ -70,5 +42,4 @@ export enum FREE_TEAM_LIMIT_TYPE {
 
 export enum PURCHASE_TYPE {
   WOO = "woo",
-  LICENSE = "license",
 }
