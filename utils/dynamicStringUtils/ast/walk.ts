@@ -35,6 +35,7 @@ export const ancestorWalk = (ast: Node): NodeList => {
    * what surrounds the identifier (its parent and ancestors), ancestor walk will give that information in the callback
    * doc: https://github.com/acornjs/acorn/tree/master/acorn-walk
    */
+  // @ts-ignore
   ancestor(ast, {
     Identifier(node: Node, ancestors: Node[]) {
       /*

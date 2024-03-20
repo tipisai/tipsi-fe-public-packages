@@ -1,20 +1,4 @@
 import Icon from "@ant-design/icons"
-import { getColor } from "@illa-public/color-scheme"
-import { CloseIcon } from "@illa-public/icon"
-import { ILLA_MIXPANEL_EVENT_TYPE } from "@illa-public/mixpanel-utils"
-import {
-  PROMOTION_CODE_USAGE,
-  SUBSCRIBE_PLAN,
-  SUBSCRIPTION_CYCLE,
-  USER_ROLE,
-} from "@illa-public/public-types"
-import {
-  getCurrentId,
-  getCurrentTeamInfo,
-  getCurrentUser,
-  getCurrentUserID,
-} from "@illa-public/user-data"
-import { isMobileByWindowSize } from "@illa-public/utils"
 import {
   App,
   Button,
@@ -28,12 +12,23 @@ import { FC, useEffect, useMemo, useState } from "react"
 import { Trans, useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { useWindowSize } from "react-use"
+import { getColor } from "@illa-public/color-scheme"
+import { CloseIcon } from "@illa-public/icon"
+import { ILLA_MIXPANEL_EVENT_TYPE } from "@illa-public/mixpanel-utils"
+import {
+  SUBSCRIBE_PLAN,
+  SUBSCRIPTION_CYCLE,
+  USER_ROLE,
+} from "@illa-public/public-types"
+import {
+  getCurrentId,
+  getCurrentTeamInfo,
+  getCurrentUserID,
+} from "@illa-public/user-data"
+import { isMobileByWindowSize } from "@illa-public/utils"
 import { PURCHASE_TYPE } from "../../interface"
 import { cancelSubscribe, modifySubscribe, subscribe } from "../../service"
-import {
-  LICENSE_NEW_USER_DISCOUNT,
-  LICENSE_UNIT_PRICE,
-} from "../../service/interface"
+import { LICENSE_UNIT_PRICE } from "../../service/interface"
 import {
   getSuccessRedirectWithParams,
   isSubscribeForDrawer,
@@ -44,7 +39,6 @@ import { UpgradeDrawerProps } from "./interface"
 import {
   closeIconStyle,
   descriptionStyle,
-  discountStyle,
   drawerContentStyle,
   drawerPaddingStyle,
   extraStyle,
@@ -75,21 +69,6 @@ export const UpgradeDrawer: FC<UpgradeDrawerProps> = (props) => {
   const teamID = useSelector(getCurrentId)
   const userID = useSelector(getCurrentUserID)
   const currentTeamInfo = useSelector(getCurrentTeamInfo)!
-  const promotionCodes = useSelector(getCurrentUser)?.promotionCode
-
-  const canUseDiscount = useMemo(() => {
-    if (!promotionCodes || !Array.isArray(promotionCodes)) return false
-    const index = promotionCodes.findIndex((item) => {
-      const ddl = new Date(item.expiresAt)?.getTime()
-      const now = new Date().getTime()
-      return (
-        item.usage === PROMOTION_CODE_USAGE.DEFAULT_REGISTER &&
-        item.maxRedemptions > 0 &&
-        ddl - now > 0
-      )
-    })
-    return index !== -1
-  }, [promotionCodes])
 
   const [cycle, setCycle] = useState<SUBSCRIPTION_CYCLE>(
     defaultConfig?.subscribeInfo?.cycle || SUBSCRIPTION_CYCLE.MONTHLY,
@@ -211,9 +190,7 @@ export const UpgradeDrawer: FC<UpgradeDrawerProps> = (props) => {
       purchaseType: PURCHASE_TYPE.LICENSE,
       userID,
       purchaseCount: quantity,
-      purchaseValue: canUseDiscount
-        ? unitPrice * quantity * LICENSE_NEW_USER_DISCOUNT
-        : unitPrice * quantity,
+      purchaseValue: unitPrice * quantity,
     })
     const cancelRedirect = window.location.href
     try {
@@ -387,19 +364,9 @@ export const UpgradeDrawer: FC<UpgradeDrawerProps> = (props) => {
               <div css={priceStyle}>
                 <div css={priceLabelContainerStyle}>
                   <span css={priceTotalLabelStyle}>{priceLabel}</span>
-                  {canUseDiscount && (
-                    <span css={discountStyle}>
-                      {t("billing.first_time_off.discount")}
-                    </span>
-                  )}
                 </div>
                 <span css={priceTotalStyle}>
-                  $
-                  {(
-                    unitPrice *
-                    quantity *
-                    (canUseDiscount ? LICENSE_NEW_USER_DISCOUNT : 1)
-                  ).toFixed(2)}
+                  ${(unitPrice * quantity).toFixed(2)}
                 </span>
               </div>
             </div>
