@@ -159,4 +159,8 @@ export default class WebSocketClient {
     this.isManualClose = true
     this.websocket.close()
   }
+
+  public getWebSocket(): WebSocket {
+    return this.websocket
+  }
 }
