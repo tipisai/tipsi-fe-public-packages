@@ -1,28 +1,22 @@
-import { CloseIcon } from "@illa-public/icon"
 import { Flex, Modal, Tabs } from "antd"
-import Icon from "antd"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
+import { CloseIcon } from "@illa-public/icon"
 import { InviteByEmailPC } from "../../component/InviteByEmail/pc"
 import { InviteLinkPC } from "../../component/InviteLink/pc"
 import { InviteMemberProps } from "../interface"
-import {
-  closeIconStyle,
-  contentContainerStyle,
-  headerContainerStyle,
-} from "./style"
+import { closeIconStyle, headerContainerStyle } from "./style"
 
 export const InviteMemberPC: FC<InviteMemberProps> = (props) => {
   const { t } = useTranslation()
 
   return (
     <Modal
-      onCancel={() => {
-        props.onClose?.()
-      }}
+      onCancel={props.onClose}
       footer={false}
       maskClosable={false}
       open={true}
+      title={null}
     >
       <div css={headerContainerStyle}>
         <Tabs
@@ -33,14 +27,6 @@ export const InviteMemberPC: FC<InviteMemberProps> = (props) => {
             },
           ]}
         />
-        <div
-          css={closeIconStyle}
-          onClick={() => {
-            props.onClose?.()
-          }}
-        >
-          <CloseIcon />
-        </div>
       </div>
       <Flex vertical gap="small">
         <InviteLinkPC

@@ -1,4 +1,7 @@
 import Icon from "@ant-design/icons"
+import { App, Button, Flex, Switch } from "antd"
+import { FC, useContext, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { BindIcon, PenIcon } from "@illa-public/icon"
 import {
   ILLA_MIXPANEL_EVENT_TYPE,
@@ -7,9 +10,6 @@ import {
 import { USER_ROLE } from "@illa-public/public-types"
 import { isBiggerThanTargetRole } from "@illa-public/user-role-utils"
 import { getAgentPublicLink, useMergeValue } from "@illa-public/utils"
-import { App, Button, Flex, Space, Switch } from "antd"
-import { FC, useContext, useState } from "react"
-import { useTranslation } from "react-i18next"
 import { ContributeAgentPC } from "../../../ContributeAgent/pc"
 import { HASHTAG_REQUEST_TYPE } from "../../../constants"
 import { ShareBlockPC } from "../../ShareBlock/pc"

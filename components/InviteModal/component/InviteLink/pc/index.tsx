@@ -266,7 +266,7 @@ export const InviteLinkPC: FC<InviteLinkProps> = (props) => {
               {t("user_management.modal.link.description")}
             </div>
             <Button
-              type="text"
+              type="link"
               size="small"
               loading={getLinkLoading}
               onClick={async () => {
