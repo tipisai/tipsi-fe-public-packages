@@ -1,4 +1,7 @@
 import Icon from "@ant-design/icons"
+import { Flex, Modal, Tabs } from "antd"
+import { FC, useContext, useEffect, useMemo, useState } from "react"
+import { useTranslation } from "react-i18next"
 import { CloseIcon } from "@illa-public/icon"
 import {
   ILLA_MIXPANEL_EVENT_TYPE,
@@ -11,14 +14,10 @@ import {
   canManage,
   isBiggerThanTargetRole,
 } from "@illa-public/user-role-utils"
-import { Flex, Modal, Tabs } from "antd"
-import { FC, useContext, useEffect, useMemo, useState } from "react"
-import { useTranslation } from "react-i18next"
 import { AgentToMarketplacePC } from "../../component/AgentToMarketplace/pc"
 import { InviteByEmailPC } from "../../component/InviteByEmail/pc"
 import { InviteLinkPC } from "../../component/InviteLink/pc"
 import { ShareAgentProps, ShareAgentTab } from "../interface"
-import { contentContainerStyle } from "./style"
 
 export const ShareAgentPC: FC<ShareAgentProps> = (props) => {
   let defTab = ShareAgentTab.TO_MARKETPLACE
