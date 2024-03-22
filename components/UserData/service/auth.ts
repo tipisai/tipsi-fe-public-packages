@@ -70,7 +70,7 @@ export const authAPI = createApi({
             error: teamInfoResult.error,
           }
         }
-        const teamInfos = teamInfoResult.data as TeamInfo[]
+        const teamInfos = (teamInfoResult.data || []) as TeamInfo[]
         let currentTeamID
         if (strictMode) {
           currentTeamID = teamInfos.find(
