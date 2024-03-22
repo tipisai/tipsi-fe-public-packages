@@ -1,9 +1,8 @@
 import Icon from "@ant-design/icons"
-import { CloseIcon } from "@illa-public/icon"
 import { Modal, Tabs } from "antd"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
-import { ShareAgentTab } from "../../ShareAgent/interface"
+import { CloseIcon } from "@illa-public/icon"
 import { AgentToMarketplacePC } from "../../component/AgentToMarketplace/pc"
 import { MarketShareAgentProps } from "../interface"
 import {

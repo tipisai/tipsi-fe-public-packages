@@ -26,7 +26,7 @@ export const RoleSelector: FC<RoleSelectorProps> = (props) => {
     return [
       {
         role: USER_ROLE.OWNER,
-        tips: t("user_management.role.tips.owner"),
+        tips: t("user_management.role.tips.admin"),
         name: t("user_management.role.owner"),
       },
       {

@@ -36,7 +36,7 @@ export const Calculator: FC<CalculatorProps> = ({
             changeNum * unitCollaByCycle * UNIT_WOO_CONVERSION_STORAGE
           }GB`,
         })}`}</span>
-        <span css={orStyle}>{t("or")}</span>
+        <span css={orStyle}>or</span>
         <span>
           {`${t("billing.payment_sidebar.colla.3", {
             trafficNum: `${
@@ -44,7 +44,7 @@ export const Calculator: FC<CalculatorProps> = ({
             }GB`,
           })}`}
         </span>
-        <span css={orStyle}>{t("or")}</span>
+        <span css={orStyle}>or</span>
         <span>
           {`${t("billing.payment_sidebar.colla.4", {
             tokenNum: `${
