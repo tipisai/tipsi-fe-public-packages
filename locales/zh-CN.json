@@ -225,7 +225,7 @@
   "user_management.modal.contribute.default_text.agent": "我刚刚发现了一个令人印象深刻的AI Agent，名为{{agentName}}。查看链接: {{agentLink}}",
   "share": "分享",
   "new_dashboard.button.blank-agent": "创建AI Agent",
-  "knowledge": "Knowledge",
+  "homepage.tipi_detail.label.knowledge": "",
   "editor.ai-agent.validation_blank.prompt": "请输入提示词",
   "editor.ai-agent.placeholder.prompt": "输入{{变量名}}以使用变量",
   "editor.ai-agent.validation_blank.variable_value": "请确保键和值都为空或都不为空",

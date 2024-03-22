@@ -225,7 +225,7 @@
   "user_management.modal.contribute.default_text.agent": "{{agentName}}という印象的なAIエージェントを見つけました。確認してください：{{agentLink}}",
   "share": "共有",
   "new_dashboard.button.blank-agent": "AIエージェントを作成",
-  "knowledge": "Knowledge",
+  "homepage.tipi_detail.label.knowledge": "",
   "editor.ai-agent.validation_blank.prompt": "プロンプトを入力してください",
   "editor.ai-agent.placeholder.prompt": "{{変数名}}を入力して、変数を使用してください",
   "editor.ai-agent.validation_blank.variable_value": "キーと値の両方が空でないか、いずれかが空であることを確認してください。",

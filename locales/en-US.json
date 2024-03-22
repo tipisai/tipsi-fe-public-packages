@@ -225,7 +225,7 @@
   "user_management.modal.contribute.default_text.agent": "I just discovered an impressive AI Agent called {{ agentName }}. Check it: {{ agentLink }}",
   "share": "Share",
   "new_dashboard.button.blank-agent": "Create AI Agent",
-  "knowledge": "Knowledge",
+  "homepage.tipi_detail.label.knowledge": "knowledge",
   "editor.ai-agent.validation_blank.prompt": "Please enter the prompt",
   "editor.ai-agent.placeholder.prompt": "Enter {{variableName}} to use a variable",
   "editor.ai-agent.validation_blank.variable_value": "Please ensure that both the key and value are either empty or not empty.",
