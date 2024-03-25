@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react"
-import { CollarDrawer } from "../../component/CollarDrawer"
-import { WooDrawerShowProps } from "./interface"
+import { CreditDrawer } from "../../component/CreditDrawer"
+import { CreditDrawerShowProps } from "./interface"
 import { collarDrawerStore } from "./store"
 
-export const UpgradeCollarDrawer: FC = () => {
-  const [drawer, setDrawer] = useState<WooDrawerShowProps | null>(null)
+export const UpgradeCreditDrawer: FC = () => {
+  const [drawer, setDrawer] = useState<CreditDrawerShowProps | null>(null)
 
   useEffect(() => {
     const listener = collarDrawerStore.subscribe(() => {
@@ -17,7 +17,7 @@ export const UpgradeCollarDrawer: FC = () => {
 
   if (!drawer) return null
   return (
-    <CollarDrawer
+    <CreditDrawer
       from={drawer.from}
       visible={drawer.visible}
       onCancel={() => {
@@ -35,4 +35,4 @@ export const UpgradeCollarDrawer: FC = () => {
   )
 }
 
-UpgradeCollarDrawer.displayName = "UpgradeCollarDrawer"
+UpgradeCreditDrawer.displayName = "UpgradeCreditDrawer"

@@ -1,20 +1,20 @@
-import { getCurrentTeamInfo, getPlanUtils } from "@illa-public/user-data"
-import { canManagePayment } from "@illa-public/user-role-utils"
 import { App } from "antd"
 import { FC, useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
-import { CollarModal } from "../../component/CollarModal"
+import { getCurrentTeamInfo, getPlanUtils } from "@illa-public/user-data"
+import { canManagePayment } from "@illa-public/user-role-utils"
+import { CreditModal } from "../../component/CreditModal"
 import { OPERATION_NO_PERMISSION } from "../constants"
 import { ModalShowProps } from "./interface"
 import { modalStore } from "./store"
 
-export const UpgradeCollarModal: FC = () => {
+export const UpgradeCreditModal: FC = () => {
   const [modal, setModal] = useState<ModalShowProps | null>(null)
   const currentTeamInfo = useSelector(getCurrentTeamInfo)
   const { message } = App.useApp()
   const { t } = useTranslation()
-  const canManageThisCollar = canManagePayment(
+  const canManageThisCredit = canManagePayment(
     currentTeamInfo?.myRole,
     getPlanUtils(currentTeamInfo),
   )
@@ -30,13 +30,13 @@ export const UpgradeCollarModal: FC = () => {
 
   const collarModal = useMemo(() => {
     if (!modal) return null
-    if (!currentTeamInfo || !canManageThisCollar) {
+    if (!currentTeamInfo || !canManageThisCredit) {
       message.info(t(OPERATION_NO_PERMISSION[modal.modalType]))
       modalStore.remove()
       return null
     }
     return (
-      <CollarModal
+      <CreditModal
         modalType={modal.modalType}
         visible={modal.visible}
         from={modal.from}
@@ -48,9 +48,9 @@ export const UpgradeCollarModal: FC = () => {
         afterClose={() => modalStore.remove()}
       />
     )
-  }, [canManageThisCollar, currentTeamInfo, message, modal, t])
+  }, [canManageThisCredit, currentTeamInfo, message, modal, t])
 
   return <>{collarModal}</>
 }
 
-UpgradeCollarModal.displayName = "UpgradeCollarModal"
+UpgradeCreditModal.displayName = "UpgradeCreditModal"

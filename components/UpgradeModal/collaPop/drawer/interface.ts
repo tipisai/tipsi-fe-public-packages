@@ -1,10 +1,10 @@
 import { SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
-import { WOO_TYPE } from "../../interface"
+import { CREDIT_TYPE } from "../../interface"
 
-export interface WooDrawerShowProps {
+export interface CreditDrawerShowProps {
   from: string
   visible?: boolean
   id: string
-  onSuccessCallback?: (teamID: string, operationType: WOO_TYPE) => void
+  onSuccessCallback?: (teamID: string, operationType: CREDIT_TYPE) => void
   subCycle?: SUBSCRIPTION_CYCLE
 }

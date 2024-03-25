@@ -10,11 +10,11 @@ import {
 import { getAuthToken } from "@illa-public/utils"
 import { OAUTH_REDIRECT_URL } from "../constants"
 import {
+  ICreditUsageInfoResponse,
   IForgetPasswordRequestBody,
   ISignInRequestData,
   ITeamSubscription,
   IUpdateTeamPermissionConfigRequest,
-  IWooUsageInfoResponse,
 } from "./interface"
 
 export const authAPI = createApi({
@@ -261,8 +261,8 @@ export const authAPI = createApi({
       }),
     }),
 
-    getWooUsageInfo: builder.query<
-      IWooUsageInfoResponse,
+    getCreditUsageInfo: builder.query<
+      ICreditUsageInfoResponse,
       {
         teamID: string
         fromDate: string
@@ -552,7 +552,7 @@ export const {
   useExchangeTokenMutation,
   useChangeTeamConfigMutation,
   useLazyGetPortalURLQuery,
-  useLazyGetWooUsageInfoQuery,
+  useLazyGetCreditUsageInfoQuery,
   useLazyGetTeamSubscriptionQuery,
   useGetTeamSubscriptionQuery,
   useLazyGetTeamsInfoQuery,

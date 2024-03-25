@@ -1,4 +1,4 @@
-import { IWooInfo } from "@illa-public/public-types"
+import { ICreditInfo } from "@illa-public/public-types"
 
 export interface ISignInRequestData {
   nickname: string
@@ -18,7 +18,7 @@ export interface IForgetPasswordRequestBody {
   isFirstSet?: boolean
 }
 
-export interface IWooUsageInfoResponse {
+export interface ICreditUsageInfoResponse {
   driveVolumeUsage: number
   driveVolumeUsagePercent: number
   driveTrafficUsage: number
@@ -29,8 +29,8 @@ export interface IWooUsageInfoResponse {
 }
 
 export interface ITeamSubscription {
-  woo: {
-    current: IWooInfo
+  credit: {
+    current: ICreditInfo
   }
 }
 

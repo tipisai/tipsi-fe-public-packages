@@ -1,12 +1,12 @@
-import { UpgradeCollarDrawer } from "./collaPop/drawer"
-import { UpgradeCollarModal } from "./collaPop/modal"
+import { UpgradeCreditDrawer } from "./collaPop/drawer"
+import { UpgradeCreditModal } from "./collaPop/modal"
 import { TeamLimitPop } from "./teamLimitPop"
 
 export const UpgradeModalGroup = () => {
   return (
     <>
-      <UpgradeCollarDrawer />
-      <UpgradeCollarModal />
+      <UpgradeCreditDrawer />
+      <UpgradeCreditModal />
       <TeamLimitPop />
     </>
   )
@@ -14,4 +14,4 @@ export const UpgradeModalGroup = () => {
 export * from "./hook"
 export * from "./service/interface"
 export * from "./interface"
-export { handleWooPurchaseError, handleFreeTeamLimitError } from "./utils"
+export { handleCreditPurchaseError, handleFreeTeamLimitError } from "./utils"
