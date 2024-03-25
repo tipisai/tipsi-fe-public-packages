@@ -3,6 +3,7 @@ export const languageKeys = [
   "zh-CN",
   "ja-JP",
   "de-DE",
+  "zh-TW",
 
   // "ko-KR",
   // "cs-CZ",

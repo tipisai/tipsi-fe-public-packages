@@ -56,19 +56,20 @@ const teamSlice = createSlice({
       },
     )
 
-    builder.addMatcher(
-      authAPI.endpoints.deleteTeamByID.matchFulfilled,
-      (state, action) => {
-        const teamID = action.meta.arg.originalArgs
+    // builder.addMatcher(
+    //   authAPI.endpoints.deleteTeamByID.matchFulfilled,
+    //   (state, action) => {
+    //     const teamID = action.meta.arg.originalArgs
 
-        const currentTeams =
-          state.items?.filter((item) => item.id !== teamID) || []
+    //     const currentTeams =
+    //       state.items?.filter((item) => item.id !== teamID) || []
 
-        state.currentId =
-          currentTeams.length === 0 ? undefined : currentTeams[0].id
-        state.items = currentTeams
-      },
-    )
+    //     state.currentId =
+    //       currentTeams.length === 0 ? undefined : currentTeams[0].id
+
+    //     state.items = currentTeams
+    //   },
+    // )
 
     builder.addMatcher(
       authAPI.endpoints.getTeamsInfo.matchFulfilled,
@@ -77,14 +78,14 @@ const teamSlice = createSlice({
       },
     )
 
-    builder.addMatcher(
-      authAPI.endpoints.createTeam.matchFulfilled,
-      (state, action) => {
-        const { teams, currentTeamID } = action.payload
-        state.items = teams
-        state.currentId = currentTeamID
-      },
-    )
+    // builder.addMatcher(
+    //   authAPI.endpoints.createTeam.matchFulfilled,
+    //   (state, action) => {
+    //     const { teams, currentTeamID } = action.payload
+    //     state.items = teams
+    //     state.currentId = currentTeamID
+    //   },
+    // )
 
     builder.addMatcher(
       authAPI.endpoints.updateTeamPermissionConfig.matchFulfilled,

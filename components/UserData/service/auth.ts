@@ -70,7 +70,7 @@ export const authAPI = createApi({
             error: teamInfoResult.error,
           }
         }
-        const teamInfos = teamInfoResult.data as TeamInfo[]
+        const teamInfos = (teamInfoResult.data || []) as TeamInfo[]
         let currentTeamID
         if (strictMode) {
           currentTeamID = teamInfos.find(
@@ -303,6 +303,26 @@ export const authAPI = createApi({
         method: "DELETE",
         url: `/teams/${teamID}`,
       }),
+      async onQueryStarted(teamID, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          authAPI.util.updateQueryData(
+            "getUserInfoAndTeamsInfoByToken",
+            {},
+            (draft) => {
+              const currentTeams =
+                draft.teams?.filter((teamInfo) => teamInfo.id !== teamID) || []
+
+              draft.teams = currentTeams
+              draft.currentTeamID = currentTeams[0].id
+            },
+          ),
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
     }),
 
     removeTeamMemberByID: builder.mutation<
@@ -467,13 +487,6 @@ export const authAPI = createApi({
         identifier: string
       }
     >({
-      // query: (body) => {
-      //   return {
-      //     url: "/teams",
-      //     method: "POST",
-      //     body,
-      //   }
-      // },
       async queryFn(
         { name, identifier },
         _queryAPI,
@@ -509,6 +522,21 @@ export const authAPI = createApi({
             currentTeamID,
           },
         }
+      },
+      async onQueryStarted({}, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+          dispatch(
+            authAPI.util.updateQueryData(
+              "getUserInfoAndTeamsInfoByToken",
+              {},
+              (draft) => {
+                draft.teams = data.teams
+                draft.currentTeamID = data.currentTeamID
+              },
+            ),
+          )
+        } catch {}
       },
     }),
   }),
