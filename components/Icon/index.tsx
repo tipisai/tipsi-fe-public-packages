@@ -18,6 +18,7 @@ import DocsIcon from "./publicIcon/doc.svg?react"
 import DoubtIcon from "./publicIcon/doubt.svg?react"
 import DownIcon from "./publicIcon/down.svg?react"
 import DragPointIcon from "./publicIcon/dragPoint.svg?react"
+import EmptyIcon from "./publicIcon/emptyIcon.svg?react"
 import ErrorIcon from "./publicIcon/error.svg?react"
 import ForkIcon from "./publicIcon/fork.svg?react"
 import InfoIcon from "./publicIcon/info.svg?react"
@@ -100,4 +101,5 @@ export {
   CameraIcon,
   DragPointIcon,
   NextDoubleIcon,
+  EmptyIcon,
 }

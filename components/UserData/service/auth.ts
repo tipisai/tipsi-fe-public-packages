@@ -9,11 +9,11 @@ import {
 } from "@illa-public/public-types"
 import { OAUTH_REDIRECT_URL } from "../constants"
 import {
+  ICreditUsageInfoResponse,
   IForgetPasswordRequestBody,
   ISignInRequestData,
   ITeamSubscription,
   IUpdateTeamPermissionConfigRequest,
-  IWooUsageInfoResponse,
 } from "./interface"
 import { prepareHeaders } from "./prepareHeaders"
 
@@ -158,8 +158,8 @@ export const authAPI = createApi({
       }),
     }),
 
-    getWooUsageInfo: builder.query<
-      IWooUsageInfoResponse,
+    getCreditUsageInfo: builder.query<
+      ICreditUsageInfoResponse,
       {
         teamID: string
         fromDate: string
@@ -357,7 +357,7 @@ export const {
   useForgetPasswordMutation,
   useExchangeTokenMutation,
   useLazyGetPortalURLQuery,
-  useLazyGetWooUsageInfoQuery,
+  useLazyGetCreditUsageInfoQuery,
   useLazyGetTeamSubscriptionQuery,
   useGetTeamSubscriptionQuery,
   useLazyGetTeamsInfoQuery,

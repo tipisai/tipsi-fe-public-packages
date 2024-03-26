@@ -7,8 +7,8 @@ import {
 } from "@illa-public/mixpanel-utils"
 import { SUBSCRIBE_PLAN } from "@illa-public/public-types"
 import { getILLACloudURL, isIllaErrorInterface } from "@illa-public/utils"
-import { createCollarModal, createTeamLimitModal } from "./hook"
-import { FREE_TEAM_LIMIT_TYPE, WooModalType } from "./interface"
+import { createCreditModal, createTeamLimitModal } from "./hook"
+import { CreditModalType, FREE_TEAM_LIMIT_TYPE } from "./interface"
 
 export function getSuccessRedirectWithParams(
   params: Record<string, string | number>,
@@ -24,12 +24,12 @@ export function getSuccessRedirectWithParams(
   return `${getILLACloudURL(window.customDomain)}${redirectPath}?${paramString}`
 }
 
-export const handleWooPurchaseError = (
+export const handleCreditPurchaseError = (
   e: unknown,
-  modalType: WooModalType,
+  modalType: CreditModalType,
   from: string,
 ) => {
-  const collaModal = createCollarModal()
+  const collaModal = createCreditModal()
   if (
     isILLAAPiError(e) &&
     (e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_COLLA ||
@@ -55,10 +55,10 @@ export const handleWooPurchaseError = (
 
 export const handleCollaPurchaseErrorByILLAInnerError = (
   e: unknown,
-  modalType: WooModalType,
+  modalType: CreditModalType,
   from: string,
 ) => {
-  const collaModal = createCollarModal()
+  const collaModal = createCreditModal()
   if (
     isIllaErrorInterface(e) &&
     (e.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_COLLA ||
@@ -100,8 +100,8 @@ export const handleFreeTeamLimitError = (
 
 export const isSubscribeForDrawer = (subscribePlan?: SUBSCRIBE_PLAN) => {
   return (
-    subscribePlan === SUBSCRIBE_PLAN.WOO_SUBSCRIBE_INSUFFICIENT ||
-    subscribePlan === SUBSCRIBE_PLAN.WOO_SUBSCRIBE_PAID
+    subscribePlan === SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_INSUFFICIENT ||
+    subscribePlan === SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_PAID
   )
 }
 

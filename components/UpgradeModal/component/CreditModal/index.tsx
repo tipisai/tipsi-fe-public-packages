@@ -8,12 +8,12 @@ import { CloseIcon, UpgradeIcon } from "@illa-public/icon"
 import { ILLA_MIXPANEL_EVENT_TYPE } from "@illa-public/mixpanel-utils"
 import { SUBSCRIPTION_CYCLE, USER_ROLE } from "@illa-public/public-types"
 import { getCurrentTeamInfo, getCurrentUserID } from "@illa-public/user-data"
-import { useCollarDrawer } from "../../hook"
-import { WooModalType } from "../../interface"
-import { WOO_UNIT_PRICE } from "../../service/interface"
+import { useCreditDrawer } from "../../hook"
+import { CreditModalType } from "../../interface"
+import { CREDIT_UNIT_PRICE } from "../../service/interface"
 import { isSubscribeForDrawer, track } from "../../utils"
-import CollarBg from "./assets/collarBg.svg?react"
-import { CollarModalProps } from "./interface"
+import CreditBg from "./assets/collarBg.svg?react"
+import { CreditModalProps } from "./interface"
 import {
   decorateStyle,
   descriptionStyle,
@@ -26,21 +26,21 @@ import {
 } from "./style"
 import { getUnitDetailByPrice } from "./utils"
 
-export const CollarModal: FC<CollarModalProps> = (props) => {
+export const CreditModal: FC<CreditModalProps> = (props) => {
   const {
     visible,
     from,
-    modalType = WooModalType.TOKEN,
+    modalType = CreditModalType.TOKEN,
     onCancel,
     afterClose,
   } = props
   const { t } = useTranslation()
-  const collarDrawer = useCollarDrawer()
+  const collarDrawer = useCreditDrawer()
 
   const { title, desc } = getUnitDetailByPrice(modalType)
   const teamInfo = useSelector(getCurrentTeamInfo)
   const userID = useSelector(getCurrentUserID)
-  const isSubscribe = isSubscribeForDrawer(teamInfo?.woo?.plan)
+  const isSubscribe = isSubscribeForDrawer(teamInfo?.credit?.plan)
 
   const reportElement = isSubscribe
     ? "colla_increase_modal"
@@ -92,7 +92,7 @@ export const CollarModal: FC<CollarModalProps> = (props) => {
       <div css={modalCloseIconStyle} onClick={onCancel}>
         <Icon component={CloseIcon} />
       </div>
-      <CollarBg css={decorateStyle} />
+      <CreditBg css={decorateStyle} />
       <div css={headerStyle}>
         <div css={titleStyle}>{t(title)}</div>
         <div css={descriptionStyle}>
@@ -105,7 +105,7 @@ export const CollarModal: FC<CollarModalProps> = (props) => {
         <div css={footerStyle}>
           <div>
             <div css={priceStyle}>
-              {`$${WOO_UNIT_PRICE[SUBSCRIPTION_CYCLE.MONTHLY]}`}
+              {`$${CREDIT_UNIT_PRICE[SUBSCRIPTION_CYCLE.MONTHLY]}`}
             </div>
             <div css={priceContentStyle}>
               {t("billing.modal.colla_insufficient_modal.cycle")}
@@ -125,4 +125,4 @@ export const CollarModal: FC<CollarModalProps> = (props) => {
   )
 }
 
-CollarModal.displayName = "CollarModal"
+CreditModal.displayName = "CreditModal"
