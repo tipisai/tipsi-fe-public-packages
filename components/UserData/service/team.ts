@@ -180,4 +180,5 @@ export const {
   useDeleteTeamByIDMutation,
   useCreateTeamMutation,
   useGetTeamsInfoAndCurrentIDQuery,
+  useLazyGetTeamsInfoQuery,
 } = teamAPI
