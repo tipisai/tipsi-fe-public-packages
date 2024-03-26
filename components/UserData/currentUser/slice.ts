@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { userAPI } from ".."
 import { authAPI } from "../service/auth"
 import {
   updateCurrentUserReducer,
@@ -19,21 +20,22 @@ const currentUserSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      authAPI.endpoints.getUserInfoAndTeamsInfoByToken.matchFulfilled,
+      userAPI.endpoints.getUserInfo.matchFulfilled,
       (state, action) => {
-        state = action.payload.user
+        state = action.payload
         return state
       },
-    ),
-      builder.addMatcher(
-        authAPI.endpoints.updateNickName.matchFulfilled,
-        (state, action) => {
-          return {
-            ...state,
-            nickname: action.meta.arg.originalArgs,
-          }
-        },
-      )
+    )
+
+    builder.addMatcher(
+      authAPI.endpoints.updateNickName.matchFulfilled,
+      (state, action) => {
+        return {
+          ...state,
+          nickname: action.meta.arg.originalArgs,
+        }
+      },
+    )
 
     builder.addMatcher(
       authAPI.endpoints.updateUserAvatar.matchFulfilled,

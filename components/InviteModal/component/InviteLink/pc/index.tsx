@@ -118,7 +118,6 @@ export const InviteLinkPC: FC<InviteLinkProps> = (props) => {
       } finally {
         setGetLinkLoading(false)
       }
-      console.log("userRole", userRole)
       setInviteUserRole(userRole)
     },
     [message, redirectURL, setInviteUserRole, t],

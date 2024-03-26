@@ -74,7 +74,6 @@ export const RoleSelector: FC<RoleSelectorProps> = (props) => {
     }))
     .filter((item) => !item.disabled)
   const menuClick: MenuProps["onClick"] = ({ key }) => {
-    console.log("key", key)
     onClickItem?.(Number(key))
   }
 
