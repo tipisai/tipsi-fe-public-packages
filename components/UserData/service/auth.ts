@@ -7,7 +7,6 @@ import {
   TeamInfo,
   USER_ROLE,
 } from "@illa-public/public-types"
-import { getAuthToken } from "@illa-public/utils"
 import { OAUTH_REDIRECT_URL } from "../constants"
 import {
   IForgetPasswordRequestBody,
@@ -16,6 +15,7 @@ import {
   IUpdateTeamPermissionConfigRequest,
   IWooUsageInfoResponse,
 } from "./interface"
+import { prepareHeaders } from "./prepareHeaders"
 
 export const authAPI = createApi({
   reducerPath: "authAPI",
@@ -23,14 +23,7 @@ export const authAPI = createApi({
   refetchOnReconnect: true,
   baseQuery: fetchBaseQuery({
     baseUrl: `${HTTP_REQUEST_PUBLIC_BASE_URL}/supervisor/api/v1/`,
-    prepareHeaders: (headers) => {
-      const urlParams = new URLSearchParams(location.search)
-      const token = urlParams.get("token") || getAuthToken()
-      if (token) {
-        headers.set("Authorization", token)
-      }
-      return headers
-    },
+    prepareHeaders: prepareHeaders,
   }),
   tagTypes: ["members"],
   endpoints: (builder) => ({
@@ -39,56 +32,6 @@ export const authAPI = createApi({
         url: "/users",
         method: "GET",
       }),
-    }),
-    getUserInfoAndTeamsInfoByToken: builder.query<
-      {
-        user: CurrentUserInfo
-        teams: TeamInfo[]
-        currentTeamID: string | undefined
-      },
-      {
-        teamIdentifier?: string
-        strictMode?: boolean
-      }
-    >({
-      async queryFn(
-        { teamIdentifier, strictMode },
-        _queryAPI,
-        _extraOptions,
-        fetchWithBQ,
-      ) {
-        const userInfoResult = await fetchWithBQ("users")
-        if (userInfoResult.error) {
-          return {
-            error: userInfoResult.error,
-          }
-        }
-        const userInfo = userInfoResult.data as CurrentUserInfo
-        const teamInfoResult = await fetchWithBQ("teams/my")
-        if (teamInfoResult.error) {
-          return {
-            error: teamInfoResult.error,
-          }
-        }
-        const teamInfos = teamInfoResult.data as TeamInfo[]
-        let currentTeamID
-        if (strictMode) {
-          currentTeamID = teamInfos.find(
-            (info) => info.identifier === teamIdentifier,
-          )?.id
-        } else {
-          if (teamInfos.length > 0) {
-            currentTeamID = teamInfos[0].id
-          }
-        }
-        return {
-          data: {
-            user: userInfo,
-            teams: teamInfos,
-            currentTeamID,
-          },
-        }
-      },
     }),
 
     signIn: builder.mutation<
@@ -165,52 +108,6 @@ export const authAPI = createApi({
           usage,
         },
       }),
-    }),
-
-    changeTeamConfig: builder.mutation<
-      | undefined
-      | {
-          teams?: TeamInfo[]
-        },
-      {
-        teamID: string
-        data: {
-          name?: string
-          identifier?: string
-          icon?: string
-        }
-      }
-    >({
-      async queryFn({ teamID, data }, _queryAPI, _extraOptions, fetchWithBQ) {
-        const updateResult = await fetchWithBQ({
-          method: "PATCH",
-          url: `/teams/${teamID}/config`,
-          body: data,
-        })
-        if (updateResult.error) {
-          return {
-            error: updateResult.error,
-          }
-        }
-
-        if (data.identifier) {
-          const teamInfoResult = await fetchWithBQ("teams/my")
-          if (teamInfoResult.error) {
-            return {
-              error: teamInfoResult.error,
-            }
-          }
-          const teamInfos = teamInfoResult.data as TeamInfo[]
-          return {
-            data: {
-              teams: teamInfos,
-            },
-          }
-        }
-        return {
-          data: undefined,
-        }
-      },
     }),
 
     forgetPassword: builder.mutation<undefined, IForgetPasswordRequestBody>({
@@ -295,13 +192,6 @@ export const authAPI = createApi({
       query: (inviteToken) => ({
         url: `/join/${inviteToken}`,
         method: "PUT",
-      }),
-    }),
-
-    deleteTeamByID: builder.mutation<undefined, string>({
-      query: (teamID) => ({
-        method: "DELETE",
-        url: `/teams/${teamID}`,
       }),
     }),
 
@@ -456,79 +346,21 @@ export const authAPI = createApi({
       },
       providesTags: ["members"],
     }),
-
-    createTeam: builder.mutation<
-      {
-        teams: TeamInfo[]
-        currentTeamID?: string
-      },
-      {
-        name: string
-        identifier: string
-      }
-    >({
-      // query: (body) => {
-      //   return {
-      //     url: "/teams",
-      //     method: "POST",
-      //     body,
-      //   }
-      // },
-      async queryFn(
-        { name, identifier },
-        _queryAPI,
-        _extraOptions,
-        fetchWithBQ,
-      ) {
-        const createResult = await fetchWithBQ({
-          url: "/teams",
-          method: "POST",
-          body: {
-            name,
-            identifier,
-          },
-        })
-        if (createResult.error) {
-          return {
-            error: createResult.error,
-          }
-        }
-        const teamInfoResult = await fetchWithBQ("teams/my")
-        if (teamInfoResult.error) {
-          return {
-            error: teamInfoResult.error,
-          }
-        }
-        const teamInfos = teamInfoResult.data as TeamInfo[]
-        const currentTeamID = teamInfos.find(
-          (info) => info.identifier === identifier,
-        )?.id
-        return {
-          data: {
-            teams: teamInfos,
-            currentTeamID,
-          },
-        }
-      },
-    }),
   }),
 })
 
 export const {
-  useGetUserInfoAndTeamsInfoByTokenQuery,
   useSignInMutation,
   useLazyGetOAuthURIQuery,
   useSignUpMutation,
   useSendVerificationCodeToEmailMutation,
   useForgetPasswordMutation,
   useExchangeTokenMutation,
-  useChangeTeamConfigMutation,
   useLazyGetPortalURLQuery,
   useLazyGetWooUsageInfoQuery,
   useLazyGetTeamSubscriptionQuery,
   useGetTeamSubscriptionQuery,
   useLazyGetTeamsInfoQuery,
-  useDeleteTeamByIDMutation,
   useRemoveTeamMemberByIDMutation,
   useLazyGetTeamIconUploadAddressQuery,
   useUpdateUserLanguageMutation,
@@ -541,5 +373,4 @@ export const {
   useChangeTeamMemberRoleMutation,
   useUpdateTeamPermissionConfigMutation,
   useGetMemberListQuery,
-  useCreateTeamMutation,
 } = authAPI

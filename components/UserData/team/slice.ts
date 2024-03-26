@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { authAPI } from ".."
+import { authAPI, teamAPI } from ".."
 import {
   addTeamItemReducer,
   deleteMemberListReducer,
@@ -49,7 +49,7 @@ const teamSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addMatcher(
-      authAPI.endpoints.getUserInfoAndTeamsInfoByToken.matchFulfilled,
+      teamAPI.endpoints.getTeamsInfoAndCurrentID.matchFulfilled,
       (state, action) => {
         state.items = action.payload.teams
         state.currentId = action.payload.currentTeamID
@@ -57,32 +57,9 @@ const teamSlice = createSlice({
     )
 
     builder.addMatcher(
-      authAPI.endpoints.deleteTeamByID.matchFulfilled,
-      (state, action) => {
-        const teamID = action.meta.arg.originalArgs
-
-        const currentTeams =
-          state.items?.filter((item) => item.id !== teamID) || []
-
-        state.currentId =
-          currentTeams.length === 0 ? undefined : currentTeams[0].id
-        state.items = currentTeams
-      },
-    )
-
-    builder.addMatcher(
-      authAPI.endpoints.getTeamsInfo.matchFulfilled,
+      teamAPI.endpoints.getTeamsInfo.matchFulfilled,
       (state, action) => {
         state.items = action.payload
-      },
-    )
-
-    builder.addMatcher(
-      authAPI.endpoints.createTeam.matchFulfilled,
-      (state, action) => {
-        const { teams, currentTeamID } = action.payload
-        state.items = teams
-        state.currentId = currentTeamID
       },
     )
 
@@ -105,9 +82,9 @@ const teamSlice = createSlice({
     )
 
     builder.addMatcher(
-      authAPI.endpoints.changeTeamConfig.matchFulfilled,
+      teamAPI.endpoints.changeTeamConfig.matchFulfilled,
       (state, action) => {
-        state.items = action.payload?.teams ?? state.items
+        state.items = [...(state.items ?? []), action.payload]
       },
     )
   },

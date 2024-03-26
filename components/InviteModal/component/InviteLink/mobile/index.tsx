@@ -164,18 +164,19 @@ export const InviteLinkMobile: FC<InviteLinkProps> = (props) => {
                 currentUserRole={currentUserRole}
                 value={inviteUserRole}
                 onClickItem={async (role) => {
-                  if (
-                    isBiggerThanTargetRole(USER_ROLE.VIEWER, role, false) &&
-                    defaultBalance === 0
-                  ) {
-                    // TODO: billing
-                    // upgradeModal({
-                    //   modalType: "upgrade",
-                    //   from: "invite_by_link",
-                    // })
-                  } else {
-                    await renewInviteLinkRequest(teamID, role)
-                  }
+                  // if (
+                  //   isBiggerThanTargetRole(USER_ROLE.VIEWER, role, false) &&
+                  //   defaultBalance === 0
+                  // ) {
+                  //   // TODO: billing
+                  //   // upgradeModal({
+                  //   //   modalType: "upgrade",
+                  //   //   from: "invite_by_link",
+                  //   // })
+                  // } else {
+                  //   await renewInviteLinkRequest(teamID, role)
+                  // }
+                  await renewInviteLinkRequest(teamID, role)
                 }}
               />
             </div>

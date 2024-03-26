@@ -1,5 +1,5 @@
-import { SUBSCRIBE_PLAN, TeamInfo, USER_ROLE } from "@illa-public/public-types"
 import { createSelector } from "@reduxjs/toolkit"
+import { SUBSCRIBE_PLAN, TeamInfo, USER_ROLE } from "@illa-public/public-types"
 import { RootState } from "../store"
 
 export const getCurrentId = (state: RootState) => {
@@ -8,6 +8,10 @@ export const getCurrentId = (state: RootState) => {
 export const getTeamItems = (state: RootState) => state.team.items
 export const getCurrentMemberList = (state: RootState) =>
   state.team.currentMemberList
+
+export const getIsEmptyTeam = createSelector([getTeamItems], (teams) => {
+  return !Array.isArray(teams) || teams.length === 0
+})
 
 export const getCurrentTeamInfo = createSelector(
   [getCurrentId, getTeamItems],
