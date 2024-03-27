@@ -181,13 +181,6 @@ export const authAPI = createApi({
       }),
     }),
 
-    getTeamsInfo: builder.query<TeamInfo[], {}>({
-      query: () => ({
-        url: "/teams/my",
-        method: "GET",
-      }),
-    }),
-
     joinTeam: builder.mutation<TeamInfo, string>({
       query: (inviteToken) => ({
         url: `/join/${inviteToken}`,
@@ -360,7 +353,6 @@ export const {
   useLazyGetCreditUsageInfoQuery,
   useLazyGetTeamSubscriptionQuery,
   useGetTeamSubscriptionQuery,
-  useLazyGetTeamsInfoQuery,
   useRemoveTeamMemberByIDMutation,
   useLazyGetTeamIconUploadAddressQuery,
   useUpdateUserLanguageMutation,
