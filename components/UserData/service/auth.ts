@@ -3,9 +3,7 @@ import { HTTP_REQUEST_PUBLIC_BASE_URL } from "@illa-public/illa-net"
 import {
   BaseUserInfo,
   CurrentUserInfo,
-  MemberInfo,
   TeamInfo,
-  USER_ROLE,
 } from "@illa-public/public-types"
 import { OAUTH_REDIRECT_URL } from "../constants"
 import {
@@ -27,13 +25,6 @@ export const authAPI = createApi({
   }),
   tagTypes: ["members"],
   endpoints: (builder) => ({
-    getUserInfo: builder.query<CurrentUserInfo, void>({
-      query: () => ({
-        url: "/users",
-        method: "GET",
-      }),
-    }),
-
     signIn: builder.mutation<
       {
         token?: string | null
@@ -188,38 +179,6 @@ export const authAPI = createApi({
       }),
     }),
 
-    removeTeamMemberByID: builder.mutation<
-      undefined,
-      {
-        teamID: string
-        teamMemberID: string
-      }
-    >({
-      query: ({ teamID, teamMemberID }) => ({
-        method: "DELETE",
-        url: `/teams/${teamID}/teamMembers/${teamMemberID}`,
-      }),
-      invalidatesTags: ["members"],
-    }),
-
-    changeTeamMemberRole: builder.mutation<
-      undefined,
-      {
-        teamID: string
-        teamMemberID: string
-        userRole: USER_ROLE
-      }
-    >({
-      query: ({ teamID, teamMemberID, userRole }) => ({
-        method: "PATCH",
-        url: `/teams/${teamID}/teamMembers/${teamMemberID}/role`,
-        body: {
-          userRole,
-        },
-      }),
-      invalidatesTags: ["members"],
-    }),
-
     updateTeamPermissionConfig: builder.mutation<
       undefined,
       {
@@ -329,16 +288,6 @@ export const authAPI = createApi({
         },
       }),
     }),
-
-    getMemberList: builder.query<MemberInfo[], string>({
-      query: (teamID) => {
-        return {
-          url: `/teams/${teamID}/members`,
-          method: "GET",
-        }
-      },
-      providesTags: ["members"],
-    }),
   }),
 })
 
@@ -353,7 +302,6 @@ export const {
   useLazyGetCreditUsageInfoQuery,
   useLazyGetTeamSubscriptionQuery,
   useGetTeamSubscriptionQuery,
-  useRemoveTeamMemberByIDMutation,
   useLazyGetTeamIconUploadAddressQuery,
   useUpdateUserLanguageMutation,
   useCancelLinkedMutation,
@@ -362,7 +310,5 @@ export const {
   useLazyGetUserAvatarUploadAddressQuery,
   useUpdateUserAvatarMutation,
   useLogoutMutation,
-  useChangeTeamMemberRoleMutation,
   useUpdateTeamPermissionConfigMutation,
-  useGetMemberListQuery,
 } = authAPI

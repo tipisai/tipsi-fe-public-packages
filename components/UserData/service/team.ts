@@ -3,7 +3,7 @@ import {
   CLOUD_REQUEST_PREFIX,
   HTTP_REQUEST_PUBLIC_BASE_URL,
 } from "@illa-public/illa-net"
-import { TeamInfo } from "@illa-public/public-types"
+import { MemberInfo, TeamInfo, USER_ROLE } from "@illa-public/public-types"
 import { prepareHeaders } from "./prepareHeaders"
 
 export const teamAPI = createApi({
@@ -12,10 +12,17 @@ export const teamAPI = createApi({
     baseUrl: `${HTTP_REQUEST_PUBLIC_BASE_URL}${CLOUD_REQUEST_PREFIX}`,
     prepareHeaders: prepareHeaders,
   }),
-  tagTypes: ["Teams"],
+  tagTypes: ["Teams", "TeamMembers"],
   endpoints: (builder) => ({
     getTeamsInfo: builder.query<TeamInfo[], null>({
       query: () => "teams/my",
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Teams" as const, id })),
+              "Teams",
+            ]
+          : ["Teams"],
     }),
 
     getTeamsInfoAndCurrentID: builder.query<
@@ -34,11 +41,11 @@ export const teamAPI = createApi({
           }
         }
         const teamInfos = teamInfoResult.data as TeamInfo[]
+
         if (!teamIdentifier) {
           return {
             data: {
               teams: teamInfos,
-              currentTeamID: undefined,
             },
           }
         }
@@ -55,9 +62,17 @@ export const teamAPI = createApi({
       },
       async onQueryStarted(teamIdentifier, { dispatch, queryFulfilled }) {
         const { data } = await queryFulfilled
+
         dispatch(teamAPI.util.upsertQueryData("getTeamsInfo", null, data.teams))
       },
-      providesTags: ["Teams"],
+
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.teams.map(({ id }) => ({ type: "Teams" as const, id })),
+              "Teams",
+            ]
+          : ["Teams"],
     }),
 
     changeTeamConfig: builder.mutation<
@@ -81,21 +96,17 @@ export const teamAPI = createApi({
         { dispatch, queryFulfilled },
       ) => {
         const patchResult = dispatch(
-          teamAPI.util.updateQueryData(
-            "getTeamsInfoAndCurrentID",
-            undefined,
-            (draft) => {
-              draft.teams = draft.teams.map((team) => {
-                if (team.id === teamID) {
-                  return {
-                    ...team,
-                    ...data,
-                  }
+          teamAPI.util.updateQueryData("getTeamsInfo", null, (draft) => {
+            draft = draft.map((team) => {
+              if (team.id === teamID) {
+                return {
+                  ...team,
+                  ...data,
                 }
-                return team
-              })
-            },
-          ),
+              }
+              return team
+            })
+          }),
         )
 
         try {
@@ -104,6 +115,7 @@ export const teamAPI = createApi({
           patchResult.undo()
         }
       },
+      invalidatesTags: ["Teams"],
     }),
 
     createTeam: builder.mutation<
@@ -126,17 +138,35 @@ export const teamAPI = createApi({
           const { data } = await queryFulfilled
           dispatch(
             teamAPI.util.updateQueryData(
-              "getTeamsInfoAndCurrentID",
-              undefined,
+              "getTeamsInfo",
+              null,
               (draft) => {
-                draft.teams = [...(draft.teams || []), data]
-                draft.currentTeamID = data.id
-                draft.currentTeamInfo = data
+                draft = [...(draft || []), data]
               },
+              true,
             ),
           )
         } catch {}
       },
+      invalidatesTags: ["Teams"],
+    }),
+
+    joinTeam: builder.mutation<TeamInfo, string>({
+      query: (inviteToken) => ({
+        url: `/join/${inviteToken}`,
+        method: "PUT",
+      }),
+      onQueryStarted: async (inviteToken, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled
+          dispatch(
+            teamAPI.util.updateQueryData("getTeamsInfo", null, (draft) => {
+              draft = [...(draft || []), data]
+            }),
+          )
+        } catch {}
+      },
+      invalidatesTags: ["Teams"],
     }),
 
     deleteTeamByID: builder.mutation<undefined, string>({
@@ -147,21 +177,16 @@ export const teamAPI = createApi({
       async onQueryStarted(teamID, { dispatch, queryFulfilled }) {
         const patchResult = dispatch(
           teamAPI.util.updateQueryData(
-            "getTeamsInfoAndCurrentID",
-            undefined,
+            "getTeamsInfo",
+            null,
             (draft) => {
               const currentTeams =
-                draft.teams?.filter((teamInfo) => teamInfo.id !== teamID) || []
-              draft.teams = currentTeams
-              if (currentTeams.length > 0) {
-                draft.currentTeamID = currentTeams[0].id
-                draft.currentTeamInfo = currentTeams[0]
-              }
-              if (currentTeams.length === 0) {
-                draft.currentTeamID = undefined
-                draft.currentTeamInfo = undefined
-              }
+                draft.filter((teamInfo) => teamInfo.id !== teamID) || []
+              draft = [...currentTeams]
+
+              return draft
             },
+            true,
           ),
         )
         try {
@@ -170,6 +195,97 @@ export const teamAPI = createApi({
           patchResult.undo()
         }
       },
+      invalidatesTags: ["Teams"],
+    }),
+
+    removeTeamMemberByID: builder.mutation<
+      undefined,
+      {
+        teamID: string
+        teamMemberID: string
+      }
+    >({
+      query: ({ teamID, teamMemberID }) => ({
+        method: "DELETE",
+        url: `/teams/${teamID}/teamMembers/${teamMemberID}`,
+      }),
+      async onQueryStarted(
+        { teamID, teamMemberID },
+        { dispatch, queryFulfilled },
+      ) {
+        const teamsInfoPathResult = dispatch(
+          teamAPI.util.updateQueryData("getTeamsInfo", null, (draft) => {
+            const targetTeamInfo = draft.find((team) => team.id === teamID)
+            if (!targetTeamInfo) return draft
+            if (targetTeamInfo.teamMemberID === teamMemberID) {
+              const newTeams = draft.filter((team) => team.id !== teamID)
+              draft = [...newTeams]
+            }
+            return draft
+          }),
+        )
+        const teamMemberPathResult = dispatch(
+          teamAPI.util.updateQueryData("getMemberList", teamID, (draft) => {
+            const newMembers = draft.filter(
+              (member) => member.teamMemberID !== teamMemberID,
+            )
+            draft = [...newMembers]
+            return draft
+          }),
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          teamsInfoPathResult.undo()
+          teamMemberPathResult.undo()
+        }
+      },
+      invalidatesTags: ["Teams", "TeamMembers"],
+    }),
+    getMemberList: builder.query<MemberInfo[], string>({
+      query: (teamID) => {
+        return {
+          url: `/teams/${teamID}/members`,
+          method: "GET",
+        }
+      },
+      providesTags: ["TeamMembers"],
+    }),
+    changeTeamMemberRole: builder.mutation<
+      undefined,
+      {
+        teamID: string
+        teamMemberID: string
+        userRole: USER_ROLE
+      }
+    >({
+      query: ({ teamID, teamMemberID, userRole }) => ({
+        method: "PATCH",
+        url: `/teams/${teamID}/teamMembers/${teamMemberID}/role`,
+        body: {
+          userRole,
+        },
+      }),
+      onQueryStarted: async (
+        { teamID, teamMemberID, userRole },
+        { dispatch, queryFulfilled },
+      ) => {
+        const patchResult = dispatch(
+          teamAPI.util.updateQueryData("getMemberList", teamID, (draft) => {
+            draft.forEach((member) => {
+              if (member.teamMemberID === teamMemberID) {
+                member.userRole = userRole
+              }
+            })
+          }),
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
+      invalidatesTags: ["TeamMembers"],
     }),
   }),
 })
@@ -181,4 +297,8 @@ export const {
   useCreateTeamMutation,
   useGetTeamsInfoAndCurrentIDQuery,
   useLazyGetTeamsInfoQuery,
+  useJoinTeamMutation,
+  useRemoveTeamMemberByIDMutation,
+  useGetMemberListQuery,
+  useChangeTeamMemberRoleMutation,
 } = teamAPI
