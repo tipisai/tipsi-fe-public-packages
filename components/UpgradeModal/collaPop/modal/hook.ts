@@ -3,7 +3,7 @@ import { ModalHandler } from "../../interface"
 import { ModalShowProps } from "./interface"
 import { modalStore } from "./store"
 
-const showCollarModalImpl = (modal: ModalShowProps) => {
+const showCreditModalImpl = (modal: ModalShowProps) => {
   if (!modal.id) {
     modal.id = v4()
   }
@@ -15,11 +15,11 @@ const showCollarModalImpl = (modal: ModalShowProps) => {
 }
 
 const collarModalHandler = (type: ModalShowProps) => {
-  return showCollarModalImpl(type)
+  return showCreditModalImpl(type)
 }
 
-export function useCollarModal(): ModalHandler<ModalShowProps> {
+export function useCreditModal(): ModalHandler<ModalShowProps> {
   return collarModalHandler
 }
 
-export const createCollarModal = useCollarModal
+export const createCreditModal = useCreditModal

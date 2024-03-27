@@ -1,9 +1,9 @@
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 import {
-  UNIT_WOO_CONVERSION_STORAGE,
-  UNIT_WOO_CONVERSION_TOKEN,
-  UNIT_WOO_CONVERSION_TRAFFIC,
+  UNIT_CREDIT_CONVERSION_STORAGE,
+  UNIT_CREDIT_CONVERSION_TOKEN,
+  UNIT_CREDIT_CONVERSION_TRAFFIC,
 } from "../../service/interface"
 import {
   calculatorStyle,
@@ -14,33 +14,33 @@ import {
 
 interface CalculatorProps {
   changeNum: number
-  unitCollaByCycle: number
+  unitCreditByCycle: number
 }
 
 export const Calculator: FC<CalculatorProps> = ({
   changeNum,
-  unitCollaByCycle,
+  unitCreditByCycle,
 }) => {
   const { t } = useTranslation()
   return (
     <div css={calculatorStyle}>
       <span css={calculatorTitleStyle}>
         {t("billing.payment_sidebar.colla.1", {
-          purchaseNum: `${changeNum * unitCollaByCycle}k`,
+          purchaseNum: `${changeNum * unitCreditByCycle}k`,
         })}
         &nbsp; ≈
       </span>
       <div css={goodsStyle}>
         <span>{`${t("billing.payment_sidebar.colla.2", {
           storageNum: `${
-            changeNum * unitCollaByCycle * UNIT_WOO_CONVERSION_STORAGE
+            changeNum * unitCreditByCycle * UNIT_CREDIT_CONVERSION_STORAGE
           }GB`,
         })}`}</span>
         <span css={orStyle}>or</span>
         <span>
           {`${t("billing.payment_sidebar.colla.3", {
             trafficNum: `${
-              changeNum * unitCollaByCycle * UNIT_WOO_CONVERSION_TRAFFIC
+              changeNum * unitCreditByCycle * UNIT_CREDIT_CONVERSION_TRAFFIC
             }GB`,
           })}`}
         </span>
@@ -48,7 +48,7 @@ export const Calculator: FC<CalculatorProps> = ({
         <span>
           {`${t("billing.payment_sidebar.colla.4", {
             tokenNum: `${
-              changeNum * unitCollaByCycle * UNIT_WOO_CONVERSION_TOKEN
+              changeNum * unitCreditByCycle * UNIT_CREDIT_CONVERSION_TOKEN
             }k`,
           })}`}
         </span>

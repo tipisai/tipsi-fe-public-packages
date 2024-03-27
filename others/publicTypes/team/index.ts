@@ -49,11 +49,11 @@ export enum SUBSCRIBE_PLAN {
   DRIVE_VOLUME_INSUFFICIENT = "drive_volume_insufficient",
   DRIVE_VOLUME_EXPIRED = "drive_volume_expired",
   DRIVE_VOLUME_CANCELED = "drive_volume_canceled",
-  WOO_FREE = "woo_free",
-  WOO_SUBSCRIBE_PAID = "woo_subscribe_paid",
-  WOO_SUBSCRIBE_INSUFFICIENT = "woo_subscribe_insufficient",
-  WOO_SUBSCRIBE_CANCELED = "woo_subscribe_canceled",
-  WOO_SUBSCRIBE_EXPIRED = "woo_subscribe_expired",
+  CREDIT_FREE = "credit_free",
+  CREDIT_SUBSCRIBE_PAID = "credit_subscribe_paid",
+  CREDIT_SUBSCRIBE_INSUFFICIENT = "credit_subscribe_insufficient",
+  CREDIT_SUBSCRIBE_CANCELED = "credit_subscribe_canceled",
+  CREDIT_SUBSCRIBE_EXPIRED = "credit_subscribe_expired",
 }
 
 export enum SUBSCRIPTION_CYCLE {
@@ -82,7 +82,7 @@ export interface TotalTeamLicense {
   teamLicenseAllPaid: boolean
 }
 
-export interface IWooInfo {
+export interface ICreditInfo {
   volume: number
   balance: number
   balanceConverted: number
@@ -116,7 +116,7 @@ export interface TeamInfo {
   myRole: USER_ROLE
   permission: TeamMemberPermission
   teamMemberPermission: TeamMemberPermissionConfig
-  woo: IWooInfo
+  credit: ICreditInfo
   customInfo: ITeamCustomInfo
 }
 

@@ -21,16 +21,16 @@ export interface SubListener {
   onStoreChange: () => void
 }
 
-export enum WooModalType {
+export enum CreditModalType {
   STORAGE = "storage",
   TOKEN = "token",
   TRAFFIC = "traffic",
 }
 
-export enum WOO_TYPE {
+export enum CREDIT_TYPE {
   SUBSCRIBE = "subscribe",
-  ADD_WOO = "addCollar",
-  REMOVE_WOO = "removeCollar",
+  ADD_CREDIT = "addCredit",
+  REMOVE_CREDIT = "removeCredit",
   CANCEL_SUBSCRIPTION = "cancelSubscription",
   MODIFY_SUBSCRIPTION = "modifySubscription",
 }
@@ -41,5 +41,5 @@ export enum FREE_TEAM_LIMIT_TYPE {
 }
 
 export enum PURCHASE_TYPE {
-  WOO = "woo",
+  CREDIT = "credit",
 }

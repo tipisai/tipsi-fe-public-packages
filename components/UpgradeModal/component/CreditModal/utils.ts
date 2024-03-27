@@ -1,9 +1,9 @@
-import { WooModalType } from "../../interface"
+import { CreditModalType } from "../../interface"
 import { ModalDetail } from "./interface"
 
-export const getUnitDetailByPrice = (type: WooModalType): ModalDetail => {
+export const getUnitDetailByPrice = (type: CreditModalType): ModalDetail => {
   switch (type) {
-    case WooModalType.STORAGE:
+    case CreditModalType.STORAGE:
       return {
         title: "billing.modal.colla_insufficient_modal.storage.title",
         desc: [
@@ -11,7 +11,7 @@ export const getUnitDetailByPrice = (type: WooModalType): ModalDetail => {
           "billing.modal.colla_insufficient_modal.storage.desc.2",
         ],
       }
-    case WooModalType.TRAFFIC:
+    case CreditModalType.TRAFFIC:
       return {
         title: "billing.modal.colla_insufficient_modal.traffic.title",
         desc: [
@@ -20,7 +20,7 @@ export const getUnitDetailByPrice = (type: WooModalType): ModalDetail => {
         ],
       }
     default:
-    case WooModalType.TOKEN:
+    case CreditModalType.TOKEN:
       return {
         title: "billing.modal.colla_insufficient_modal.token.title",
         desc: [

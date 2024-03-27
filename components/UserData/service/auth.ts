@@ -9,11 +9,11 @@ import {
 } from "@illa-public/public-types"
 import { OAUTH_REDIRECT_URL } from "../constants"
 import {
+  ICreditUsageInfoResponse,
   IForgetPasswordRequestBody,
   ISignInRequestData,
   ITeamSubscription,
   IUpdateTeamPermissionConfigRequest,
-  IWooUsageInfoResponse,
 } from "./interface"
 import { prepareHeaders } from "./prepareHeaders"
 
@@ -158,8 +158,8 @@ export const authAPI = createApi({
       }),
     }),
 
-    getWooUsageInfo: builder.query<
-      IWooUsageInfoResponse,
+    getCreditUsageInfo: builder.query<
+      ICreditUsageInfoResponse,
       {
         teamID: string
         fromDate: string
@@ -177,13 +177,6 @@ export const authAPI = createApi({
     getTeamSubscription: builder.query<ITeamSubscription, string>({
       query: (teamID) => ({
         url: `/teams/${teamID}/billing`,
-        method: "GET",
-      }),
-    }),
-
-    getTeamsInfo: builder.query<TeamInfo[], {}>({
-      query: () => ({
-        url: "/teams/my",
         method: "GET",
       }),
     }),
@@ -357,10 +350,9 @@ export const {
   useForgetPasswordMutation,
   useExchangeTokenMutation,
   useLazyGetPortalURLQuery,
-  useLazyGetWooUsageInfoQuery,
+  useLazyGetCreditUsageInfoQuery,
   useLazyGetTeamSubscriptionQuery,
   useGetTeamSubscriptionQuery,
-  useLazyGetTeamsInfoQuery,
   useRemoveTeamMemberByIDMutation,
   useLazyGetTeamIconUploadAddressQuery,
   useUpdateUserLanguageMutation,

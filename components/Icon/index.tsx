@@ -18,6 +18,7 @@ import DocsIcon from "./publicIcon/doc.svg?react"
 import DoubtIcon from "./publicIcon/doubt.svg?react"
 import DownIcon from "./publicIcon/down.svg?react"
 import DragPointIcon from "./publicIcon/dragPoint.svg?react"
+import EmptyIcon from "./publicIcon/emptyIcon.svg?react"
 import ErrorIcon from "./publicIcon/error.svg?react"
 import ForkIcon from "./publicIcon/fork.svg?react"
 import InfoIcon from "./publicIcon/info.svg?react"
@@ -37,6 +38,7 @@ import ResetIcon from "./publicIcon/reset.svg?react"
 import Result403Icon from "./publicIcon/result403.svg?react"
 import Result404Icon from "./publicIcon/result404.svg?react"
 import Result500Icon from "./publicIcon/result500.svg?react"
+import ResultEmptyIcon from "./publicIcon/resultEmpty.svg?react"
 import SearchIcon from "./publicIcon/search.svg?react"
 import ShareIcon from "./publicIcon/share.svg?react"
 import SorterDefaultIcon from "./publicIcon/sorterDefault.svg?react"
@@ -100,4 +102,6 @@ export {
   CameraIcon,
   DragPointIcon,
   NextDoubleIcon,
+  EmptyIcon,
+  ResultEmptyIcon,
 }
