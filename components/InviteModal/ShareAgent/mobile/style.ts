@@ -12,7 +12,6 @@ export const inviteHeaderContainerStyle = css`
 export const inviteModalStyle = css`
   flex: none;
   border-radius: 12px 12px 0 0;
-  padding: 0 12px 0 12px;
 `
 
 export const inviteContainerStyle = css`

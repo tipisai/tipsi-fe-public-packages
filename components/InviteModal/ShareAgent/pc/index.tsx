@@ -20,20 +20,21 @@ import { InviteLinkPC } from "../../component/InviteLink/pc"
 import { ShareAgentProps, ShareAgentTab } from "../interface"
 
 export const ShareAgentPC: FC<ShareAgentProps> = (props) => {
-  let defTab = ShareAgentTab.TO_MARKETPLACE
+  // let defTab = ShareAgentTab.TO_MARKETPLACE
+  const defTab = ShareAgentTab.SHARE_WITH_TEAM
 
-  if (
-    props.canInvite &&
-    props.canUseBillingFeature &&
-    USER_ROLE.VIEWER === props.currentUserRole
-  ) {
-    defTab = ShareAgentTab.SHARE_WITH_TEAM
-  } else if (
-    isBiggerThanTargetRole(USER_ROLE.VIEWER, props.currentUserRole) ||
-    props.defaultAgentContributed
-  ) {
-    defTab = ShareAgentTab.TO_MARKETPLACE
-  }
+  // if (
+  //   props.canInvite &&
+  //   props.canUseBillingFeature &&
+  //   USER_ROLE.VIEWER === props.currentUserRole
+  // ) {
+  //   defTab = ShareAgentTab.SHARE_WITH_TEAM
+  // } else if (
+  //   isBiggerThanTargetRole(USER_ROLE.VIEWER, props.currentUserRole) ||
+  //   props.defaultAgentContributed
+  // ) {
+  //   defTab = ShareAgentTab.TO_MARKETPLACE
+  // }
 
   const [activeTab, setActiveTab] = useState<string>(props.defaultTab ?? defTab)
 
@@ -55,20 +56,20 @@ export const ShareAgentPC: FC<ShareAgentProps> = (props) => {
         key: ShareAgentTab.SHARE_WITH_TEAM,
       })
     }
-    if (
-      canManage(
-        props.userRoleForThisAgent,
-        ATTRIBUTE_GROUP.AI_AGENT,
-        props.teamPlan,
-        ACTION_MANAGE.CREATE_AI_AGENT,
-      ) ||
-      props.defaultAgentContributed
-    ) {
-      result.push({
-        label: t("user_management.modal.title.contribute"),
-        key: ShareAgentTab.TO_MARKETPLACE,
-      })
-    }
+    // if (
+    //   canManage(
+    //     props.userRoleForThisAgent,
+    //     ATTRIBUTE_GROUP.AI_AGENT,
+    //     props.teamPlan,
+    //     ACTION_MANAGE.CREATE_AI_AGENT,
+    //   ) ||
+    //   props.defaultAgentContributed
+    // ) {
+    //   result.push({
+    //     label: t("user_management.modal.title.contribute"),
+    //     key: ShareAgentTab.TO_MARKETPLACE,
+    //   })
+    // }
     return result
   }, [])
 
