@@ -157,7 +157,7 @@ export const authAPI = createApi({
       }
     >({
       query: ({ teamID, fromDate, toDate }) => ({
-        url: `/teams/${teamID}/billing/collaUsageInfo?fromDate=${encodeURI(
+        url: `/teams/${teamID}/billing/creditUsageInfo?fromDate=${encodeURI(
           fromDate,
         )}&toDate=${encodeURI(toDate)}`,
         method: "GET",
