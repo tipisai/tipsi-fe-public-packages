@@ -1,7 +1,7 @@
 import Icon from "@ant-design/icons"
 import { App, ConfigProvider, Divider, Drawer, InputNumber, Select } from "antd"
 import { Button } from "antd"
-import { FC, useEffect, useRef, useState } from "react"
+import { FC, useEffect, useMemo, useRef, useState } from "react"
 import { Trans, useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { useWindowSize } from "react-use"
@@ -27,11 +27,7 @@ import {
   track,
 } from "../../utils"
 import { Calculator } from "../Calculator"
-import {
-  CREDIT_BUTTON_TEXT,
-  CREDIT_MORE_TEXT,
-  LEARN_MORE_LINK,
-} from "./constants"
+import { LEARN_MORE_LINK } from "./constants"
 import { CreditDrawerProps } from "./interface"
 import {
   accountsStyle,
@@ -50,7 +46,7 @@ import {
   titleContainerStyle,
   titleStyle,
 } from "./style"
-import { getBtnText, getCurrentCreditType, getDescription } from "./utils"
+import { getCurrentCreditType } from "./utils"
 
 export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
   const { onCancel, visible, afterClose, onSuccessCallback, from, subCycle } =
@@ -102,12 +98,6 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
 
   const changeNum = Math.abs(teamQuantity - currentQuantity)
 
-  const [description, setDescription] = useState(
-    getDescription(currentCreditType.current),
-  )
-
-  const [btnText, setBtnText] = useState(getBtnText(currentCreditType.current))
-
   const unitPrice = CREDIT_UNIT_PRICE[cycle ?? SUBSCRIPTION_CYCLE.MONTHLY]
   const unitCreditByCycle =
     CREDIT_UNIT_BY_CYCLE[cycle ?? SUBSCRIPTION_CYCLE.MONTHLY]
@@ -116,29 +106,6 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
     currentTeamInfo?.credit?.cycle === cycle ? changeNum : currentQuantity
 
   const reportElement = isSubScribe ? "colla_manage" : "colla_subscribe"
-
-  const handleNumChange = (value: number | null) => {
-    setCurrentQuantity(value ?? 1)
-    if (currentTeamInfo?.credit?.cycle !== cycle && isSubScribe) {
-      setBtnText(CREDIT_BUTTON_TEXT.MONTH_YEAR_UPDATE)
-      setDescription(CREDIT_MORE_TEXT.MONTH_YEAR_UPDATE)
-    } else {
-      currentCreditType.current = getCurrentCreditType(teamQuantity, value ?? 1)
-      setBtnText(getBtnText(currentCreditType.current))
-      setDescription(getDescription(currentCreditType.current))
-    }
-  }
-
-  const handleOnSelectChange = (value?: SUBSCRIPTION_CYCLE) => {
-    setCycle(value as SUBSCRIPTION_CYCLE)
-    if (currentTeamInfo?.credit?.cycle !== value && isSubScribe) {
-      setBtnText(CREDIT_BUTTON_TEXT.MONTH_YEAR_UPDATE)
-      setDescription(CREDIT_MORE_TEXT.MONTH_YEAR_UPDATE)
-    } else {
-      setBtnText(getBtnText(currentCreditType.current))
-      setDescription(getDescription(currentCreditType.current))
-    }
-  }
 
   const handleCancel = () => {
     setCurrentQuantity(teamQuantity + 1)
@@ -251,6 +218,68 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
     }
   }
 
+  const { btnText, description } = useMemo(() => {
+    const num = `${changeNum * unitCreditByCycle}k`
+    if (currentTeamInfo?.credit?.cycle !== cycle && isSubScribe) {
+      return {
+        btnText: t("tipi_billing.change_plan", {
+          changeNum: num,
+        }),
+        description: t("tipi_billing.change_desc", {
+          changeNum: num,
+        }),
+      }
+    } else {
+      const type = getCurrentCreditType(teamQuantity, currentQuantity ?? 1)
+      switch (type) {
+        case CREDIT_TYPE.ADD_CREDIT:
+          return {
+            btnText: t("tipi_billing.increase", {
+              changeNum: num,
+            }),
+            description: t("tipi_billing.increase_desc", {
+              changeNum: num,
+            }),
+          }
+        case CREDIT_TYPE.REMOVE_CREDIT:
+          return {
+            btnText: t("tipi_billing.remove", {
+              changeNum: num,
+            }),
+            description: t("tipi_billing.reduce_desc", {
+              changeNum: num,
+            }),
+          }
+        case CREDIT_TYPE.CANCEL_SUBSCRIPTION:
+          return {
+            btnText: t("tipi_billing.unsubscribe", {
+              changeNum: num,
+            }),
+            description: t("tipi_billing.unsub_desc", {
+              changeNum: num,
+            }),
+          }
+        default:
+        case CREDIT_TYPE.SUBSCRIBE:
+          return {
+            btnText: t("tipi_billing.subscribe", {
+              changeNum: num,
+            }),
+            description: t("tipi_billing.sub_desc", {
+              changeNum: num,
+            }),
+          }
+      }
+    }
+  }, [
+    currentTeamInfo?.credit?.cycle,
+    changeNum,
+    unitCreditByCycle,
+    teamQuantity,
+    currentQuantity,
+    cycle,
+  ])
+
   useEffect(() => {
     from &&
       visible &&
@@ -320,14 +349,14 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
               <Select
                 value={cycle}
                 options={paymentOptions}
-                onChange={handleOnSelectChange}
+                onChange={(v) => setCycle(v as SUBSCRIPTION_CYCLE)}
               />
               <InputNumber
                 style={{
                   width: "100%",
                 }}
                 value={currentQuantity}
-                onChange={handleNumChange}
+                onChange={(v) => setCurrentQuantity(v ?? 1)}
                 min={isSubScribe ? 0 : 1}
               />
             </div>
@@ -377,9 +406,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
                 }}
                 onClick={handleSubscribe}
               >
-                {t(btnText, {
-                  changeNum: `${changeNum * unitCreditByCycle}k`,
-                })}
+                {t(btnText)}
               </Button>
             </ConfigProvider>
           </div>
@@ -403,9 +430,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
             }}
           >
             <Trans
-              i18nKey={t(description, {
-                changeNum: `${changeNum * unitCreditByCycle}k`,
-              })}
+              i18nKey={t(description)}
               t={t}
               components={[
                 <Button
