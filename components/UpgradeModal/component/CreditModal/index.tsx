@@ -24,7 +24,6 @@ import {
   priceStyle,
   titleStyle,
 } from "./style"
-import { getUnitDetailByPrice } from "./utils"
 
 export const CreditModal: FC<CreditModalProps> = (props) => {
   const {
@@ -37,7 +36,6 @@ export const CreditModal: FC<CreditModalProps> = (props) => {
   const { t } = useTranslation()
   const collarDrawer = useCreditDrawer()
 
-  const { title, desc } = getUnitDetailByPrice(modalType)
   const teamInfo = useSelector(getCurrentTeamInfo)
   const userID = useSelector(getCurrentUserID)
   const isSubscribe = isSubscribeForDrawer(teamInfo?.credit?.plan)
@@ -94,11 +92,11 @@ export const CreditModal: FC<CreditModalProps> = (props) => {
       </div>
       <CreditBg css={decorateStyle} />
       <div css={headerStyle}>
-        <div css={titleStyle}>{t(title)}</div>
+        <div css={titleStyle}>
+          {t("billing.modal.colla_insufficient_modal.token.title")}
+        </div>
         <div css={descriptionStyle}>
-          {desc.map((detail) => (
-            <p key={detail}>{t(detail)}</p>
-          ))}
+          {t("billing.modal.colla_insufficient_modal.token.desc.1")}
         </div>
       </div>
       <div>

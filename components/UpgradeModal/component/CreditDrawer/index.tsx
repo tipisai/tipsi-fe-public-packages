@@ -65,11 +65,11 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
 
   const paymentOptions = [
     {
-      label: t("billing.payment_sidebar.select_option.Yearly"),
+      label: t("tipi_billing.annual"),
       value: SUBSCRIPTION_CYCLE.YEARLY,
     },
     {
-      label: t("billing.payment_sidebar.select_option.Monthly"),
+      label: t("tipi_billing.monthly"),
       value: SUBSCRIPTION_CYCLE.MONTHLY,
     },
   ]
@@ -303,27 +303,17 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
       <div css={drawerContentStyle}>
         <div>
           <div css={titleContainerStyle}>
-            <div css={titleStyle}>
-              {t("billing.payment_sidebar.title.colla")}
-            </div>
+            <div css={titleStyle}>{t("tipi_billing.manage_credits")}</div>
             <div css={closeIconContainerStyle} onClick={onCancel}>
               <Icon component={CloseIcon} css={closeIconStyle} />
             </div>
           </div>
           <div css={manageContentStyle}>
             <div css={manageHeaderStyle}>
-              <div>{t("billing.payment_sidebar.plan_label.colla")}</div>
+              <div>{t("tipi_billing.credit")}</div>
               <div css={managePriceStyle}>
-                <span>
-                  {t("billing.payment_sidebar.price.colla_monthly", {
-                    price: `$${CREDIT_UNIT_PRICE[SUBSCRIPTION_CYCLE.MONTHLY]}`,
-                  })}
-                </span>
-                <span>
-                  {t("billing.payment_sidebar.price.colla_yearly", {
-                    price: `$${CREDIT_UNIT_PRICE[SUBSCRIPTION_CYCLE.YEARLY]}`,
-                  })}
-                </span>
+                <span>{t("tipi_billing.monthly_price_total")}</span>
+                <span>{t("tipi_billing.annual_price_total")}</span>
               </div>
             </div>
             <div css={manageItemStyle}>
@@ -349,16 +339,13 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
           />
           <div css={accountsStyle}>
             <div css={subTotalStyle}>
-              <div>{t("billing.payment_sidebar.price_label.total")}</div>
+              <div>{t("tipi_billing.total")}</div>
               <div css={priceStyle}>
                 <div css={priceTotalStyle}>
                   ${(unitPrice * currentQuantity).toFixed(2)}
                 </div>
                 <div css={priceTotalLabelStyle}>
-                  {t("billing.payment_sidebar.price_cal.colla", {
-                    unitPrice: `$${unitPrice}`,
-                    purchaseNum: currentQuantity,
-                  })}
+                  {`$${unitPrice} * ${currentQuantity}`}
                 </div>
               </div>
             </div>
