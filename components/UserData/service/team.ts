@@ -4,6 +4,7 @@ import {
   HTTP_REQUEST_PUBLIC_BASE_URL,
 } from "@illa-public/illa-net"
 import { MemberInfo, TeamInfo, USER_ROLE } from "@illa-public/public-types"
+import { IUpdateTeamPermissionConfigRequest } from "./interface"
 import { prepareHeaders } from "./prepareHeaders"
 
 export const teamAPI = createApi({
@@ -287,6 +288,45 @@ export const teamAPI = createApi({
       },
       invalidatesTags: ["TeamMembers"],
     }),
+
+    updateTeamPermissionConfig: builder.mutation<
+      undefined,
+      {
+        teamID: string
+        data: IUpdateTeamPermissionConfigRequest
+      }
+    >({
+      query: ({ teamID, data }) => ({
+        url: `/teams/${teamID}/permission`,
+        method: "PATCH",
+        body: data,
+      }),
+      onQueryStarted: async (
+        { teamID, data },
+        { dispatch, queryFulfilled },
+      ) => {
+        const patchResult = dispatch(
+          teamAPI.util.updateQueryData("getTeamsInfo", null, (draft) => {
+            draft = draft.map((team) => {
+              if (team.id === teamID) {
+                return {
+                  ...team,
+                  ...data,
+                }
+              }
+              return team
+            })
+          }),
+        )
+
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
+      invalidatesTags: ["Teams"],
+    }),
   }),
 })
 
@@ -301,4 +341,5 @@ export const {
   useRemoveTeamMemberByIDMutation,
   useGetMemberListQuery,
   useChangeTeamMemberRoleMutation,
+  useUpdateTeamPermissionConfigMutation,
 } = teamAPI

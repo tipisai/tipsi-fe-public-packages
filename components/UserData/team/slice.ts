@@ -62,31 +62,6 @@ const teamSlice = createSlice({
         state.items = action.payload
       },
     )
-
-    builder.addMatcher(
-      authAPI.endpoints.updateTeamPermissionConfig.matchFulfilled,
-      (state, action) => {
-        const { data, teamID } = action.meta.arg.originalArgs
-        const teams = state.items || []
-        const index = teams.findIndex((team) => team.id === teamID)
-        const targetTeam = teams[index]
-        const items = teams.splice(index, 1, {
-          ...targetTeam,
-          permission: {
-            ...targetTeam.permission,
-            ...data,
-          },
-        })
-        state.items = items
-      },
-    )
-
-    builder.addMatcher(
-      teamAPI.endpoints.changeTeamConfig.matchFulfilled,
-      (state, action) => {
-        state.items = [...(state.items ?? []), action.payload]
-      },
-    )
   },
 })
 

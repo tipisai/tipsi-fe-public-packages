@@ -11,7 +11,6 @@ import {
   IForgetPasswordRequestBody,
   ISignInRequestData,
   ITeamSubscription,
-  IUpdateTeamPermissionConfigRequest,
 } from "./interface"
 import { prepareHeaders } from "./prepareHeaders"
 
@@ -179,20 +178,6 @@ export const authAPI = createApi({
       }),
     }),
 
-    updateTeamPermissionConfig: builder.mutation<
-      undefined,
-      {
-        teamID: string
-        data: IUpdateTeamPermissionConfigRequest
-      }
-    >({
-      query: ({ teamID, data }) => ({
-        method: "PATCH",
-        url: `/teams/${teamID}/permission`,
-        body: data,
-      }),
-    }),
-
     getTeamIconUploadAddress: builder.query<
       {
         uploadAddress: string
@@ -211,23 +196,6 @@ export const authAPI = createApi({
       },
     }),
 
-    updateUserLanguage: builder.mutation<undefined, string>({
-      query: (language) => ({
-        url: "/users/language",
-        method: "PATCH",
-        body: {
-          language,
-        },
-      }),
-    }),
-
-    cancelLinked: builder.mutation<undefined, "github" | "google">({
-      query: (oauthAgency) => ({
-        url: `/users/oauth/${oauthAgency}`,
-        method: "DELETE",
-      }),
-    }),
-
     updateUserPassword: builder.mutation<
       undefined,
       {
@@ -239,26 +207,6 @@ export const authAPI = createApi({
         url: "/users/password",
         method: "PATCH",
         data,
-      }),
-    }),
-
-    updateNickName: builder.mutation<undefined, string>({
-      query: (nickname) => ({
-        url: "/users/nickname",
-        method: "PATCH",
-        body: {
-          nickname,
-        },
-      }),
-    }),
-
-    updateUserAvatar: builder.mutation<undefined, string>({
-      query: (avatar) => ({
-        url: "/users/avatar",
-        method: "PATCH",
-        body: {
-          avatar,
-        },
       }),
     }),
 
@@ -303,12 +251,7 @@ export const {
   useLazyGetTeamSubscriptionQuery,
   useGetTeamSubscriptionQuery,
   useLazyGetTeamIconUploadAddressQuery,
-  useUpdateUserLanguageMutation,
-  useCancelLinkedMutation,
   useUpdateUserPasswordMutation,
-  useUpdateNickNameMutation,
   useLazyGetUserAvatarUploadAddressQuery,
-  useUpdateUserAvatarMutation,
   useLogoutMutation,
-  useUpdateTeamPermissionConfigMutation,
 } = authAPI
