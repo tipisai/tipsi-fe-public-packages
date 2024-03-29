@@ -206,7 +206,7 @@ export const authAPI = createApi({
       query: (data) => ({
         url: "/users/password",
         method: "PATCH",
-        data,
+        body: data,
       }),
     }),
 
