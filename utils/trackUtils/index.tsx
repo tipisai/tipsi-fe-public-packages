@@ -5,7 +5,6 @@ import {
   IReportedUserInfo,
   TIPISProperties,
   TIPIS_PAGE_NAME,
-  TIPIS_TRACK_EVENT_TYPE,
 } from "./interface"
 
 export * from "./interface"
@@ -27,7 +26,7 @@ class TipisTrackTool {
     return posthog.capture
   }
 
-  public track(event: TIPIS_TRACK_EVENT_TYPE, properties: TIPISProperties) {
+  public track(event: string, properties: TIPISProperties) {
     if (this.enable) {
       posthog.capture(event, {
         ...properties,

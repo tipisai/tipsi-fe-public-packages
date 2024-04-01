@@ -8,39 +8,12 @@ interface TipisExtendedProperties {
   [key: string]: unknown
 }
 
-interface TipisBaseProperties {
-  element?: string
-}
-
 type TipisPrefixedExtendProperties = TipisPrefixedPropertiesInterface<
   "parameter",
   TipisExtendedProperties
 >
 
-export type TIPISProperties = TipisBaseProperties &
-  TipisPrefixedExtendProperties
-
-export enum TIPIS_TRACK_EVENT_TYPE {
-  VISIT = "visit",
-  SHOW = "show",
-  CLICK = "click",
-  INITIALIZE = "initialize",
-  VALIDATE = "validate",
-  REQUEST = "request",
-  SELECT = "select",
-  FOCUS = "focus",
-  BLUR = "blur",
-  KEYDOWN = "keydown",
-  KEYUP = "keyup",
-  ADD = "add",
-  DRAG = "drag",
-  DUPLICATE = "duplicate",
-  RENAME = "rename",
-  HOVER = "hover",
-  CHANGE = "change",
-  DELETE = "delete",
-  ILLA_ACTIVE = "illa_active",
-}
+export type TIPISProperties = TipisPrefixedExtendProperties
 
 export enum TIPIS_TRACK_CLOUD_PAGE_NAME {
   HOMEPAGE = "cloud_homepage",
