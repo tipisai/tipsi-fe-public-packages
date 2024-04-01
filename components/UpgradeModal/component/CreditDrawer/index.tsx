@@ -7,13 +7,11 @@ import { useSelector } from "react-redux"
 import { useWindowSize } from "react-use"
 import { getColor } from "@illa-public/color-scheme"
 import { CloseIcon } from "@illa-public/icon"
-import {
-  SUBSCRIBE_PLAN,
-  SUBSCRIPTION_CYCLE,
-  USER_ROLE,
-} from "@illa-public/public-types"
-import { getCurrentTeamInfo, getCurrentUserID } from "@illa-public/user-data"
+import { SUBSCRIBE_PLAN, SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
+import { TipisTrack } from "@illa-public/track-utils"
+import { getCurrentTeamInfo } from "@illa-public/user-data"
 import { isMobileByWindowSize } from "@illa-public/utils"
+import { BILLING_REPORT_TYPE } from "../../constants"
 import { CREDIT_TYPE } from "../../interface"
 import { cancelSubscribe, modifySubscribe, subscribe } from "../../service"
 import {
@@ -66,7 +64,6 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
   ]
 
   const currentTeamInfo = useSelector(getCurrentTeamInfo)!
-  const userID = useSelector(getCurrentUserID)
 
   const isSubScribe = isSubscribeForDrawer(currentTeamInfo?.credit?.plan)
   const isCancelSubscribe =
@@ -100,8 +97,6 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
   const calculatorNum =
     currentTeamInfo?.credit?.cycle === cycle ? changeNum : currentQuantity
 
-  const reportElement = isSubScribe ? "colla_manage" : "colla_subscribe"
-
   const handleCancel = () => {
     setCurrentQuantity(teamQuantity + 1)
     onCancel?.()
@@ -119,11 +114,16 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
     setLoading(true)
     const successRedirect = getSuccessRedirectWithParams({
       returnTo: window.location.href,
+      from,
     })
     const cancelRedirect = window.location.href
     try {
       switch (currentCreditType.current) {
         case CREDIT_TYPE.CANCEL_SUBSCRIPTION:
+          TipisTrack.track("sidebar_click", {
+            parameter1: from,
+            parameter3: BILLING_REPORT_TYPE.UNSUBSCRIBE,
+          })
           await cancelSubscribe(
             currentTeamInfo.id,
             currentTeamInfo.credit?.plan ||
@@ -135,6 +135,10 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
           })
           break
         case CREDIT_TYPE.MODIFY_SUBSCRIPTION:
+          TipisTrack.track("sidebar_click", {
+            parameter1: from,
+            parameter3: BILLING_REPORT_TYPE.CHANGE_PLAN,
+          })
           await modifySubscribe(currentTeamInfo.id, {
             plan: SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_PAID,
             quantity: currentQuantity,
@@ -147,6 +151,13 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
           break
         case CREDIT_TYPE.ADD_CREDIT:
         case CREDIT_TYPE.REMOVE_CREDIT:
+          TipisTrack.track("sidebar_click", {
+            parameter1: from,
+            parameter3:
+              teamQuantity > currentQuantity
+                ? BILLING_REPORT_TYPE.REMOVE
+                : BILLING_REPORT_TYPE.INCREASE,
+          })
           await modifySubscribe(currentTeamInfo.id, {
             plan:
               currentTeamInfo.credit?.plan ??
@@ -161,6 +172,10 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
           break
         default:
         case CREDIT_TYPE.SUBSCRIBE:
+          TipisTrack.track("sidebar_click", {
+            parameter1: from,
+            parameter3: BILLING_REPORT_TYPE.SUBSCRIBE,
+          })
           const res = await subscribe(currentTeamInfo.id, {
             plan: SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_PAID,
             quantity: currentQuantity,
@@ -258,6 +273,14 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
     currentQuantity,
     cycle,
   ])
+
+  useEffect(() => {
+    if (visible) {
+      TipisTrack.track("show_billing_sidebar", {
+        parameter1: from,
+      })
+    }
+  }, [])
 
   return (
     <Drawer

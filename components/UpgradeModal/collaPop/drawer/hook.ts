@@ -1,10 +1,11 @@
 import { v4 } from "uuid"
+import { BILLING_REPORT_FROM } from "../../constants"
 import { CreditDrawerShowProps } from "./interface"
 import { collarDrawerStore } from "./store"
 
 // collar
 const showCreditDrawerImpl = (
-  from: string,
+  from: BILLING_REPORT_FROM,
   config?: Pick<CreditDrawerShowProps, "onSuccessCallback" | "subCycle">,
 ) => {
   let drawer: CreditDrawerShowProps = {
@@ -22,7 +23,7 @@ const showCreditDrawerImpl = (
 }
 
 const collarDrawerHandler = (
-  from: string,
+  from: BILLING_REPORT_FROM,
   config?: Pick<CreditDrawerShowProps, "onSuccessCallback" | "subCycle">,
 ) => {
   return showCreditDrawerImpl(from, config)

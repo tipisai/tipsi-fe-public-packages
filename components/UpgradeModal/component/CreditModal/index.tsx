@@ -2,15 +2,13 @@ import Icon from "@ant-design/icons"
 import { Button, Modal } from "antd"
 import { FC, useEffect } from "react"
 import { useTranslation } from "react-i18next"
-import { useSelector } from "react-redux"
 import { getColor } from "@illa-public/color-scheme"
 import { CloseIcon, UpgradeIcon } from "@illa-public/icon"
-import { SUBSCRIPTION_CYCLE, USER_ROLE } from "@illa-public/public-types"
-import { getCurrentTeamInfo, getCurrentUserID } from "@illa-public/user-data"
+import { SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
+import { TipisTrack } from "@illa-public/track-utils"
 import { useCreditDrawer } from "../../hook"
 import { CreditModalType } from "../../interface"
 import { CREDIT_UNIT_PRICE } from "../../service/interface"
-import { isSubscribeForDrawer } from "../../utils"
 import CreditBg from "./assets/collarBg.svg?react"
 import { CreditModalProps } from "./interface"
 import {
@@ -33,20 +31,20 @@ export const CreditModal: FC<CreditModalProps> = (props) => {
     afterClose,
   } = props
   const { t } = useTranslation()
-  const collarDrawer = useCreditDrawer()
-
-  const teamInfo = useSelector(getCurrentTeamInfo)
-  const userID = useSelector(getCurrentUserID)
-  const isSubscribe = isSubscribeForDrawer(teamInfo?.credit?.plan)
-
-  const reportElement = isSubscribe
-    ? "colla_increase_modal"
-    : "colla_subscribe_modal"
+  const creditDrawer = useCreditDrawer()
 
   const handleClick = () => {
     onCancel?.()
-    collarDrawer(from)
+    creditDrawer(from)
   }
+
+  useEffect(() => {
+    if (visible) {
+      TipisTrack.track("show_billing_modal", {
+        parameter1: from,
+      })
+    }
+  }, [])
 
   return (
     <Modal

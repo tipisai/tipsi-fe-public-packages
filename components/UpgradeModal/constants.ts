@@ -1,8 +1,6 @@
 export enum BILLING_REPORT_FROM {
-  CREATE = "create",
-  EDIT = "edit",
   RUN = "run",
-  SETTINGS = "settings",
+  SETTING_BILLING = "setting_billing",
 }
 
 export enum BILLING_REPORT_TYPE {
