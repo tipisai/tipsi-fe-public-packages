@@ -3,10 +3,6 @@ import { App, Button, Flex, Switch } from "antd"
 import { FC, useContext, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { BindIcon, PenIcon } from "@illa-public/icon"
-import {
-  ILLA_MIXPANEL_EVENT_TYPE,
-  MixpanelTrackContext,
-} from "@illa-public/mixpanel-utils"
 import { USER_ROLE } from "@illa-public/public-types"
 import { isBiggerThanTargetRole } from "@illa-public/user-role-utils"
 import { getAgentPublicLink, useMergeValue } from "@illa-public/utils"
@@ -43,7 +39,6 @@ export const AgentToMarketplacePC: FC<AgentToMarketplaceProps> = (props) => {
   const [isOpenContributeModal, setIsOpenContributeModal] = useState(false)
 
   const [agentContributedLoading, setAgentContributedLoading] = useState(false)
-  const { track } = useContext(MixpanelTrackContext)
 
   const { t } = useTranslation()
 
@@ -74,11 +69,6 @@ export const AgentToMarketplacePC: FC<AgentToMarketplaceProps> = (props) => {
                   checked={agentContributed}
                   loading={agentContributedLoading}
                   onChange={async (value) => {
-                    track?.(ILLA_MIXPANEL_EVENT_TYPE.CLICK, {
-                      element: "share_modal_contribute_switch",
-                      parameter2: !value,
-                      parameter5: agentID,
-                    })
                     setAgentContributed(value)
                     try {
                       setAgentContributedLoading(true)

@@ -10,7 +10,7 @@
     "@illa-public/public-types": "workspace:*",
     "@illa-public/user-role-utils": "workspace:*",
     "@illa-public/utils": "workspace:*",
-    "@illa-public/mixpanel-utils": "workspace:*",
+    "@illa-public/track-utils": "workspace:*",
     "@illa-public/color-scheme": "workspace:*",
     "react-router-dom": "^6.14.0",
     "react-use": "^17.4.0",

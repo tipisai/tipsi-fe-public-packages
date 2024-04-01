@@ -3,10 +3,6 @@ import { Flex, Modal, Tabs } from "antd"
 import { FC, useContext, useEffect, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { CloseIcon } from "@illa-public/icon"
-import {
-  ILLA_MIXPANEL_EVENT_TYPE,
-  MixpanelTrackContext,
-} from "@illa-public/mixpanel-utils"
 import { USER_ROLE } from "@illa-public/public-types"
 import {
   ACTION_MANAGE,
@@ -47,7 +43,6 @@ export const ShareAgentPC: FC<ShareAgentProps> = (props) => {
   }, [props.defaultTab])
 
   const { t } = useTranslation()
-  const { track } = useContext(MixpanelTrackContext)
   const tabItems = useMemo(() => {
     const result = []
     if (props.canInvite) {
@@ -90,11 +85,6 @@ export const ShareAgentPC: FC<ShareAgentProps> = (props) => {
           items={tabItems}
           activeKey={activeTab}
           onChange={(activeKey) => {
-            track?.(ILLA_MIXPANEL_EVENT_TYPE.CLICK, {
-              element: "share_modal_tab",
-              parameter2: activeKey,
-              parameter5: props.agentID,
-            })
             setActiveTab(activeKey)
           }}
         />

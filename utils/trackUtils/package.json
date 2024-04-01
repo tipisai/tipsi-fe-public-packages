@@ -1,17 +1,12 @@
 {
-  "name": "@illa-public/mixpanel-utils",
+  "name": "@illa-public/track-utils",
   "version": "0.0.0",
   "private": true,
   "main": "index.tsx",
   "dependencies": {
-    "@fingerprintjs/fingerprintjs": "^3.4.0",
-    "@illa-public/illa-storage": "workspace:*",
-    "@illa-public/utils": "workspace:*",
-    "mixpanel-browser": "^2.47.0",
-    "@amplitude/analytics-browser": "^2.4.0"
+    "posthog-js": "^1.116.6"
   },
   "devDependencies": {
-    "@types/mixpanel-browser": "^2.47.1",
     "tsconfig": "workspace:*"
   },
   "peerDependencies": {

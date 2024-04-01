@@ -5,13 +5,12 @@ import { useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { getColor } from "@illa-public/color-scheme"
 import { CloseIcon, UpgradeIcon } from "@illa-public/icon"
-import { ILLA_MIXPANEL_EVENT_TYPE } from "@illa-public/mixpanel-utils"
 import { SUBSCRIPTION_CYCLE, USER_ROLE } from "@illa-public/public-types"
 import { getCurrentTeamInfo, getCurrentUserID } from "@illa-public/user-data"
 import { useCreditDrawer } from "../../hook"
 import { CreditModalType } from "../../interface"
 import { CREDIT_UNIT_PRICE } from "../../service/interface"
-import { isSubscribeForDrawer, track } from "../../utils"
+import { isSubscribeForDrawer } from "../../utils"
 import CreditBg from "./assets/collarBg.svg?react"
 import { CreditModalProps } from "./interface"
 import {
@@ -48,19 +47,6 @@ export const CreditModal: FC<CreditModalProps> = (props) => {
     onCancel?.()
     collarDrawer(from)
   }
-
-  useEffect(() => {
-    teamInfo?.myRole &&
-      visible &&
-      from &&
-      track?.(
-        ILLA_MIXPANEL_EVENT_TYPE.SHOW,
-        { element: reportElement, parameter1: from },
-        USER_ROLE[teamInfo?.myRole],
-        teamInfo?.id,
-        userID,
-      )
-  }, [from, reportElement, teamInfo?.id, teamInfo?.myRole, userID, visible])
 
   return (
     <Modal

@@ -7,7 +7,6 @@ import { useSelector } from "react-redux"
 import { useWindowSize } from "react-use"
 import { getColor } from "@illa-public/color-scheme"
 import { CloseIcon } from "@illa-public/icon"
-import { ILLA_MIXPANEL_EVENT_TYPE } from "@illa-public/mixpanel-utils"
 import {
   SUBSCRIBE_PLAN,
   SUBSCRIPTION_CYCLE,
@@ -21,11 +20,7 @@ import {
   CREDIT_UNIT_BY_CYCLE,
   CREDIT_UNIT_PRICE,
 } from "../../service/interface"
-import {
-  getSuccessRedirectWithParams,
-  isSubscribeForDrawer,
-  track,
-} from "../../utils"
+import { getSuccessRedirectWithParams, isSubscribeForDrawer } from "../../utils"
 import { Calculator } from "../Calculator"
 import { LEARN_MORE_LINK } from "./constants"
 import { CreditDrawerProps } from "./interface"
@@ -122,17 +117,6 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
   const handleSubscribe = async () => {
     if (loading || !currentTeamInfo || !currentTeamInfo?.id) return
     setLoading(true)
-    track?.(
-      ILLA_MIXPANEL_EVENT_TYPE.CLICK,
-      {
-        element: "billing_side_bar_upgrade_or_manage_button",
-        parameter1: from,
-        parameter2: reportElement,
-      },
-      USER_ROLE[currentTeamInfo?.myRole],
-      currentTeamInfo?.id,
-      userID,
-    )
     const successRedirect = getSuccessRedirectWithParams({
       returnTo: window.location.href,
     })
@@ -273,29 +257,6 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
     teamQuantity,
     currentQuantity,
     cycle,
-  ])
-
-  useEffect(() => {
-    from &&
-      visible &&
-      track?.(
-        ILLA_MIXPANEL_EVENT_TYPE.SHOW,
-        {
-          element: "billing_side_bar",
-          parameter1: from,
-          parameter2: reportElement,
-        },
-        USER_ROLE[currentTeamInfo?.myRole],
-        currentTeamInfo?.id,
-        userID,
-      )
-  }, [
-    currentTeamInfo?.id,
-    currentTeamInfo?.myRole,
-    from,
-    userID,
-    visible,
-    reportElement,
   ])
 
   return (

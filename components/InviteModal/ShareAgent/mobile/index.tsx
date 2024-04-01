@@ -3,10 +3,6 @@ import { Divider, Drawer } from "antd"
 import { FC, useContext, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { CloseIcon } from "@illa-public/icon"
-import {
-  ILLA_MIXPANEL_EVENT_TYPE,
-  MixpanelTrackContext,
-} from "@illa-public/mixpanel-utils"
 import { AgentToMarketplaceMobile } from "../../component/AgentToMarketplace/mobile"
 import { InviteByEmailMobile } from "../../component/InviteByEmail/mobile"
 import { InviteLinkMobile } from "../../component/InviteLink/mobile"
@@ -18,7 +14,6 @@ import {
   inviteContainerStyle,
   inviteHeaderContainerStyle,
   inviteModalStyle,
-  spaceLineStyle,
   tabTitleStyle,
   tabsContainerStyle,
 } from "./style"
@@ -38,14 +33,8 @@ export const ShareAgentMobile: FC<ShareAgentProps> = (props) => {
   const [activeTab, setActiveTab] = useState<string>(defTab)
 
   const { t } = useTranslation()
-  const { track } = useContext(MixpanelTrackContext)
 
   const handleTabChange = (activeKey: string) => {
-    track?.(ILLA_MIXPANEL_EVENT_TYPE.CLICK, {
-      element: "share_modal_tab",
-      parameter2: activeKey,
-      parameter5: props.agentID,
-    })
     setActiveTab(activeKey)
   }
 
