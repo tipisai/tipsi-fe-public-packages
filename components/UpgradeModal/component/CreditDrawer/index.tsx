@@ -15,7 +15,7 @@ import {
 } from "@illa-public/public-types"
 import { getCurrentTeamInfo, getCurrentUserID } from "@illa-public/user-data"
 import { isMobileByWindowSize } from "@illa-public/utils"
-import { CREDIT_TYPE, PURCHASE_TYPE } from "../../interface"
+import { CREDIT_TYPE } from "../../interface"
 import { cancelSubscribe, modifySubscribe, subscribe } from "../../service"
 import {
   CREDIT_UNIT_BY_CYCLE,
@@ -135,11 +135,6 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
     )
     const successRedirect = getSuccessRedirectWithParams({
       returnTo: window.location.href,
-      purchaseStatus: "success",
-      purchaseType: PURCHASE_TYPE.CREDIT,
-      userID,
-      purchaseCount: currentQuantity,
-      purchaseValue: unitPrice * currentQuantity,
     })
     const cancelRedirect = window.location.href
     try {
