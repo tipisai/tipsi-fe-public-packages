@@ -1,11 +1,11 @@
 import { isCloudVersion } from "./typeHelper"
 
-// process.env.ILLA_APP_ENV &&
-//     process.env.ILLA_APP_ENV === "production" &&
-//     isCloudVersion
-// initGTMConfig
 export const initGTMConfig = () => {
-  if (true) {
+  if (
+    process.env.ILLA_APP_ENV &&
+    process.env.ILLA_APP_ENV === "production" &&
+    isCloudVersion
+  ) {
     const gaScript = document.createElement("script")
     const gaNoScript = document.createElement("noscript")
     gaScript.innerHTML = `
