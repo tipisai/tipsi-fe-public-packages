@@ -26,7 +26,7 @@ class TipisTrackTool {
     return posthog.capture
   }
 
-  public track(event: string, properties: TIPISProperties) {
+  public track(event: string, properties: Partial<TIPISProperties> = {}) {
     if (this.enable) {
       posthog.capture(event, {
         ...properties,
