@@ -280,7 +280,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
         parameter1: from,
       })
     }
-  }, [])
+  }, [visible])
 
   return (
     <Drawer
