@@ -1,14 +1,16 @@
 import { App, Button, Flex, Select } from "antd"
-import { FC, useState } from "react"
+import { FC, useContext, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Avatar } from "@illa-public/avatar"
 import { ERROR_FLAG, isILLAAPiError } from "@illa-public/illa-net"
-import { USER_ROLE } from "@illa-public/public-types"
 import { RoleSelector } from "@illa-public/role-selector"
-import { isBiggerThanTargetRole } from "@illa-public/user-role-utils"
-import { EMAIL_FORMAT, useMergeValue } from "@illa-public/utils"
+import {
+  useChangeTeamMemberRoleMutation,
+  useInviteByEmailMutation,
+} from "@illa-public/user-data"
+import { EMAIL_FORMAT } from "@illa-public/utils"
+import { InviteMemberContext } from "../../../context"
 import { InviteByEmailProps, InvitedUser } from "../interface"
-import { changeUserRoleByTeamMemberID, inviteByEmail } from "../service"
 import {
   avatarContainerStyle,
   inviteByEmailContainerStyle,
@@ -18,32 +20,16 @@ import {
 } from "./style"
 
 export const InviteByEmailPC: FC<InviteByEmailProps> = (props) => {
-  const {
-    excludeUserRole,
-    defaultInviteUserRole,
-    defaultBalance,
-    teamID,
-    onBalanceChange,
-    redirectURL,
-    currentUserRole,
-    onInvitedChange,
-    itemID,
-  } = props
+  const { excludeUserRole, redirectURL } = props
 
   const { message } = App.useApp()
 
   const { t } = useTranslation()
 
-  const [inviteUserRole, setInviteUserRole] = useMergeValue(
-    defaultInviteUserRole,
-    {
-      defaultValue: defaultInviteUserRole,
-    },
-  )
+  const { defaultInviteUserRole, currentUserRole, teamID } =
+    useContext(InviteMemberContext)
 
-  const [currentBalance, setCurrentBalance] = useMergeValue(defaultBalance, {
-    defaultValue: defaultBalance,
-  })
+  const [inviteUserRole, setInviteUserRole] = useState(defaultInviteUserRole)
 
   const [alreadyInvited, setAlreadyInvited] = useState<InvitedUser[]>([])
 
@@ -51,36 +37,27 @@ export const InviteByEmailPC: FC<InviteByEmailProps> = (props) => {
 
   const [currentValue, setCurrentValue] = useState<string[]>([])
 
+  const [inviteByEmail] = useInviteByEmailMutation()
+  const [changeUserRoleByTeamMemberID] = useChangeTeamMemberRoleMutation()
+
   const handleOnInviteButton = async () => {
-    if (
-      isBiggerThanTargetRole(USER_ROLE.EDITOR, inviteUserRole) &&
-      currentBalance < currentValue.length
-    ) {
-      // TODO: billing
-      // upgradeModal({
-      //   modalType: "add-license",
-      //   from: "invite_by_email",
-      // })
-      return
-    }
     setInviting(true)
     const finalInviteUserList: InvitedUser[] = [...alreadyInvited]
     for (let i = 0; i < currentValue.length; i++) {
       try {
-        const invitedUserResp = await inviteByEmail(
-          teamID,
-          currentValue[i],
-          inviteUserRole,
+        const invitedUserResp = await inviteByEmail({
+          teamID: teamID,
+          email: currentValue[i],
+          userRole: inviteUserRole,
           redirectURL,
-          window.customDomain,
-        )
+        }).unwrap()
         const currentIndex = finalInviteUserList.findIndex(
           (item) => item.email === currentValue[i],
         )
         const user = {
           email: currentValue[i],
           userRole: inviteUserRole,
-          teamMemberID: invitedUserResp.data.teamMemberID,
+          teamMemberID: invitedUserResp.teamMemberID,
         }
         if (currentIndex !== -1) {
           finalInviteUserList[currentIndex] = user
@@ -102,11 +79,6 @@ export const InviteByEmailPC: FC<InviteByEmailProps> = (props) => {
         }
       }
     }
-    if (isBiggerThanTargetRole(USER_ROLE.EDITOR, inviteUserRole)) {
-      setCurrentBalance(currentBalance - currentValue.length)
-      onBalanceChange(currentBalance - currentValue.length)
-    }
-    onInvitedChange(finalInviteUserList)
     setAlreadyInvited(finalInviteUserList)
     setInviting(false)
   }
@@ -189,11 +161,11 @@ export const InviteByEmailPC: FC<InviteByEmailProps> = (props) => {
                   onClickItem={async (item) => {
                     setInviting(true)
                     try {
-                      await changeUserRoleByTeamMemberID(
+                      await changeUserRoleByTeamMemberID({
                         teamID,
-                        user.teamMemberID,
-                        item,
-                      )
+                        teamMemberID: user.teamMemberID,
+                        userRole: item,
+                      })
                       const index = alreadyInvited.findIndex(
                         (u) => u.email === user.email,
                       )
@@ -201,7 +173,6 @@ export const InviteByEmailPC: FC<InviteByEmailProps> = (props) => {
                         const newAlreadyInvited = [...alreadyInvited]
                         newAlreadyInvited[index].userRole = item
                         setAlreadyInvited(newAlreadyInvited)
-                        onInvitedChange?.(newAlreadyInvited)
                       }
                       message.success({
                         content: t("user_management.mes.invite_suc"),

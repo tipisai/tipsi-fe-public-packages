@@ -1,11 +1,10 @@
 import { Flex, Modal, Tabs } from "antd"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
-import { CloseIcon } from "@illa-public/icon"
 import { InviteByEmailPC } from "../../component/InviteByEmail/pc"
 import { InviteLinkPC } from "../../component/InviteLink/pc"
 import { InviteMemberProps } from "../interface"
-import { closeIconStyle, headerContainerStyle } from "./style"
+import { headerContainerStyle } from "./style"
 
 export const InviteMemberPC: FC<InviteMemberProps> = (props) => {
   const { t } = useTranslation()
