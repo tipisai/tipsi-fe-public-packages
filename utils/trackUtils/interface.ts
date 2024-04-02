@@ -24,6 +24,7 @@ export enum TIPIS_TRACK_CLOUD_PAGE_NAME {
   SETTING_INFO = "setting_info",
   SETTING_MEMBER = "setting_member",
   SETTING_BILLING = "setting_billing",
+  MOBILE_SETTING_NAV = "mobile_setting_nav",
 }
 
 export enum TIPIS_TRACK_PUBLIC_PAGE_NAME {
