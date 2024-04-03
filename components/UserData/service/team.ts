@@ -341,7 +341,7 @@ export const teamAPI = createApi({
       }
     >({
       query: ({ teamID, userRole, redirectURL }) => ({
-        url: `/teams/${teamID}/inviteLink/userRole/${userRole}${redirectURL ? `redirectURL=${encodeURIComponent(redirectURL)}` : ""}`,
+        url: `/teams/${teamID}/inviteLink/userRole/${userRole}${redirectURL ? `?redirectURL=${encodeURIComponent(redirectURL)}` : ""}`,
         method: "GET",
       }),
     }),
