@@ -1,6 +1,6 @@
 import { ERROR_FLAG, isILLAAPiError } from "@illa-public/illa-net"
 import { SUBSCRIBE_PLAN } from "@illa-public/public-types"
-import { getILLACloudURL, isIllaErrorInterface } from "@illa-public/utils"
+import { getILLACloudURL } from "@illa-public/utils"
 import { BILLING_REPORT_FROM } from "./constants"
 import { createCreditModal, createTeamLimitModal } from "./hook"
 import { CreditModalType, FREE_TEAM_LIMIT_TYPE } from "./interface"
