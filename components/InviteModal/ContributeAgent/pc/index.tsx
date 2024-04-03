@@ -1,4 +1,3 @@
-import { getColor } from "@illa-public/color-scheme"
 import { App, Modal } from "antd"
 import { FC, useState } from "react"
 import { useTranslation } from "react-i18next"

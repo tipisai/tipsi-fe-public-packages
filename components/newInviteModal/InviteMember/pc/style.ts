@@ -1,15 +1,6 @@
 import { css } from "@emotion/react"
 import { getColor } from "@illa-public/color-scheme"
 
-export const headerContainerStyle = css`
-  width: 100%;
-  display: flex;
-  box-sizing: border-box;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`
-
 export const contentContainerStyle = css`
   display: flex;
   flex-direction: column;

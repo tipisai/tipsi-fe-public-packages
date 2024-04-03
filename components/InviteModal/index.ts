@@ -11,7 +11,3 @@ export * from "./MarketShareAgent/index"
 export * from "./ContributeAgent/pc"
 export * from "./ContributeAgent/interface"
 export * from "./constants"
-
-export * from "./newInviteMember"
-export * from "./newInviteMember/context/interface"
-export * from "./newInviteMember/context"
