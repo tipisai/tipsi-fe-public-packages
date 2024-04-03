@@ -190,7 +190,7 @@ export const authAPI = createApi({
     >({
       query: ({ teamID, type, fileName }) => {
         return {
-          url: `/teams/${teamID}icon/uploadAddress/fileName/${fileName}.${type}`,
+          url: `/teams/${teamID}/icon/uploadAddress/fileName/${fileName}.${type}`,
           method: "GET",
         }
       },
