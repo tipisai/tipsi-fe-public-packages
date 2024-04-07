@@ -18,7 +18,7 @@ export const teamAPI = createApi({
     getTeamsInfo: builder.query<TeamInfo[], null>({
       query: () => "teams/my",
       providesTags: (result) =>
-        result
+        Array.isArray(result)
           ? [
               ...result.map(({ id }) => ({ type: "Teams" as const, id })),
               "Teams",
@@ -68,7 +68,7 @@ export const teamAPI = createApi({
       },
 
       providesTags: (result) =>
-        result
+        Array.isArray(result?.teams)
           ? [
               ...result.teams.map(({ id }) => ({ type: "Teams" as const, id })),
               "Teams",
