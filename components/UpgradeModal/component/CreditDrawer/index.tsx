@@ -1,16 +1,16 @@
 import Icon from "@ant-design/icons"
-import { App, ConfigProvider, Divider, Drawer, InputNumber, Select } from "antd"
-import { Button } from "antd"
-import { FC, useEffect, useMemo, useRef, useState } from "react"
-import { Trans, useTranslation } from "react-i18next"
-import { useSelector } from "react-redux"
-import { useWindowSize } from "react-use"
 import { getColor } from "@illa-public/color-scheme"
 import { CloseIcon } from "@illa-public/icon"
 import { SUBSCRIBE_PLAN, SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
 import { TipisTrack } from "@illa-public/track-utils"
 import { getCurrentTeamInfo } from "@illa-public/user-data"
 import { isMobileByWindowSize } from "@illa-public/utils"
+import { App, ConfigProvider, Divider, Drawer, InputNumber, Select } from "antd"
+import { Button } from "antd"
+import { FC, useEffect, useMemo, useRef, useState } from "react"
+import { Trans, useTranslation } from "react-i18next"
+import { useSelector } from "react-redux"
+import { useWindowSize } from "react-use"
 import { BILLING_REPORT_TYPE } from "../../constants"
 import { CREDIT_TYPE } from "../../interface"
 import { cancelSubscribe, modifySubscribe, subscribe } from "../../service"
@@ -266,12 +266,14 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
       }
     }
   }, [
-    currentTeamInfo?.credit?.cycle,
     changeNum,
     unitCreditByCycle,
+    currentTeamInfo?.credit?.cycle,
+    cycle,
+    isSubScribe,
+    t,
     teamQuantity,
     currentQuantity,
-    cycle,
   ])
 
   useEffect(() => {
@@ -280,7 +282,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
         parameter1: from,
       })
     }
-  }, [visible])
+  }, [from, visible])
 
   return (
     <Drawer
