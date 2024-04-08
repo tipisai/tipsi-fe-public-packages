@@ -5,12 +5,7 @@ import {
   CurrentUserInfo,
   TeamInfo,
 } from "@illa-public/public-types"
-import {
-  ICreditUsageInfoResponse,
-  IForgetPasswordRequestBody,
-  ISignInRequestData,
-  ITeamSubscription,
-} from "./interface"
+import { IForgetPasswordRequestBody, ISignInRequestData } from "./interface"
 import { prepareHeaders } from "./prepareHeaders"
 
 export const authAPI = createApi({
@@ -147,29 +142,6 @@ export const authAPI = createApi({
       }),
     }),
 
-    getCreditUsageInfo: builder.query<
-      ICreditUsageInfoResponse,
-      {
-        teamID: string
-        fromDate: string
-        toDate: string
-      }
-    >({
-      query: ({ teamID, fromDate, toDate }) => ({
-        url: `/teams/${teamID}/billing/creditUsageInfo?fromDate=${encodeURI(
-          fromDate,
-        )}&toDate=${encodeURI(toDate)}`,
-        method: "GET",
-      }),
-    }),
-
-    getTeamSubscription: builder.query<ITeamSubscription, string>({
-      query: (teamID) => ({
-        url: `/teams/${teamID}/billing`,
-        method: "GET",
-      }),
-    }),
-
     joinTeam: builder.mutation<TeamInfo, string>({
       query: (inviteToken) => ({
         url: `/join/${inviteToken}`,
@@ -246,9 +218,6 @@ export const {
   useForgetPasswordMutation,
   useExchangeTokenMutation,
   useLazyGetPortalURLQuery,
-  useLazyGetCreditUsageInfoQuery,
-  useLazyGetTeamSubscriptionQuery,
-  useGetTeamSubscriptionQuery,
   useLazyGetTeamIconUploadAddressQuery,
   useUpdateUserPasswordMutation,
   useLazyGetUserAvatarUploadAddressQuery,

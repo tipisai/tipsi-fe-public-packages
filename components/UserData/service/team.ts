@@ -4,7 +4,11 @@ import {
   HTTP_REQUEST_PUBLIC_BASE_URL,
 } from "@illa-public/illa-net"
 import { MemberInfo, TeamInfo, USER_ROLE } from "@illa-public/public-types"
-import { IUpdateTeamPermissionConfigRequest } from "./interface"
+import {
+  ICreditUsageInfoResponse,
+  ITeamSubscription,
+  IUpdateTeamPermissionConfigRequest,
+} from "./interface"
 import { prepareHeaders } from "./prepareHeaders"
 
 export const teamAPI = createApi({
@@ -418,6 +422,29 @@ export const teamAPI = createApi({
       }),
       invalidatesTags: ["TeamMembers"],
     }),
+
+    getTeamSubscription: builder.query<ITeamSubscription, string>({
+      query: (teamID) => ({
+        url: `/teams/${teamID}/billing`,
+        method: "GET",
+      }),
+    }),
+
+    getCreditUsageInfo: builder.query<
+      ICreditUsageInfoResponse,
+      {
+        teamID: string
+        fromDate: string
+        toDate: string
+      }
+    >({
+      query: ({ teamID, fromDate, toDate }) => ({
+        url: `/teams/${teamID}/billing/creditUsageInfo?fromDate=${encodeURI(
+          fromDate,
+        )}&toDate=${encodeURI(toDate)}`,
+        method: "GET",
+      }),
+    }),
   }),
 })
 
@@ -436,4 +463,6 @@ export const {
   useGetInviteLinkQuery,
   useChangeTeamInviteLinkEnabledMutation,
   useInviteByEmailMutation,
+  useGetTeamSubscriptionQuery,
+  useLazyGetCreditUsageInfoQuery,
 } = teamAPI

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { authAPI, teamAPI } from ".."
+import { teamAPI } from ".."
 import {
   addTeamItemReducer,
   deleteMemberListReducer,
