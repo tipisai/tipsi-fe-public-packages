@@ -134,7 +134,7 @@
   "billing.subscription_general.table_title.colla_unsub": "Balance",
   "billing.subscription_general.table_title.expiration_date": "Expiration date",
   "drive.capacity_usage.next_renewal_date": "Next renewal date",
-  "billing.subscription_general.table_title.colla_sub": "Subscribed Colla",
+  "tipi_billing.subscribed_credits": "Subscribed credits",
   "tipi_billing.used": "Used",
   "tipi_billing.token": "Token",
   "tipi_billing.traffic": "Traffic",
