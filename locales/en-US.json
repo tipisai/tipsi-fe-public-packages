@@ -186,7 +186,7 @@
   "homepage.team_modal.team_domain_invalid": "Only letters, numbers, and \"_\" are allowed. Must begin and end with a letter or number. Cannot exceed 200 characters in length. ",
   "team_setting.team_info.save": "Save Changes",
   "team_setting.message.save_fail": "Failed to save",
-  "page.user.policy": "By using ILLA you are agreeing to our <0>Privacy Policy</0> and <1>Terms of Service</1>",
+  "page.user.policy": "By using Tipis AI, you are agreeing to our <0>Privacy Policy</0> and <1>Terms of Service</1>",
   "page.user.sign_in.tips.success": "Signed in successfully",
   "page.user.sign_in.tips.fail": "Failed to sign in",
   "page.user.sign_in.error_message.email.registered": "The email address doesn't associate with an account.",
