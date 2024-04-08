@@ -1,16 +1,16 @@
 import Icon from "@ant-design/icons"
+import { App, ConfigProvider, Divider, Drawer, InputNumber, Select } from "antd"
+import { Button } from "antd"
+import { FC, useEffect, useMemo, useState } from "react"
+import { Trans, useTranslation } from "react-i18next"
+import { useSelector } from "react-redux"
+import { useWindowSize } from "react-use"
 import { getColor } from "@illa-public/color-scheme"
 import { CloseIcon } from "@illa-public/icon"
 import { SUBSCRIBE_PLAN, SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
 import { TipisTrack } from "@illa-public/track-utils"
 import { getCurrentTeamInfo } from "@illa-public/user-data"
 import { isMobileByWindowSize } from "@illa-public/utils"
-import { App, ConfigProvider, Divider, Drawer, InputNumber, Select } from "antd"
-import { Button } from "antd"
-import { FC, useEffect, useMemo, useRef, useState } from "react"
-import { Trans, useTranslation } from "react-i18next"
-import { useSelector } from "react-redux"
-import { useWindowSize } from "react-use"
 import { BILLING_REPORT_TYPE } from "../../constants"
 import { CREDIT_TYPE } from "../../interface"
 import { cancelSubscribe, modifySubscribe, subscribe } from "../../service"
@@ -79,10 +79,6 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
       : subCycle ?? SUBSCRIPTION_CYCLE.MONTHLY,
   )
 
-  const currentCreditType = useRef<CREDIT_TYPE>(
-    getCurrentCreditType(teamQuantity, currentQuantity, isCancelSubscribe),
-  )
-
   const disabledSubscribe =
     (currentQuantity === teamQuantity &&
       cycle === currentTeamInfo?.credit?.cycle) ||
@@ -107,7 +103,8 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
     // not modify cycle
     (changeNum === 0 && currentTeamInfo?.credit?.cycle === cycle)
   // not cancel subscribe
-  currentCreditType.current !== CREDIT_TYPE.CANCEL_SUBSCRIPTION
+  getCurrentCreditType(teamQuantity, currentQuantity, isCancelSubscribe) !==
+    CREDIT_TYPE.CANCEL_SUBSCRIPTION
 
   const handleSubscribe = async () => {
     if (loading || !currentTeamInfo || !currentTeamInfo?.id) return
@@ -117,8 +114,13 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
       from,
     })
     const cancelRedirect = window.location.href
+    const type = getCurrentCreditType(
+      teamQuantity,
+      currentQuantity ?? 1,
+      isCancelSubscribe,
+    )
     try {
-      switch (currentCreditType.current) {
+      switch (type) {
         case CREDIT_TYPE.CANCEL_SUBSCRIPTION:
           TipisTrack.track("sidebar_click", {
             parameter1: from,
@@ -129,7 +131,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
             currentTeamInfo.credit?.plan ||
               SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_PAID,
           )
-          onSuccessCallback?.(currentTeamInfo.id, currentCreditType.current)
+          onSuccessCallback?.(currentTeamInfo.id, type)
           message.success({
             content: t("billing.message.unsubscription_suc"),
           })
@@ -144,7 +146,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
             quantity: currentQuantity,
             cycle,
           })
-          onSuccessCallback?.(currentTeamInfo.id, currentCreditType.current)
+          onSuccessCallback?.(currentTeamInfo.id, type)
           message.success({
             content: t("billing.message.successfully_changed"),
           })
@@ -165,7 +167,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
             quantity: currentQuantity,
             cycle,
           })
-          onSuccessCallback?.(currentTeamInfo.id, currentCreditType.current)
+          onSuccessCallback?.(currentTeamInfo.id, type)
           message.success({
             content: t("billing.message.successfully_changed"),
           })
@@ -188,7 +190,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
           }
       }
     } catch (error) {
-      switch (currentCreditType.current) {
+      switch (type) {
         case CREDIT_TYPE.CANCEL_SUBSCRIPTION:
           message.error({
             content: t("billing.message.failed_to_unsubscrib"),
