@@ -186,7 +186,7 @@
   "homepage.team_modal.team_domain_invalid": "Nur Buchstaben, Zahlen und \"_\" sind erlaubt. Muss mit einem Buchstaben oder einer Zahl beginnen und enden. Darf nicht länger als 200 Zeichen sein. ",
   "team_setting.team_info.save": "Änderungen speichern",
   "team_setting.message.save_fail": "Speichern fehlgeschlagen",
-  "page.user.policy": "By using ILLA you are agreeing to our <0>Privacy Policy</0> and <1>Terms of Service</1>",
+  "page.user.policy": "Durch die Nutzung von Tipis AI erklären Sie sich mit unserer <0>Datenschutzrichtlinie</0> und unseren <1>Nutzungsbedingungen</1> einverstanden",
   "page.user.sign_in.tips.success": "Erfolgreich angemeldet",
   "page.user.sign_in.tips.fail": "Anmeldung fehlgeschlagen",
   "page.user.sign_in.error_message.email.registered": "Die E-Mail-Adresse ist keinem Account zugeordnet",
