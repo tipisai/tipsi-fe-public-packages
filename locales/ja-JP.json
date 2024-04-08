@@ -186,7 +186,7 @@
   "homepage.team_modal.team_domain_invalid": "英数字と「_」のみ使用できます。先頭と末尾は英数字で始まり、終わる必要があります。長さは200文字を超えることはできません。",
   "team_setting.team_info.save": "変更を保存",
   "team_setting.message.save_fail": "保存に失敗しました",
-  "page.user.policy": "By using ILLA you are agreeing to our <0>Privacy Policy</0> and <1>Terms of Service</1>",
+  "page.user.policy": "Tipis AIを使用することで、<0>プライバシーポリシー</0>および<1>利用規約</1>に同意したものとみなされます",
   "page.user.sign_in.tips.success": "サインインに成功しました",
   "page.user.sign_in.tips.fail": "サインインに失敗しました",
   "page.user.sign_in.error_message.email.registered": "そのメールアドレスはアカウントに関連付けられていません。",
