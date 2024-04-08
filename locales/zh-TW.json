@@ -186,7 +186,7 @@
   "homepage.team_modal.team_domain_invalid": "僅允許使用字母、數字和「_」。必須以字母或數字開頭和結尾。長度不能超過200個字符。",
   "team_setting.team_info.save": "保存更改",
   "team_setting.message.save_fail": "保存失敗",
-  "page.user.policy": "By using ILLA you are agreeing to our <0>Privacy Policy</0> and <1>Terms of Service</1>",
+  "page.user.policy": "使用 ILLA 即表示您同意我們的 <0>隱私政策</0> 和 <1>服務條款</1>",
   "page.user.sign_in.tips.success": "登錄成功",
   "page.user.sign_in.tips.fail": "登錄失敗",
   "page.user.sign_in.error_message.email.registered": "電子郵件地址與帳戶無關聯",
