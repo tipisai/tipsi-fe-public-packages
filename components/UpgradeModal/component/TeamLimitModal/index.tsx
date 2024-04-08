@@ -29,7 +29,7 @@ export const TeamLimitModal: FC<TeamLimitModalProps> = ({
 
   const { title, desc, buttonText } = useMemo(() => {
     switch (modalType) {
-      case FREE_TEAM_LIMIT_TYPE.CREATE:
+      case FREE_TEAM_LIMIT_TYPE.TRANSFER_OWNER:
         return {
           title: t("page.workspace.modal.free_team.cannot_transfer.title"),
           desc: t("page.workspace.modal.free_team.cannot_transfer.desc"),

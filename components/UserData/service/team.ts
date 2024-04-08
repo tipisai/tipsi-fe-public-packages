@@ -18,7 +18,7 @@ export const teamAPI = createApi({
     getTeamsInfo: builder.query<TeamInfo[], null>({
       query: () => "teams/my",
       providesTags: (result) =>
-        result
+        Array.isArray(result)
           ? [
               ...result.map(({ id }) => ({ type: "Teams" as const, id })),
               "Teams",
@@ -68,7 +68,7 @@ export const teamAPI = createApi({
       },
 
       providesTags: (result) =>
-        result
+        Array.isArray(result?.teams)
           ? [
               ...result.teams.map(({ id }) => ({ type: "Teams" as const, id })),
               "Teams",
@@ -107,6 +107,7 @@ export const teamAPI = createApi({
               }
               return team
             })
+            return draft
           }),
         )
 
@@ -143,6 +144,7 @@ export const teamAPI = createApi({
               null,
               (draft) => {
                 draft = [...(draft || []), data]
+                return draft
               },
               true,
             ),
@@ -163,6 +165,7 @@ export const teamAPI = createApi({
           dispatch(
             teamAPI.util.updateQueryData("getTeamsInfo", null, (draft) => {
               draft = [...(draft || []), data]
+              return draft
             }),
           )
         } catch {}
@@ -316,6 +319,7 @@ export const teamAPI = createApi({
               }
               return team
             })
+            return draft
           }),
         )
 
@@ -326,6 +330,93 @@ export const teamAPI = createApi({
         }
       },
       invalidatesTags: ["Teams"],
+    }),
+
+    getInviteLink: builder.query<
+      { inviteLink: string },
+      {
+        teamID: string
+        userRole: USER_ROLE
+        redirectURL: string
+      }
+    >({
+      query: ({ teamID, userRole, redirectURL }) => ({
+        url: `/teams/${teamID}/inviteLink/userRole/${userRole}${redirectURL ? `?redirectURL=${encodeURIComponent(redirectURL)}` : ""}`,
+        method: "GET",
+      }),
+    }),
+
+    changeTeamInviteLinkEnabled: builder.mutation<
+      null,
+      {
+        teamID: string
+        inviteLinkEnabled: boolean
+      }
+    >({
+      query: ({ teamID, inviteLinkEnabled }) => ({
+        url: `/teams/${teamID}/configInviteLink`,
+        method: "PATCH",
+        body: {
+          inviteLinkEnabled,
+        },
+      }),
+      onQueryStarted: async (
+        { teamID, inviteLinkEnabled },
+        { dispatch, queryFulfilled },
+      ) => {
+        const patchResult = dispatch(
+          teamAPI.util.updateQueryData("getTeamsInfo", null, (draft) => {
+            draft = draft.map((team) => {
+              if (team.id === teamID) {
+                return {
+                  ...team,
+                  permission: {
+                    ...team.permission,
+                    inviteLinkEnabled,
+                  },
+                }
+              }
+              return team
+            })
+            return draft
+          }),
+        )
+
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
+    }),
+
+    inviteByEmail: builder.mutation<
+      {
+        aiAgentID: string
+        appID: string
+        email: string
+        emailStatus: boolean
+        feedback: string
+        teamMemberID: string
+        userRole: USER_ROLE
+      },
+      {
+        teamID: string
+        email: string
+        userRole: USER_ROLE
+        redirectURL: string
+      }
+    >({
+      query: ({ teamID, email, userRole, redirectURL }) => ({
+        url: `/teams/${teamID}/inviteByEmail`,
+        method: "POST",
+        body: {
+          email,
+          userRole,
+          redirectURL: encodeURIComponent(redirectURL),
+        },
+      }),
+      invalidatesTags: ["TeamMembers"],
     }),
   }),
 })
@@ -342,4 +433,7 @@ export const {
   useGetMemberListQuery,
   useChangeTeamMemberRoleMutation,
   useUpdateTeamPermissionConfigMutation,
+  useGetInviteLinkQuery,
+  useChangeTeamInviteLinkEnabledMutation,
+  useInviteByEmailMutation,
 } = teamAPI

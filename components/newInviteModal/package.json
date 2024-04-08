@@ -1,5 +1,5 @@
 {
-  "name": "@illa-public/invite-modal",
+  "name": "@illa-public/new-invite-modal",
   "version": "0.0.0",
   "private": true,
   "main": "index.ts",

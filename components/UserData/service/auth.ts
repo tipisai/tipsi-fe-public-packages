@@ -5,7 +5,6 @@ import {
   CurrentUserInfo,
   TeamInfo,
 } from "@illa-public/public-types"
-import { OAUTH_REDIRECT_URL } from "../constants"
 import {
   ICreditUsageInfoResponse,
   IForgetPasswordRequestBody,
@@ -55,12 +54,12 @@ export const authAPI = createApi({
       {
         oauthAgency: "github" | "google"
         landing: "signin" | "signup" | "connect"
-        redirectURI?: string
+        redirectURI: string
       }
     >({
       query: ({ oauthAgency, redirectURI, landing }) =>
         `/oauth/${oauthAgency}/uri/redirectTo/${encodeURIComponent(
-          redirectURI ?? OAUTH_REDIRECT_URL,
+          redirectURI,
         )}/landing/${landing}`,
     }),
 
@@ -190,7 +189,7 @@ export const authAPI = createApi({
     >({
       query: ({ teamID, type, fileName }) => {
         return {
-          url: `/teams/${teamID}icon/uploadAddress/fileName/${fileName}.${type}`,
+          url: `/teams/${teamID}/icon/uploadAddress/fileName/${fileName}.${type}`,
           method: "GET",
         }
       },

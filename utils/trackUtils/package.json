@@ -4,7 +4,8 @@
   "private": true,
   "main": "index.tsx",
   "dependencies": {
-    "posthog-js": "^1.116.6"
+    "posthog-js": "^1.116.6",
+    "@illa-public/utils": "workspace:*"
   },
   "devDependencies": {
     "tsconfig": "workspace:*"

@@ -44,7 +44,7 @@ export const CreditModal: FC<CreditModalProps> = (props) => {
         parameter1: from,
       })
     }
-  }, [])
+  }, [visible])
 
   return (
     <Modal
