@@ -1,12 +1,8 @@
 import { App, Button, Flex, Select } from "antd"
-import { FC, useContext, useState } from "react"
+import { FC, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Avatar } from "@illa-public/avatar"
 import { ERROR_FLAG, isILLAAPiError } from "@illa-public/illa-net"
-import {
-  ILLA_MIXPANEL_EVENT_TYPE,
-  MixpanelTrackContext,
-} from "@illa-public/mixpanel-utils"
 import { USER_ROLE } from "@illa-public/public-types"
 import { RoleSelector } from "@illa-public/role-selector"
 import { isBiggerThanTargetRole } from "@illa-public/user-role-utils"
@@ -38,8 +34,6 @@ export const InviteByEmailPC: FC<InviteByEmailProps> = (props) => {
 
   const { t } = useTranslation()
 
-  const { track } = useContext(MixpanelTrackContext)
-
   const [inviteUserRole, setInviteUserRole] = useMergeValue(
     defaultInviteUserRole,
     {
@@ -58,10 +52,6 @@ export const InviteByEmailPC: FC<InviteByEmailProps> = (props) => {
   const [currentValue, setCurrentValue] = useState<string[]>([])
 
   const handleOnInviteButton = async () => {
-    track?.(ILLA_MIXPANEL_EVENT_TYPE.CLICK, {
-      element: "share_modal_send",
-      parameter5: itemID,
-    })
     if (
       isBiggerThanTargetRole(USER_ROLE.EDITOR, inviteUserRole) &&
       currentBalance < currentValue.length

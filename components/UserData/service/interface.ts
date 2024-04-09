@@ -19,13 +19,13 @@ export interface IForgetPasswordRequestBody {
 }
 
 export interface ICreditUsageInfoResponse {
-  driveVolumeUsage: number
-  driveVolumeUsagePercent: number
+  // driveVolumeUsage: number
+  // driveVolumeUsagePercent: number
   driveTrafficUsage: number
   driveTrafficUsagePercent: number
   aiTokenGeneralUsage: number
   aiTokenGeneralUsagePercent: number
-  totalCollaUsage: number
+  totalCreditUsage: number
 }
 
 export interface ITeamSubscription {

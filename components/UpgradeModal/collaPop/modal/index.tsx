@@ -5,7 +5,6 @@ import { useSelector } from "react-redux"
 import { getCurrentTeamInfo, getPlanUtils } from "@illa-public/user-data"
 import { canManagePayment } from "@illa-public/user-role-utils"
 import { CreditModal } from "../../component/CreditModal"
-import { OPERATION_NO_PERMISSION } from "../constants"
 import { ModalShowProps } from "./interface"
 import { modalStore } from "./store"
 
@@ -31,7 +30,7 @@ export const UpgradeCreditModal: FC = () => {
   const collarModal = useMemo(() => {
     if (!modal) return null
     if (!currentTeamInfo || !canManageThisCredit) {
-      message.info(t(OPERATION_NO_PERMISSION[modal.modalType]))
+      message.info(t("billing.tipi.message.colla_insufficient"))
       modalStore.remove()
       return null
     }

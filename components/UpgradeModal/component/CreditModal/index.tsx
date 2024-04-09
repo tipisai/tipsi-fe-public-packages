@@ -2,16 +2,13 @@ import Icon from "@ant-design/icons"
 import { Button, Modal } from "antd"
 import { FC, useEffect } from "react"
 import { useTranslation } from "react-i18next"
-import { useSelector } from "react-redux"
 import { getColor } from "@illa-public/color-scheme"
 import { CloseIcon, UpgradeIcon } from "@illa-public/icon"
-import { ILLA_MIXPANEL_EVENT_TYPE } from "@illa-public/mixpanel-utils"
-import { SUBSCRIPTION_CYCLE, USER_ROLE } from "@illa-public/public-types"
-import { getCurrentTeamInfo, getCurrentUserID } from "@illa-public/user-data"
+import { SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
+import { TipisTrack } from "@illa-public/track-utils"
 import { useCreditDrawer } from "../../hook"
 import { CreditModalType } from "../../interface"
 import { CREDIT_UNIT_PRICE } from "../../service/interface"
-import { isSubscribeForDrawer, track } from "../../utils"
 import CreditBg from "./assets/collarBg.svg?react"
 import { CreditModalProps } from "./interface"
 import {
@@ -24,7 +21,6 @@ import {
   priceStyle,
   titleStyle,
 } from "./style"
-import { getUnitDetailByPrice } from "./utils"
 
 export const CreditModal: FC<CreditModalProps> = (props) => {
   const {
@@ -35,34 +31,20 @@ export const CreditModal: FC<CreditModalProps> = (props) => {
     afterClose,
   } = props
   const { t } = useTranslation()
-  const collarDrawer = useCreditDrawer()
-
-  const { title, desc } = getUnitDetailByPrice(modalType)
-  const teamInfo = useSelector(getCurrentTeamInfo)
-  const userID = useSelector(getCurrentUserID)
-  const isSubscribe = isSubscribeForDrawer(teamInfo?.credit?.plan)
-
-  const reportElement = isSubscribe
-    ? "colla_increase_modal"
-    : "colla_subscribe_modal"
+  const creditDrawer = useCreditDrawer()
 
   const handleClick = () => {
     onCancel?.()
-    collarDrawer(from)
+    creditDrawer(from)
   }
 
   useEffect(() => {
-    teamInfo?.myRole &&
-      visible &&
-      from &&
-      track?.(
-        ILLA_MIXPANEL_EVENT_TYPE.SHOW,
-        { element: reportElement, parameter1: from },
-        USER_ROLE[teamInfo?.myRole],
-        teamInfo?.id,
-        userID,
-      )
-  }, [from, reportElement, teamInfo?.id, teamInfo?.myRole, userID, visible])
+    if (visible) {
+      TipisTrack.track("show_billing_modal", {
+        parameter1: from,
+      })
+    }
+  }, [visible])
 
   return (
     <Modal
@@ -94,11 +76,11 @@ export const CreditModal: FC<CreditModalProps> = (props) => {
       </div>
       <CreditBg css={decorateStyle} />
       <div css={headerStyle}>
-        <div css={titleStyle}>{t(title)}</div>
+        <div css={titleStyle}>
+          {t("billing.modal.colla_insufficient_modal.token.title")}
+        </div>
         <div css={descriptionStyle}>
-          {desc.map((detail) => (
-            <p key={detail}>{t(detail)}</p>
-          ))}
+          {t("billing.modal.colla_insufficient_modal.token.desc.1")}
         </div>
       </div>
       <div>

@@ -1,12 +1,7 @@
 import { ERROR_FLAG, isILLAAPiError } from "@illa-public/illa-net"
-import {
-  ILLAMixpanel,
-  ILLAProperties,
-  ILLA_MIXPANEL_EVENT_TYPE,
-  ILLA_MIXPANEL_PUBLIC_PAGE_NAME,
-} from "@illa-public/mixpanel-utils"
 import { SUBSCRIBE_PLAN } from "@illa-public/public-types"
-import { getILLACloudURL, isIllaErrorInterface } from "@illa-public/utils"
+import { getILLACloudURL } from "@illa-public/utils"
+import { BILLING_REPORT_FROM } from "./constants"
 import { createCreditModal, createTeamLimitModal } from "./hook"
 import { CreditModalType, FREE_TEAM_LIMIT_TYPE } from "./interface"
 
@@ -27,9 +22,8 @@ export function getSuccessRedirectWithParams(
 export const handleCreditPurchaseError = (
   e: unknown,
   modalType: CreditModalType,
-  from: string,
 ) => {
-  const collaModal = createCreditModal()
+  const creditModal = createCreditModal()
   if (
     isILLAAPiError(e) &&
     (e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_COLLA ||
@@ -44,37 +38,9 @@ export const handleCreditPurchaseError = (
       e.data.errorFlag ===
         ERROR_FLAG.ERROR_FLAG_AI_AGENT_MAX_TOKEN_OVER_COLLA_BALANCE)
   ) {
-    collaModal?.({
+    creditModal?.({
       modalType,
-      from,
-    })
-    return true
-  }
-  return false
-}
-
-export const handleCollaPurchaseErrorByILLAInnerError = (
-  e: unknown,
-  modalType: CreditModalType,
-  from: string,
-) => {
-  const collaModal = createCreditModal()
-  if (
-    isIllaErrorInterface(e) &&
-    (e.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_COLLA ||
-      e.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_DRIVE_VOLUME ||
-      e.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_AI_TOKEN_GENERAL ||
-      e.errorFlag === ERROR_FLAG.ERROR_FLAG_AUTO_CHARGE_COLLA_FAILED ||
-      e.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_DRIVE_TRAFFIC ||
-      e.errorFlag === ERROR_FLAG.ERROR_FLAG_COLLA_PAYMENT_FAILURE ||
-      e.errorFlag === ERROR_FLAG.ERROR_FLAG_OUT_OF_USAGE_TRAFFIC ||
-      e.errorFlag === ERROR_FLAG.ERROR_FLAG_OUT_OF_USAGE_VOLUME ||
-      e.errorFlag ===
-        ERROR_FLAG.ERROR_FLAG_AI_AGENT_MAX_TOKEN_OVER_COLLA_BALANCE)
-  ) {
-    collaModal?.({
-      modalType,
-      from,
+      from: BILLING_REPORT_FROM.RUN,
     })
     return true
   }
@@ -103,20 +69,4 @@ export const isSubscribeForDrawer = (subscribePlan?: SUBSCRIBE_PLAN) => {
     subscribePlan === SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_INSUFFICIENT ||
     subscribePlan === SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_PAID
   )
-}
-
-export const track = (
-  event: ILLA_MIXPANEL_EVENT_TYPE,
-  properties: Omit<ILLAProperties, "page"> = {},
-  userType: string,
-  teamID: string | undefined,
-  userID: string | undefined,
-) => {
-  ILLAMixpanel.track(event, {
-    page: ILLA_MIXPANEL_PUBLIC_PAGE_NAME.PLACEHOLDER,
-    ...properties,
-    team_id: teamID ?? "-1",
-    user_id: userID ?? "-1",
-    parameter11: userType,
-  })
 }

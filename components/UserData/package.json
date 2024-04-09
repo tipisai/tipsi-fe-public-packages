@@ -5,18 +5,20 @@
   "main": "index.ts",
   "dependencies": {
     "@illa-public/illa-net": "workspace:*",
-    "@illa-public/utils": "workspace:*",
-    "@illa-public/public-types": "workspace:*"
+    "@illa-public/public-types": "workspace:*",
+    "@illa-public/track-utils": "workspace:^",
+    "@illa-public/utils": "workspace:*"
   },
   "devDependencies": {
     "tsconfig": "workspace:*"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "@reduxjs/toolkit": "^2.2.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
-    "@reduxjs/toolkit": "^2.2.1",
-    "react-redux": "^9.0.4"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^9.0.4",
+    "react-router-dom": "^6.4.4"
   }
 }

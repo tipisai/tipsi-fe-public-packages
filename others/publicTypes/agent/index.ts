@@ -21,7 +21,7 @@ export interface AgentAdvanceConfig {
 export interface IKnowledgeFile {
   fileName: string
   contentType: string
-  value: string
+  fileID: string
 }
 
 export interface AgentRaw {

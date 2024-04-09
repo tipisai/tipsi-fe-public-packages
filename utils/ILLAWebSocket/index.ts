@@ -18,6 +18,14 @@ const PONG_MESSAGE = JSON.stringify({
   data: null,
 })
 
+export enum WS_READYSTATE {
+  UNINITIALIZED = -1,
+  CONNECTING = 0,
+  OPEN = 1,
+  CLOSING = 2,
+  CLOSED = 3,
+}
+
 export default class WebSocketClient {
   private websocket!: WebSocket
   private url: string
@@ -162,5 +170,9 @@ export default class WebSocketClient {
 
   public getWebSocket(): WebSocket {
     return this.websocket
+  }
+
+  public getReadyState(): WS_READYSTATE {
+    return this.websocket.readyState
   }
 }

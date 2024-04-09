@@ -7,7 +7,6 @@ export const headerContainerStyle = css`
   box-sizing: border-box;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid ${getColor("grayBlue", "09")};
   justify-content: space-between;
 `
 

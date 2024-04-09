@@ -102,7 +102,6 @@ export const RecordEditor: FC<RecordEditorProps> = (props) => {
                 marginBottom: "8px",
                 padding: "1px 8px",
                 minWidth: "32px",
-                borderRadius: "0 8px 8px 0",
               }}
               type="text"
               onClick={() => {

@@ -38,7 +38,9 @@ import ResetIcon from "./publicIcon/reset.svg?react"
 import Result403Icon from "./publicIcon/result403.svg?react"
 import Result404Icon from "./publicIcon/result404.svg?react"
 import Result500Icon from "./publicIcon/result500.svg?react"
+import ResultEmptyIcon from "./publicIcon/resultEmpty.svg?react"
 import SearchIcon from "./publicIcon/search.svg?react"
+import SendIcon from "./publicIcon/send.svg?react"
 import ShareIcon from "./publicIcon/share.svg?react"
 import SorterDefaultIcon from "./publicIcon/sorterDefault.svg?react"
 import SorterDownIcon from "./publicIcon/sorterDown.svg?react"
@@ -102,4 +104,6 @@ export {
   DragPointIcon,
   NextDoubleIcon,
   EmptyIcon,
+  ResultEmptyIcon,
+  SendIcon,
 }

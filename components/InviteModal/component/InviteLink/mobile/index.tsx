@@ -3,7 +3,6 @@ import { FC, useCallback, useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { USER_ROLE } from "@illa-public/public-types"
 import { RoleSelector } from "@illa-public/role-selector"
-import { isBiggerThanTargetRole } from "@illa-public/user-role-utils"
 import { useMergeValue } from "@illa-public/utils"
 import DisableInviteIcon from "../../../asset/DisableInviteLink.svg?react"
 import InviteIcon from "../../../asset/InviteLink.svg?react"
@@ -164,25 +163,26 @@ export const InviteLinkMobile: FC<InviteLinkProps> = (props) => {
                 currentUserRole={currentUserRole}
                 value={inviteUserRole}
                 onClickItem={async (role) => {
-                  if (
-                    isBiggerThanTargetRole(USER_ROLE.VIEWER, role, false) &&
-                    defaultBalance === 0
-                  ) {
-                    // TODO: billing
-                    // upgradeModal({
-                    //   modalType: "upgrade",
-                    //   from: "invite_by_link",
-                    // })
-                  } else {
-                    await renewInviteLinkRequest(teamID, role)
-                  }
+                  // if (
+                  //   isBiggerThanTargetRole(USER_ROLE.VIEWER, role, false) &&
+                  //   defaultBalance === 0
+                  // ) {
+                  //   // TODO: billing
+                  //   // upgradeModal({
+                  //   //   modalType: "upgrade",
+                  //   //   from: "invite_by_link",
+                  //   // })
+                  // } else {
+                  //   await renewInviteLinkRequest(teamID, role)
+                  // }
+                  await renewInviteLinkRequest(teamID, role)
                 }}
               />
             </div>
           </div>
           <div css={inviteOptionsStyle}>
             <Button
-              css={inviteButtonStyle}
+              size="large"
               block
               loading={getLinkLoading}
               disabled={enableInviteLoading}
@@ -195,7 +195,7 @@ export const InviteLinkMobile: FC<InviteLinkProps> = (props) => {
               {t("user_management.modal.link.copy")}
             </Button>
             <Button
-              css={inviteButtonStyle}
+              size="large"
               type="text"
               block
               loading={enableInviteLoading}

@@ -1,12 +1,8 @@
 import Icon from "@ant-design/icons"
-import { CloseIcon } from "@illa-public/icon"
-import {
-  ILLA_MIXPANEL_EVENT_TYPE,
-  MixpanelTrackContext,
-} from "@illa-public/mixpanel-utils"
 import { Divider, Drawer } from "antd"
 import { FC, useContext, useState } from "react"
 import { useTranslation } from "react-i18next"
+import { CloseIcon } from "@illa-public/icon"
 import { AgentToMarketplaceMobile } from "../../component/AgentToMarketplace/mobile"
 import { InviteByEmailMobile } from "../../component/InviteByEmail/mobile"
 import { InviteLinkMobile } from "../../component/InviteLink/mobile"
@@ -18,7 +14,6 @@ import {
   inviteContainerStyle,
   inviteHeaderContainerStyle,
   inviteModalStyle,
-  spaceLineStyle,
   tabTitleStyle,
   tabsContainerStyle,
 } from "./style"
@@ -26,25 +21,20 @@ import {
 export const ShareAgentMobile: FC<ShareAgentProps> = (props) => {
   const { onClose } = props
 
-  let defTab = ShareAgentTab.TO_MARKETPLACE
+  // let defTab = ShareAgentTab.TO_MARKETPLACE
+  const defTab = ShareAgentTab.SHARE_WITH_TEAM
 
-  if (props.defaultAgentContributed) {
-    defTab = ShareAgentTab.TO_MARKETPLACE
-  } else if (props.canInvite && props.canUseBillingFeature) {
-    defTab = ShareAgentTab.SHARE_WITH_TEAM
-  }
+  // if (props.defaultAgentContributed) {
+  //   defTab = ShareAgentTab.TO_MARKETPLACE
+  // } else if (props.canInvite && props.canUseBillingFeature) {
+  //   defTab = ShareAgentTab.SHARE_WITH_TEAM
+  // }
 
   const [activeTab, setActiveTab] = useState<string>(defTab)
 
   const { t } = useTranslation()
-  const { track } = useContext(MixpanelTrackContext)
 
   const handleTabChange = (activeKey: string) => {
-    track?.(ILLA_MIXPANEL_EVENT_TYPE.CLICK, {
-      element: "share_modal_tab",
-      parameter2: activeKey,
-      parameter5: props.agentID,
-    })
     setActiveTab(activeKey)
   }
 
@@ -79,7 +69,7 @@ export const ShareAgentMobile: FC<ShareAgentProps> = (props) => {
                 {t("user_management.modal.tab.with_team")}
               </div>
             )}
-            {props.canInvite &&
+            {/* {props.canInvite &&
               props.canUseBillingFeature &&
               props.defaultAgentContributed && <div css={spaceLineStyle} />}
             {props.defaultAgentContributed && (
@@ -93,7 +83,7 @@ export const ShareAgentMobile: FC<ShareAgentProps> = (props) => {
                   {t("user_management.modal.title.contribute")}
                 </div>
               </>
-            )}
+            )} */}
           </div>
         </div>
         <div css={contentContainerStyle}>

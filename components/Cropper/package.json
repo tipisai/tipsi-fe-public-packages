@@ -6,7 +6,7 @@
   "dependencies": {
     "@illa-public/color-scheme": "workspace:*",
     "@illa-public/icon": "workspace:^",
-    "@illa-public/mixpanel-utils": "workspace:*",
+    "@illa-public/track-utils": "workspace:*",
     "@illa-public/utils": "workspace:*",
     "react-easy-crop": "^5.0.0"
   },

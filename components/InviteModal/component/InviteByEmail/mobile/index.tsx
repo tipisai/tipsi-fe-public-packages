@@ -5,10 +5,6 @@ import { useTranslation } from "react-i18next"
 import { Avatar } from "@illa-public/avatar"
 import { LoadingIcon } from "@illa-public/icon"
 import { ERROR_FLAG, isILLAAPiError } from "@illa-public/illa-net"
-import {
-  ILLA_MIXPANEL_EVENT_TYPE,
-  MixpanelTrackContext,
-} from "@illa-public/mixpanel-utils"
 import { USER_ROLE } from "@illa-public/public-types"
 import { RoleSelector } from "@illa-public/role-selector"
 import { isBiggerThanTargetRole } from "@illa-public/user-role-utils"
@@ -43,7 +39,6 @@ export const InviteByEmailMobile: FC<InviteByEmailProps> = (props) => {
   } = props
 
   const { message } = App.useApp()
-  const { track } = useContext(MixpanelTrackContext)
   const { t } = useTranslation()
 
   const [inviteUserRole, setInviteUserRole] = useMergeValue(
@@ -74,10 +69,7 @@ export const InviteByEmailMobile: FC<InviteByEmailProps> = (props) => {
   const handleInvite = useCallback(
     async (e: KeyboardEvent<HTMLInputElement>) => {
       if (!currentValue) return
-      track?.(ILLA_MIXPANEL_EVENT_TYPE.CLICK, {
-        element: "share_modal_send",
-        parameter5: itemID,
-      })
+
       e.currentTarget.blur()
       if (
         (isBiggerThanTargetRole(USER_ROLE.EDITOR, inviteUserRole) &&
@@ -158,7 +150,6 @@ export const InviteByEmailMobile: FC<InviteByEmailProps> = (props) => {
       setCurrentBalance,
       t,
       teamID,
-      track,
     ],
   )
 

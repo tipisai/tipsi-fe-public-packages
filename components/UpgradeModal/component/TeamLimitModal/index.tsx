@@ -1,11 +1,10 @@
 import Icon from "@ant-design/icons"
+import { Button, Modal } from "antd"
+import { FC, useMemo } from "react"
+import { useTranslation } from "react-i18next"
 import { getColor } from "@illa-public/color-scheme"
 import { CloseIcon } from "@illa-public/icon"
-import { Button, Modal } from "antd"
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
 import { FREE_TEAM_LIMIT_TYPE } from "../../interface"
-import { MODAL_TEXT } from "./constants"
 import {
   descStyle,
   modalCloseIconStyle,
@@ -27,7 +26,24 @@ export const TeamLimitModal: FC<TeamLimitModalProps> = ({
   afterClose,
 }) => {
   const { t } = useTranslation()
-  const { title, desc, buttonText } = MODAL_TEXT[modalType]
+
+  const { title, desc, buttonText } = useMemo(() => {
+    switch (modalType) {
+      case FREE_TEAM_LIMIT_TYPE.TRANSFER_OWNER:
+        return {
+          title: t("page.workspace.modal.free_team.cannot_transfer.title"),
+          desc: t("page.workspace.modal.free_team.cannot_transfer.desc"),
+          buttonText: t("page.workspace.modal.free_team.cannot_create.button"),
+        }
+      default:
+      case FREE_TEAM_LIMIT_TYPE.CREATE:
+        return {
+          title: t("page.workspace.modal.free_team.cannot_create.title"),
+          desc: t("page.workspace.modal.free_team.cannot_create.desc"),
+          buttonText: t("page.workspace.modal.free_team.cannot_create.button"),
+        }
+    }
+  }, [modalType, t])
   return (
     <Modal
       open={visible}
