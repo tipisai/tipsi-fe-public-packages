@@ -20,6 +20,7 @@ import DownIcon from "./publicIcon/down.svg?react"
 import DragPointIcon from "./publicIcon/dragPoint.svg?react"
 import EmptyIcon from "./publicIcon/emptyIcon.svg?react"
 import ErrorIcon from "./publicIcon/error.svg?react"
+import ExitIcon from "./publicIcon/exit.svg?react"
 import ForkIcon from "./publicIcon/fork.svg?react"
 import InfoIcon from "./publicIcon/info.svg?react"
 import LoadingIcon from "./publicIcon/loading.svg?react"
@@ -106,4 +107,5 @@ export {
   EmptyIcon,
   ResultEmptyIcon,
   SendIcon,
+  ExitIcon,
 }
