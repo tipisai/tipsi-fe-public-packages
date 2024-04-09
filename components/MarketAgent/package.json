@@ -4,16 +4,16 @@
   "private": true,
   "main": "index.ts",
   "dependencies": {
-    "@illa-public/avatar": "workspace:*",
-    "@illa-public/color-scheme": "workspace:*",
-    "@illa-public/icon": "workspace:*",
-    "@illa-public/illa-net": "workspace:*",
-    "@illa-public/public-types": "workspace:*",
-    "@illa-public/record-editor": "workspace:*",
-    "@illa-public/utils": "workspace:*"
+    "@illa-public/avatar": "*",
+    "@illa-public/color-scheme": "*",
+    "@illa-public/icon": "*",
+    "@illa-public/illa-net": "*",
+    "@illa-public/public-types": "*",
+    "@illa-public/record-editor": "*",
+    "@illa-public/utils": "*"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   },
   "peerDependencies": {
     "@emotion/react": "^11.11.1",

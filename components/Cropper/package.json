@@ -4,14 +4,14 @@
   "private": true,
   "main": "index.tsx",
   "dependencies": {
-    "@illa-public/color-scheme": "workspace:*",
-    "@illa-public/icon": "workspace:^",
-    "@illa-public/track-utils": "workspace:*",
-    "@illa-public/utils": "workspace:*",
+    "@illa-public/color-scheme": "*",
+    "@illa-public/icon": "*",
+    "@illa-public/track-utils": "*",
+    "@illa-public/utils": "*",
     "react-easy-crop": "^5.0.0"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   },
   "peerDependencies": {
     "@ant-design/icons": "^5.3.1",

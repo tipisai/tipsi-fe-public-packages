@@ -4,10 +4,10 @@
   "private": true,
   "main": "index.ts",
   "dependencies": {
-    "@illa-public/utils": "workspace:*",
+    "@illa-public/utils": "*",
     "axios": "^1.6.2"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   }
 }

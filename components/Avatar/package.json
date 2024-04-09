@@ -4,11 +4,11 @@
   "private": true,
   "main": "index.tsx",
   "dependencies": {
-    "@illa-public/utils": "workspace:*",
-    "@illa-public/color-scheme": "workspace:*"
+    "@illa-public/utils": "*",
+    "@illa-public/color-scheme": "*"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   },
   "peerDependencies": {
     "react": "^18.2.0",

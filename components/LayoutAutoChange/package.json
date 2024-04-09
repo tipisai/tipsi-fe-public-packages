@@ -4,11 +4,11 @@
   "private": true,
   "main": "index.tsx",
   "dependencies": {
-    "@illa-public/utils": "workspace:*",
+    "@illa-public/utils": "*",
     "react-use": "^17.4.0"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   },
   "peerDependencies": {
     "react": "^18.2.0",

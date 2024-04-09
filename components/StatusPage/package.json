@@ -4,14 +4,14 @@
   "private": true,
   "main": "index.tsx",
   "dependencies": {
-    "@illa-public/color-scheme": "workspace:*",
-    "@illa-public/icon": "workspace:*",
-    "@illa-public/public-types": "workspace:*",
-    "@illa-public/user-role-utils": "workspace:*",
+    "@illa-public/color-scheme": "*",
+    "@illa-public/icon": "*",
+    "@illa-public/public-types": "*",
+    "@illa-public/user-role-utils": "*",
     "react-helmet-async": "^2.0.4"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   },
   "peerDependencies": {
     "@emotion/react": "^11.11.1",

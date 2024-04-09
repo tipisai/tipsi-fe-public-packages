@@ -4,11 +4,11 @@
   "private": true,
   "main": "index.tsx",
   "dependencies": {
-    "@illa-public/public-types": "workspace:*",
-    "@illa-public/utils": "workspace:*"
+    "@illa-public/public-types": "*",
+    "@illa-public/utils": "*"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   },
   "peerDependencies": {
     "@emotion/react": "^11.11.1",

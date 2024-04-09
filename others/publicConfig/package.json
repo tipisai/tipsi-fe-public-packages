@@ -4,11 +4,11 @@
   "private": true,
   "main": "index.ts",
   "dependencies": {
-    "@illa-public/public-types": "workspace:*",
+    "@illa-public/public-types": "*",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.5",
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   }
 }

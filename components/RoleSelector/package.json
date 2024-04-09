@@ -4,13 +4,13 @@
   "private": true,
   "main": "index.ts",
   "dependencies": {
-    "@illa-public/public-types": "workspace:*",
-    "@illa-public/user-role-utils": "workspace:*",
-    "@illa-public/icon": "workspace:*",
-    "@illa-public/color-scheme": "workspace:*"
+    "@illa-public/public-types": "*",
+    "@illa-public/user-role-utils": "*",
+    "@illa-public/icon": "*",
+    "@illa-public/color-scheme": "*"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   },
   "peerDependencies": {
     "antd": "^5.15.2",

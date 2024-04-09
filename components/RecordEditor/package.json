@@ -4,12 +4,12 @@
   "private": true,
   "main": "index.ts",
   "dependencies": {
-    "@illa-public/utils": "workspace:*",
-    "@illa-public/color-scheme": "workspace:*",
-    "@illa-public/icon": "workspace:*"
+    "@illa-public/utils": "*",
+    "@illa-public/color-scheme": "*",
+    "@illa-public/icon": "*"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   },
   "peerDependencies": {
     "@ant-design/icons": "^5.3.1",

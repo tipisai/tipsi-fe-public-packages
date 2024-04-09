@@ -4,12 +4,12 @@
   "private": true,
   "main": "index.tsx",
   "dependencies": {
-    "@illa-public/utils": "workspace:*",
-    "@illa-public/user-role-utils": "workspace:*",
-    "@illa-public/public-types": "workspace:*"
+    "@illa-public/utils": "*",
+    "@illa-public/user-role-utils": "*",
+    "@illa-public/public-types": "*"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   },
   "peerDependencies": {
     "react": "^18.2.0",

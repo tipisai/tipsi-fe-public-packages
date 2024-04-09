@@ -5,10 +5,10 @@
   "main": "index.tsx",
   "dependencies": {
     "posthog-js": "^1.116.6",
-    "@illa-public/utils": "workspace:*"
+    "@illa-public/utils": "*"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   },
   "peerDependencies": {
     "@types/react": "^18.0.27",

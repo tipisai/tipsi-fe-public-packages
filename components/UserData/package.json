@@ -4,13 +4,13 @@
   "private": true,
   "main": "index.ts",
   "dependencies": {
-    "@illa-public/illa-net": "workspace:*",
-    "@illa-public/public-types": "workspace:*",
-    "@illa-public/track-utils": "workspace:^",
-    "@illa-public/utils": "workspace:*"
+    "@illa-public/illa-net": "*",
+    "@illa-public/public-types": "*",
+    "@illa-public/track-utils": "*",
+    "@illa-public/utils": "*"
   },
   "devDependencies": {
-    "tsconfig": "workspace:*"
+    "tsconfig": "*"
   },
   "peerDependencies": {
     "@reduxjs/toolkit": "^2.2.1",
