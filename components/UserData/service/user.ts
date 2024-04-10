@@ -38,6 +38,7 @@ export const userAPI = createApi({
               ...draft,
               language,
             }
+            return draft
           }),
         )
         try {
@@ -96,6 +97,7 @@ export const userAPI = createApi({
               ...draft,
               avatar,
             }
+            return draft
           }),
         )
         try {
@@ -122,6 +124,7 @@ export const userAPI = createApi({
               ...draft,
               nickname,
             }
+            return draft
           }),
         )
         try {
@@ -146,6 +149,7 @@ export const userAPI = createApi({
               ...draft,
               isPasswordSet: true,
             }
+            return draft
           }),
         )
         try {

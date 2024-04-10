@@ -1,5 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { HTTP_REQUEST_PUBLIC_BASE_URL } from "@illa-public/illa-net"
+import {
+  CLOUD_REQUEST_PREFIX,
+  HTTP_REQUEST_PUBLIC_BASE_URL,
+} from "@illa-public/illa-net"
 import {
   BaseUserInfo,
   CurrentUserInfo,
@@ -10,13 +13,10 @@ import { prepareHeaders } from "./prepareHeaders"
 
 export const authAPI = createApi({
   reducerPath: "authAPI",
-  refetchOnFocus: true,
-  refetchOnReconnect: true,
   baseQuery: fetchBaseQuery({
-    baseUrl: `${HTTP_REQUEST_PUBLIC_BASE_URL}/supervisor/api/v1/`,
+    baseUrl: `${HTTP_REQUEST_PUBLIC_BASE_URL}${CLOUD_REQUEST_PREFIX}`,
     prepareHeaders: prepareHeaders,
   }),
-  tagTypes: ["members"],
   endpoints: (builder) => ({
     signIn: builder.mutation<
       {
