@@ -48,7 +48,6 @@
   "homepage.left_panel.feature.new_chat": "新對話",
   "homepage.left_panel.feature.create_tipi": "建立新的 Tipi",
   "user_management.modal.custom_copy_text": "{{userName}}邀請您加入「{{teamName}}」。點擊連結加入團隊：{{inviteLink}}",
-  "homepage.left_panel.tab.clear_all": "Clear All",
   "homepage.message.join_suc": "加入成功",
   "homepage.message.join_failed": "您的電子郵件不是被邀請的電子郵件。",
   "homepage.message.have_joined": "您已經加入了該團隊。請手動切換到該團隊。",
