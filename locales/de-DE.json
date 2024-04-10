@@ -48,7 +48,6 @@
   "homepage.left_panel.feature.new_chat": "Neuer Chat",
   "homepage.left_panel.feature.create_tipi": "Neues Tipi erstellen",
   "user_management.modal.custom_copy_text": "userName lädt Sie ein, „teamName“ beizutreten. Klicken Sie auf den Link, um dem Team beizutreten: inviteLink",
-  "homepage.left_panel.tab.clear_all": "Clear All",
   "homepage.message.join_suc": "Erfolgreich beigetreten",
   "homepage.message.join_failed": "Ihre E-Mail ist nicht die eingeladene E-Mail.",
   "homepage.message.have_joined": "Sie haben bereits am Team teilgenommen. Bitte wechseln Sie manuell zum Team.",
