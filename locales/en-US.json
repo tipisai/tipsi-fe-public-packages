@@ -48,7 +48,6 @@
   "homepage.left_panel.feature.new_chat": "New chat",
   "homepage.left_panel.feature.create_tipi": "Create new Tipi",
   "user_management.modal.custom_copy_text": "{{userName}} invites you to join 「{{teamName}}」 . Click the link to join the team: {{inviteLink}}",
-  "homepage.left_panel.tab.clear_all": "Close all tabs",
   "homepage.message.join_suc": "Joined successfully",
   "homepage.message.join_failed": "Your email is not the invited email.",
   "homepage.message.have_joined": "You have already joined in the team. Please change to the team manually. ",
