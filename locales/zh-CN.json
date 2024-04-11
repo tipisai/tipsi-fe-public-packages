@@ -288,7 +288,7 @@
   "homepage.edit_tipi.modal.upload": "Upload",
   "editor.ai-agent.copy_code": "复制代码",
   "homepage.tipi_chat.response.resonse": "Response",
-  "homepage.tipi_chat.processing_status.title.python": "运行 Python",
+  "homepage.tipi_chat.processing_status.title.python": "Tipis 智能分析",
   "homepage.tipi_chat.processing_status.suc": "分析成功",
   "homepage.tipi_chat.processing_status.failed": "分析失败",
   "homepage.tipi_chat.processing_status.stopped": "停止分析",
