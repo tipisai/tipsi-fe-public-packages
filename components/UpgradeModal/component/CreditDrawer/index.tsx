@@ -20,7 +20,7 @@ import {
 } from "../../service/interface"
 import { getSuccessRedirectWithParams, isSubscribeForDrawer } from "../../utils"
 import { Calculator } from "../Calculator"
-import { LEARN_MORE_LINK } from "./constants"
+import { LEARN_MORE_LINK, SUBSCRIBE_CLASS_NAME } from "./constants"
 import { CreditDrawerProps } from "./interface"
 import {
   accountsStyle,
@@ -387,6 +387,15 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
                 style={{
                   marginTop: "16px",
                 }}
+                className={
+                  getCurrentCreditType(
+                    teamQuantity,
+                    currentQuantity ?? 1,
+                    isCancelSubscribe,
+                  ) === CREDIT_TYPE.SUBSCRIBE && !disabledSubscribe
+                    ? SUBSCRIBE_CLASS_NAME
+                    : ""
+                }
                 onClick={handleSubscribe}
               >
                 {t(btnText)}
