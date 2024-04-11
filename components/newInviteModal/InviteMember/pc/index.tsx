@@ -15,11 +15,14 @@ export const InviteMemberPC: FC<NewInviteMemberProps> = (props) => {
     >
       <Flex vertical gap="small">
         <InviteLinkPC
-          excludeUserRole={[]}
+          excludeUserRole={props.excludeUserRole}
           redirectURL={props.redirectURL}
           onCopyInviteLink={props.onCopyInviteLink}
         />
-        <InviteByEmailPC redirectURL={props.redirectURL} excludeUserRole={[]} />
+        <InviteByEmailPC
+          redirectURL={props.redirectURL}
+          excludeUserRole={props.excludeUserRole}
+        />
       </Flex>
     </Modal>
   )

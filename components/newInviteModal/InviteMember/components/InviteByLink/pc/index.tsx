@@ -23,7 +23,7 @@ import {
 } from "./style"
 
 export const InviteLinkPC: FC<INewInviteLinkProps> = (props) => {
-  const { excludeUserRole, onCopyInviteLink, redirectURL } = props
+  const { excludeUserRole = [], onCopyInviteLink, redirectURL } = props
 
   const {
     defaultAllowInviteLink,
@@ -162,6 +162,11 @@ export const InviteLinkPC: FC<INewInviteLinkProps> = (props) => {
           )}
           <Button
             loading={isLoading}
+            size="large"
+            style={{
+              width: "80px",
+              flex: "none",
+            }}
             onClick={() => {
               const newUrl = new URL(data?.inviteLink ?? "")
               if (redirectURL !== "") {
