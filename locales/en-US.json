@@ -288,7 +288,7 @@
   "homepage.edit_tipi.modal.upload": "Upload",
   "editor.ai-agent.copy_code": "Copy code",
   "homepage.tipi_chat.response.resonse": "Response",
-  "homepage.tipi_chat.processing_status.title.python": "Run Python",
+  "homepage.tipi_chat.processing_status.title.python": "Tipis smart analysis",
   "homepage.tipi_chat.processing_status.suc": "Successfully analyzed",
   "homepage.tipi_chat.processing_status.failed": "Failed to analyze",
   "homepage.tipi_chat.processing_status.stopped": "Stopped analysis",
