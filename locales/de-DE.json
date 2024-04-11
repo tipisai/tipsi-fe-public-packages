@@ -287,6 +287,7 @@
   "homepage.edit_tipi.modal.remove_file_cancel": "Cancel",
   "homepage.edit_tipi.modal.upload": "Upload",
   "editor.ai-agent.copy_code": "Code kopieren",
+  "homepage.tipi_chat.response.resonse": "Response",
   "homepage.tipi_chat.processing_status.title.python": "Python ausführen",
   "homepage.tipi_chat.processing_status.suc": "Erfolgreich analysiert",
   "homepage.tipi_chat.processing_status.failed": "Analyse fehlgeschlagen",
