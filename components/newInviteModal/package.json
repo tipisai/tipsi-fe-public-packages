@@ -19,7 +19,6 @@
     "@illa-public/utils": "workspace:*",
     "copy-to-clipboard": "^3.3.2",
     "lodash-es": "^4.17.21",
-    "react-hook-form": "^7.30.0",
     "react-share": "^4.4.1"
   },
   "devDependencies": {
