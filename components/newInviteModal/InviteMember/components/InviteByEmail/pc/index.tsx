@@ -20,7 +20,7 @@ import {
 } from "./style"
 
 export const InviteByEmailPC: FC<InviteByEmailProps> = (props) => {
-  const { excludeUserRole, redirectURL } = props
+  const { excludeUserRole = [], redirectURL } = props
 
   const { message } = App.useApp()
 
@@ -137,6 +137,7 @@ export const InviteByEmailPC: FC<InviteByEmailProps> = (props) => {
           />
           <Button
             disabled={currentValue.length === 0}
+            size="large"
             loading={inviting}
             onClick={handleOnInviteButton}
             style={{

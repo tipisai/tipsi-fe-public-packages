@@ -12,6 +12,7 @@ export const InviteMember: FC<NewInviteMemberProps> = (props) => {
     onCopyInviteLink,
     redirectURL,
     titleName = t("user_management.modal.title.invite_members"),
+    excludeUserRole = [],
   } = props
   return (
     <LayoutAutoChange
@@ -21,6 +22,7 @@ export const InviteMember: FC<NewInviteMemberProps> = (props) => {
           onCopyInviteLink={onCopyInviteLink}
           onClose={onClose}
           titleName={titleName}
+          excludeUserRole={excludeUserRole}
         />
       }
       mobilePage={
@@ -29,6 +31,7 @@ export const InviteMember: FC<NewInviteMemberProps> = (props) => {
           onCopyInviteLink={onCopyInviteLink}
           onClose={onClose}
           titleName={titleName}
+          excludeUserRole={excludeUserRole}
         />
       }
     />

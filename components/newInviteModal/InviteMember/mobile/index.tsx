@@ -8,7 +8,7 @@ import { NewInviteMemberProps } from "../interface"
 import { dividerStyle, inviteModalStyle } from "./style"
 
 export const InviteMemberMobile: FC<NewInviteMemberProps> = (props) => {
-  const { onClose, titleName } = props
+  const { onClose, titleName, excludeUserRole } = props
 
   return (
     <Drawer
@@ -28,13 +28,13 @@ export const InviteMemberMobile: FC<NewInviteMemberProps> = (props) => {
       }
     >
       <InviteLinkMobile
-        excludeUserRole={[]}
+        excludeUserRole={excludeUserRole}
         redirectURL={props.redirectURL}
         onCopyInviteLink={props.onCopyInviteLink}
       />
       <Divider css={dividerStyle} />
       <InviteByEmailMobile
-        excludeUserRole={[]}
+        excludeUserRole={excludeUserRole}
         redirectURL={props.redirectURL}
       />
     </Drawer>
