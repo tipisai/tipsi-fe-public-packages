@@ -71,7 +71,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
 
   const teamQuantity = isSubScribe ? currentTeamInfo?.credit?.quantity ?? 0 : 0
   const [currentQuantity, setCurrentQuantity] = useState<number>(
-    teamQuantity + 1,
+    teamQuantity === 0 ? 1 : teamQuantity,
   )
   const [cycle, setCycle] = useState<SUBSCRIPTION_CYCLE>(
     isSubScribe
@@ -94,7 +94,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
     currentTeamInfo?.credit?.cycle === cycle ? changeNum : currentQuantity
 
   const handleCancel = () => {
-    setCurrentQuantity(teamQuantity + 1)
+    setCurrentQuantity(teamQuantity)
     onCancel?.()
   }
 
