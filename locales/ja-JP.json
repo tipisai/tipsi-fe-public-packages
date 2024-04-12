@@ -296,7 +296,7 @@
   "homepage.tipi_chat.processing_status.title.read_file": "ファイルを読む",
   "homepage.tipi_chat.processing_status.title.current_time": "現在時刻を取得",
   "editor.ai-agent.message.token": "最大トークン数はプロンプトで使用されるトークン数よりも小さく、またはモデルの制限を超えています。",
-  "homepage.tipi_chat.clear_all": "Clear all",
+  "homepage.tipi_chat.clear_all": "すべてクリア",
   "tipi_billing.you_have_no_teams": "チームがありません",
   "tipi_billing.create_a_new_team": "新しいチームを作成",
   "editor.action.resource.restapi.label.action_type": "アクションタイプ",

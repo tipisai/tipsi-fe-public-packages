@@ -296,7 +296,7 @@
   "homepage.tipi_chat.processing_status.title.read_file": "读取文件",
   "homepage.tipi_chat.processing_status.title.current_time": "获取当前时间",
   "editor.ai-agent.message.token": "最大Token数小于提示占用的Token数或超过了模型的限制",
-  "homepage.tipi_chat.clear_all": "Clear all",
+  "homepage.tipi_chat.clear_all": "清空",
   "tipi_billing.you_have_no_teams": "您没有团队",
   "tipi_billing.create_a_new_team": "创建一个新团队",
   "editor.action.resource.restapi.label.action_type": "操作类型",
