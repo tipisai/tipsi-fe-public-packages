@@ -296,7 +296,7 @@
   "homepage.tipi_chat.processing_status.title.read_file": "Datei lesen",
   "homepage.tipi_chat.processing_status.title.current_time": "Aktuelle Zeit abrufen",
   "editor.ai-agent.message.token": "Die maximale Token-Anzahl ist kleiner als die Anzahl der Tokens, die durch das Prompt belegt werden, oder überschreitet das Limit des Modells.",
-  "homepage.tipi_chat.clear_all": "Clear all",
+  "homepage.tipi_chat.clear_all": "Alles leeren",
   "tipi_billing.you_have_no_teams": "Sie haben keine Teams",
   "tipi_billing.create_a_new_team": "Ein neues Team erstellen",
   "editor.action.resource.restapi.label.action_type": "Aktionstyp",
