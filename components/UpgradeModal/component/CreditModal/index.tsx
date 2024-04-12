@@ -7,7 +7,6 @@ import { CloseIcon, UpgradeIcon } from "@illa-public/icon"
 import { SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
 import { TipisTrack } from "@illa-public/track-utils"
 import { useCreditDrawer } from "../../hook"
-import { CreditModalType } from "../../interface"
 import { CREDIT_UNIT_PRICE } from "../../service/interface"
 import CreditBg from "./assets/collarBg.svg?react"
 import { CreditModalProps } from "./interface"
@@ -23,13 +22,7 @@ import {
 } from "./style"
 
 export const CreditModal: FC<CreditModalProps> = (props) => {
-  const {
-    visible,
-    from,
-    modalType = CreditModalType.TOKEN,
-    onCancel,
-    afterClose,
-  } = props
+  const { visible, from, onCancel, afterClose } = props
   const { t } = useTranslation()
   const creditDrawer = useCreditDrawer()
 
@@ -44,7 +37,7 @@ export const CreditModal: FC<CreditModalProps> = (props) => {
         parameter1: from,
       })
     }
-  }, [visible])
+  }, [from, visible])
 
   return (
     <Modal

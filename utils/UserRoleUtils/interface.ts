@@ -48,6 +48,7 @@ export enum ATTRIBUTE_GROUP {
   WORKFLOW,
   FLOW_NODE,
   FLOW_ACTION,
+  OBJECT_STORAGE,
 }
 
 export enum ATTRIBUTE_CATEGORY {
@@ -117,6 +118,8 @@ export enum ACTION_MANAGE {
   EDIT_FLOW_ACTION,
   PREVIEW_FLOW_ACTION,
   RUN_FLOW_ACTION,
+  CREATE_TEMPORARY_FILE, // create (upload) a temporary file
+  DELETE_FILE,
 }
 
 export enum ACTION_DELETE {

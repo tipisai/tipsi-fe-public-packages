@@ -44,6 +44,7 @@ export const InvalidedSubscribePlanAttributeConfigList: AttributeConfigListShape
         [ATTRIBUTE_GROUP.WORKFLOW]: { [ACTION_ACCESS.VIEW]: true },
         [ATTRIBUTE_GROUP.FLOW_NODE]: { [ACTION_ACCESS.VIEW]: true },
         [ATTRIBUTE_GROUP.FLOW_ACTION]: { [ACTION_ACCESS.VIEW]: true },
+        [ATTRIBUTE_GROUP.OBJECT_STORAGE]: { [ACTION_ACCESS.VIEW]: true },
       },
       [USER_ROLE.ADMIN]: {
         [ATTRIBUTE_GROUP.TEAM]: { [ACTION_ACCESS.VIEW]: true },
@@ -87,6 +88,7 @@ export const InvalidedSubscribePlanAttributeConfigList: AttributeConfigListShape
         [ATTRIBUTE_GROUP.WORKFLOW]: { [ACTION_DELETE.DELETE]: true },
         [ATTRIBUTE_GROUP.FLOW_NODE]: { [ACTION_DELETE.DELETE]: true },
         [ATTRIBUTE_GROUP.FLOW_ACTION]: { [ACTION_DELETE.DELETE]: true },
+        [ATTRIBUTE_GROUP.OBJECT_STORAGE]: { [ACTION_ACCESS.VIEW]: true },
       },
       [USER_ROLE.ADMIN]: {},
       [USER_ROLE.EDITOR]: {},
@@ -178,11 +180,95 @@ export const InvalidedSubscribePlanAttributeConfigList: AttributeConfigListShape
           [ACTION_MANAGE.PREVIEW_FLOW_ACTION]: true,
           [ACTION_MANAGE.RUN_FLOW_ACTION]: true,
         },
+        [ATTRIBUTE_GROUP.OBJECT_STORAGE]: {
+          [ACTION_MANAGE.CREATE_FILE]: true,
+          [ACTION_MANAGE.EDIT_FILE]: true,
+          [ACTION_MANAGE.CREATE_SHARELINK]: true,
+          [ACTION_MANAGE.CREATE_TEMPORARY_FILE]: true,
+        },
       },
       [USER_ROLE.ADMIN]: {
+        [ATTRIBUTE_GROUP.TEAM]: {
+          [ACTION_MANAGE.TEAM_NAME]: true,
+          [ACTION_MANAGE.TEAM_ICON]: true,
+          [ACTION_MANAGE.TEAM_CONFIG]: true,
+          [ACTION_MANAGE.UPDATE_TEAM_DOMAIN]: true,
+        },
+        [ATTRIBUTE_GROUP.TEAM_MEMBER]: {
+          [ACTION_MANAGE.REMOVE_MEMBER]: true,
+          [ACTION_MANAGE.ROLE]: true,
+          [ACTION_MANAGE.ROLE_FROM_ADMIN]: true,
+          [ACTION_MANAGE.ROLE_FROM_EDITOR]: true,
+          [ACTION_MANAGE.ROLE_FROM_VIEWER]: true,
+          [ACTION_MANAGE.ROLE_TO_ADMIN]: true,
+          [ACTION_MANAGE.ROLE_TO_EDITOR]: true,
+          [ACTION_MANAGE.ROLE_TO_VIEWER]: true,
+        },
+        [ATTRIBUTE_GROUP.USER]: {
+          [ACTION_MANAGE.RENAME_USER]: true,
+          [ACTION_MANAGE.UPDATE_USER_AVATAR]: true,
+        },
+        [ATTRIBUTE_GROUP.INVITE]: {
+          [ACTION_MANAGE.CONFIG_INVITE]: true,
+          [ACTION_MANAGE.INVITE_LINK]: true,
+        },
+        [ATTRIBUTE_GROUP.DOMAIN]: {},
+        [ATTRIBUTE_GROUP.BILLING]: {
+          [ACTION_MANAGE.PAYMENT]: true,
+          [ACTION_MANAGE.PAYMENT_INFO]: true,
+        },
+        [ATTRIBUTE_GROUP.BUILDER_DASHBOARD]: {
+          [ACTION_MANAGE.DASHBOARD_BROADCAST]: true,
+        },
+        [ATTRIBUTE_GROUP.APP]: {
+          [ACTION_MANAGE.CREATE_APP]: true,
+          [ACTION_MANAGE.EDIT_APP]: true,
+          [ACTION_MANAGE.FORK_APP]: true,
+        },
+        [ATTRIBUTE_GROUP.COMPONENTS]: {},
+        [ATTRIBUTE_GROUP.RESOURCE]: {
+          [ACTION_MANAGE.CREATE_RESOURCE]: true,
+          [ACTION_MANAGE.EDIT_RESOURCE]: true,
+        },
         [ATTRIBUTE_GROUP.ACTION]: {
+          [ACTION_MANAGE.CREATE_ACTION]: true,
+          [ACTION_MANAGE.EDIT_ACTION]: true,
           [ACTION_MANAGE.PREVIEW_ACTION]: true,
           [ACTION_MANAGE.RUN_ACTION]: true,
+        },
+        [ATTRIBUTE_GROUP.TRANSFORMER]: {},
+        [ATTRIBUTE_GROUP.JOB]: {},
+        [ATTRIBUTE_GROUP.DRIVE]: {
+          [ACTION_MANAGE.CREATE_FILE]: true,
+          [ACTION_MANAGE.EDIT_FILE]: true,
+          [ACTION_MANAGE.CREATE_SHARELINK]: true,
+        },
+        [ATTRIBUTE_GROUP.MARKETPLACE]: {
+          [ACTION_MANAGE.CONTRIBUTE_MARKETPLACE]: true,
+          [ACTION_MANAGE.UNLIST_MARKETPLACE]: true,
+        },
+        [ATTRIBUTE_GROUP.AI_AGENT]: {
+          [ACTION_MANAGE.CREATE_AI_AGENT]: true,
+          [ACTION_MANAGE.EDIT_AI_AGENT]: true,
+          [ACTION_MANAGE.FORK_AI_AGENT]: true,
+          [ACTION_MANAGE.RUN_AI_AGENT]: true,
+        },
+        [ATTRIBUTE_GROUP.WORKFLOW]: {
+          [ACTION_MANAGE.CREATE_WORKFLOW]: true,
+          [ACTION_MANAGE.EDIT_WORKFLOW]: true,
+        },
+        [ATTRIBUTE_GROUP.FLOW_NODE]: {},
+        [ATTRIBUTE_GROUP.FLOW_ACTION]: {
+          [ACTION_MANAGE.CREATE_FLOW_ACTION]: true,
+          [ACTION_MANAGE.EDIT_FLOW_ACTION]: true,
+          [ACTION_MANAGE.PREVIEW_FLOW_ACTION]: true,
+          [ACTION_MANAGE.RUN_FLOW_ACTION]: true,
+        },
+        [ATTRIBUTE_GROUP.OBJECT_STORAGE]: {
+          [ACTION_MANAGE.CREATE_FILE]: true,
+          [ACTION_MANAGE.EDIT_FILE]: true,
+          [ACTION_MANAGE.CREATE_SHARELINK]: true,
+          [ACTION_MANAGE.CREATE_TEMPORARY_FILE]: true,
         },
       },
       [USER_ROLE.EDITOR]: {
