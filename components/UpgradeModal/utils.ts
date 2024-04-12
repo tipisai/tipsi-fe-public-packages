@@ -26,17 +26,17 @@ export const handleCreditPurchaseError = (
   const creditModal = createCreditModal()
   if (
     isILLAAPiError(e) &&
-    (e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_COLLA ||
+    (e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_CREDIT ||
       e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_DRIVE_VOLUME ||
       e.data.errorFlag ===
         ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_AI_TOKEN_GENERAL ||
-      e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_AUTO_CHARGE_COLLA_FAILED ||
+      e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_AUTO_CHARGE_CREDIT_FAILED ||
       e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_DRIVE_TRAFFIC ||
-      e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_COLLA_PAYMENT_FAILURE ||
+      e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_CREDIT_PAYMENT_FAILURE ||
       e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_OUT_OF_USAGE_TRAFFIC ||
       e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_OUT_OF_USAGE_VOLUME ||
       e.data.errorFlag ===
-        ERROR_FLAG.ERROR_FLAG_AI_AGENT_MAX_TOKEN_OVER_COLLA_BALANCE)
+        ERROR_FLAG.ERROR_FLAG_AI_AGENT_MAX_TOKEN_OVER_CREDIT_BALANCE)
   ) {
     creditModal?.({
       modalType,
