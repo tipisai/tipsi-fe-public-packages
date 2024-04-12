@@ -187,38 +187,17 @@ export const canManage = (
   return !!manageAttribute?.[attribute]
 }
 
-export const canUseUpgradeFeature = (
-  userRole: USER_ROLE = USER_ROLE.VIEWER,
-  teamPlan: SUBSCRIBE_PLAN = SUBSCRIBE_PLAN.CREDIT_FREE,
-  isSubscribe?: boolean,
-  isSubscribeAndSufficient?: boolean,
-) => {
-  if (!isSubscribe) return false
-  const accessAttribute = getAttribute(
-    userRole,
-    ATTRIBUTE_GROUP.BILLING,
-    teamPlan,
-  ).accessAttribute
-
-  return isSubscribeAndSufficient || !!accessAttribute?.[ACTION_ACCESS.VIEW]
-}
-
 export const canManagePayment = (
   userRole: USER_ROLE = USER_ROLE.VIEWER,
   teamPlan: SUBSCRIBE_PLAN = SUBSCRIBE_PLAN.CREDIT_FREE,
-  isSubscribe?: boolean,
 ) => {
-  const attribute = isSubscribe
-    ? ACTION_MANAGE.PAYMENT_INFO
-    : ACTION_MANAGE.PAYMENT
-
   const manageAttribute = getAttribute(
     userRole,
     ATTRIBUTE_GROUP.BILLING,
     teamPlan,
   ).manageAttribute
 
-  return !!manageAttribute?.[attribute]
+  return !!manageAttribute?.[ACTION_MANAGE.PAYMENT]
 }
 
 export const canManageInvite = (
