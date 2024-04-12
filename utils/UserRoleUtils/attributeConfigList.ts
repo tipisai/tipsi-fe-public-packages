@@ -43,6 +43,7 @@ export const AttributeConfigList: AttributeConfigListShape = {
       [ATTRIBUTE_GROUP.WORKFLOW]: { [ACTION_ACCESS.VIEW]: true },
       [ATTRIBUTE_GROUP.FLOW_NODE]: { [ACTION_ACCESS.VIEW]: true },
       [ATTRIBUTE_GROUP.FLOW_ACTION]: { [ACTION_ACCESS.VIEW]: true },
+      [ATTRIBUTE_GROUP.OBJECT_STORAGE]: { [ACTION_ACCESS.VIEW]: true },
     },
     [USER_ROLE.ADMIN]: {
       [ATTRIBUTE_GROUP.TEAM]: { [ACTION_ACCESS.VIEW]: true },
@@ -72,6 +73,7 @@ export const AttributeConfigList: AttributeConfigListShape = {
       [ATTRIBUTE_GROUP.WORKFLOW]: { [ACTION_ACCESS.VIEW]: true },
       [ATTRIBUTE_GROUP.FLOW_NODE]: { [ACTION_ACCESS.VIEW]: true },
       [ATTRIBUTE_GROUP.FLOW_ACTION]: { [ACTION_ACCESS.VIEW]: true },
+      [ATTRIBUTE_GROUP.OBJECT_STORAGE]: { [ACTION_ACCESS.VIEW]: true },
     },
     [USER_ROLE.EDITOR]: {
       [ATTRIBUTE_GROUP.TEAM_MEMBER]: { [ACTION_ACCESS.VIEW]: true },
@@ -96,6 +98,7 @@ export const AttributeConfigList: AttributeConfigListShape = {
       [ATTRIBUTE_GROUP.WORKFLOW]: { [ACTION_ACCESS.VIEW]: true },
       [ATTRIBUTE_GROUP.FLOW_NODE]: { [ACTION_ACCESS.VIEW]: true },
       [ATTRIBUTE_GROUP.FLOW_ACTION]: { [ACTION_ACCESS.VIEW]: true },
+      [ATTRIBUTE_GROUP.OBJECT_STORAGE]: { [ACTION_ACCESS.VIEW]: true },
     },
     [USER_ROLE.VIEWER]: {
       [ATTRIBUTE_GROUP.TEAM_MEMBER]: { [ACTION_ACCESS.VIEW]: true },
@@ -116,6 +119,7 @@ export const AttributeConfigList: AttributeConfigListShape = {
       [ATTRIBUTE_GROUP.CAPACITIES]: { [ACTION_ACCESS.VIEW]: true },
       [ATTRIBUTE_GROUP.DRIVE]: { [ACTION_ACCESS.VIEW]: true },
       [ATTRIBUTE_GROUP.AI_AGENT]: { [ACTION_ACCESS.VIEW]: true },
+      [ATTRIBUTE_GROUP.OBJECT_STORAGE]: { [ACTION_ACCESS.VIEW]: true },
     },
   },
   [ATTRIBUTE_CATEGORY.DELETE]: {
@@ -143,6 +147,7 @@ export const AttributeConfigList: AttributeConfigListShape = {
       [ATTRIBUTE_GROUP.WORKFLOW]: { [ACTION_DELETE.DELETE]: true },
       [ATTRIBUTE_GROUP.FLOW_NODE]: { [ACTION_DELETE.DELETE]: true },
       [ATTRIBUTE_GROUP.FLOW_ACTION]: { [ACTION_DELETE.DELETE]: true },
+      [ATTRIBUTE_GROUP.OBJECT_STORAGE]: { [ACTION_ACCESS.VIEW]: true },
     },
     [USER_ROLE.ADMIN]: {
       [ATTRIBUTE_GROUP.TEAM_MEMBER]: { [ACTION_DELETE.DELETE]: true },
@@ -166,6 +171,7 @@ export const AttributeConfigList: AttributeConfigListShape = {
       [ATTRIBUTE_GROUP.WORKFLOW]: { [ACTION_DELETE.DELETE]: true },
       [ATTRIBUTE_GROUP.FLOW_NODE]: { [ACTION_DELETE.DELETE]: true },
       [ATTRIBUTE_GROUP.FLOW_ACTION]: { [ACTION_DELETE.DELETE]: true },
+      [ATTRIBUTE_GROUP.OBJECT_STORAGE]: { [ACTION_ACCESS.VIEW]: true },
     },
     [USER_ROLE.EDITOR]: {
       [ATTRIBUTE_GROUP.TEAM_MEMBER]: { [ACTION_DELETE.DELETE]: true },
@@ -182,6 +188,7 @@ export const AttributeConfigList: AttributeConfigListShape = {
       [ATTRIBUTE_GROUP.WORKFLOW]: { [ACTION_DELETE.DELETE]: true },
       [ATTRIBUTE_GROUP.FLOW_NODE]: { [ACTION_DELETE.DELETE]: true },
       [ATTRIBUTE_GROUP.FLOW_ACTION]: { [ACTION_DELETE.DELETE]: true },
+      [ATTRIBUTE_GROUP.OBJECT_STORAGE]: { [ACTION_ACCESS.VIEW]: true },
     },
     [USER_ROLE.VIEWER]: {
       [ATTRIBUTE_GROUP.TEAM_MEMBER]: { [ACTION_DELETE.DELETE]: true },
@@ -274,6 +281,12 @@ export const AttributeConfigList: AttributeConfigListShape = {
         [ACTION_MANAGE.PREVIEW_FLOW_ACTION]: true,
         [ACTION_MANAGE.RUN_FLOW_ACTION]: true,
       },
+      [ATTRIBUTE_GROUP.OBJECT_STORAGE]: {
+        [ACTION_MANAGE.CREATE_FILE]: true,
+        [ACTION_MANAGE.EDIT_FILE]: true,
+        [ACTION_MANAGE.CREATE_SHARELINK]: true,
+        [ACTION_MANAGE.CREATE_TEMPORARY_FILE]: true,
+      },
     },
     [USER_ROLE.ADMIN]: {
       [ATTRIBUTE_GROUP.TEAM]: {
@@ -355,6 +368,12 @@ export const AttributeConfigList: AttributeConfigListShape = {
         [ACTION_MANAGE.PREVIEW_FLOW_ACTION]: true,
         [ACTION_MANAGE.RUN_FLOW_ACTION]: true,
       },
+      [ATTRIBUTE_GROUP.OBJECT_STORAGE]: {
+        [ACTION_MANAGE.CREATE_FILE]: true,
+        [ACTION_MANAGE.EDIT_FILE]: true,
+        [ACTION_MANAGE.CREATE_SHARELINK]: true,
+        [ACTION_MANAGE.CREATE_TEMPORARY_FILE]: true,
+      },
     },
     [USER_ROLE.EDITOR]: {
       [ATTRIBUTE_GROUP.TEAM_MEMBER]: {
@@ -414,6 +433,12 @@ export const AttributeConfigList: AttributeConfigListShape = {
         [ACTION_MANAGE.EDIT_FLOW_ACTION]: true,
         [ACTION_MANAGE.PREVIEW_FLOW_ACTION]: true,
         [ACTION_MANAGE.RUN_FLOW_ACTION]: true,
+      },
+      [ATTRIBUTE_GROUP.OBJECT_STORAGE]: {
+        [ACTION_MANAGE.CREATE_FILE]: true,
+        [ACTION_MANAGE.EDIT_FILE]: true,
+        [ACTION_MANAGE.CREATE_SHARELINK]: true,
+        [ACTION_MANAGE.CREATE_TEMPORARY_FILE]: true,
       },
     },
     [USER_ROLE.VIEWER]: {

@@ -45,22 +45,9 @@ export const getCurrentTeamIdentifier = createSelector(
   },
 )
 
-export const getPlanUtils = (teamInfo?: TeamInfo) => {
+export const getPlanUtils = (teamInfo?: TeamInfo): SUBSCRIBE_PLAN => {
   if (!teamInfo) return SUBSCRIBE_PLAN.UNDEFINED
-  const { currentTeamLicense, appSumoTeamLicense } = teamInfo
-  if (!currentTeamLicense && !appSumoTeamLicense) {
-    return SUBSCRIBE_PLAN.UNDEFINED
-  }
-  if (
-    currentTeamLicense.plan === SUBSCRIBE_PLAN.TEAM_LICENSE_FREE &&
-    (appSumoTeamLicense?.plan === SUBSCRIBE_PLAN.TEAM_LICENSE_APPSUMO_TIER_1 ||
-      appSumoTeamLicense?.plan === SUBSCRIBE_PLAN.TEAM_LICENSE_APPSUMO_TIER_2 ||
-      appSumoTeamLicense?.plan === SUBSCRIBE_PLAN.TEAM_LICENSE_APPSUMO_TIER_3 ||
-      appSumoTeamLicense?.plan === SUBSCRIBE_PLAN.TEAM_LICENSE_APPSUMO_TIER_4)
-  ) {
-    return SUBSCRIBE_PLAN.TEAM_LICENSE_PLUS
-  }
-  return currentTeamLicense.plan
+  return teamInfo.credit.plan
 }
 
 export const getCurrentTeamPlan = createSelector(
