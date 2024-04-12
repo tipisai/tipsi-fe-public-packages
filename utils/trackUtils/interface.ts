@@ -55,4 +55,5 @@ export interface IReportedUserInfo {
 export interface IReportedTeamInfo {
   name: string
   identifier: string
+  paymentPlan: string
 }
