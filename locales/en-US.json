@@ -8,6 +8,7 @@
   "dashboard.message.support_for_up_to_10": "Support for up to 10 files at most.",
   "dashboard.message.please_use_a_file_wi": "Please use a file with a size not exceeding 20MB.",
   "dashboard.message.bad_file": "The file may be damaged. Please replace the file.",
+  "homepage.tipi_chat.message.failed_to_add": "Some file formats are not supported and have been removed.",
   "editor.ai-agent.button.generating": "Generating",
   "editor.ai-agent.message.reconnect": "Connection lost. Reconnecting...",
   "editor.ai-agent.tips.not-start-run": "Please click the Start button on the left.",
