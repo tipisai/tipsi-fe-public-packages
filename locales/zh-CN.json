@@ -8,6 +8,7 @@
   "dashboard.message.support_for_up_to_10": "最多支持10个文件。",
   "dashboard.message.please_use_a_file_wi": "请使用大小不超过 20MB 的文件。",
   "dashboard.message.bad_file": "文件可能已损坏。请替换该文件。",
+  "homepage.tipi_chat.message.failed_to_add": "Some file formats are not supported and have been removed.",
   "editor.ai-agent.button.generating": "生成中",
   "editor.ai-agent.message.reconnect": "连接中断。正在重新连接...",
   "editor.ai-agent.tips.not-start-run": "请点击左侧的开始按钮",

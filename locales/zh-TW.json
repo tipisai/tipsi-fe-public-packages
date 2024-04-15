@@ -8,6 +8,7 @@
   "dashboard.message.support_for_up_to_10": "支援最多10個檔案。",
   "dashboard.message.please_use_a_file_wi": "請使用不超過20MB的檔案。",
   "dashboard.message.bad_file": "檔案可能已損壞。請更換檔案。",
+  "homepage.tipi_chat.message.failed_to_add": "Some file formats are not supported and have been removed.",
   "editor.ai-agent.button.generating": "產生中",
   "editor.ai-agent.message.reconnect": "連線丟失。正在重新連線...",
   "editor.ai-agent.tips.not-start-run": "請點擊左側的開始按鈕。",

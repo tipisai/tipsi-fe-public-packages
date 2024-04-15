@@ -8,6 +8,7 @@
   "dashboard.message.support_for_up_to_10": "最大10個までのファイルをサポートします。",
   "dashboard.message.please_use_a_file_wi": "20MBを超えないファイルを使用してください。",
   "dashboard.message.bad_file": "ファイルが破損している可能性があります。ファイルを交換してください。",
+  "homepage.tipi_chat.message.failed_to_add": "Some file formats are not supported and have been removed.",
   "editor.ai-agent.button.generating": "生成中",
   "editor.ai-agent.message.reconnect": "接続が失われました。再接続中...",
   "editor.ai-agent.tips.not-start-run": "左側のStartボタンをクリックしてください。",
