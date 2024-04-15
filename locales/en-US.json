@@ -13,7 +13,7 @@
   "editor.ai-agent.message.reconnect": "Connection lost. Reconnecting...",
   "editor.ai-agent.tips.not-start-run": "Please click the Start button on the left.",
   "editor.ai-agent.tips.not-start": "Complete the Tipi configure and click Start to run",
-  "editor.ai-agent.placeholder.send": "Chat with Tipi",
+  "editor.ai-agent.placeholder.send": "Send text, files, and pictures to Tipi.",
   "editor.ai-agent.button.send": "Send",
   "homepage.tipi_chat.message.release_to_upload": "Release to upload",
   "editor.ai-agent.message.start-failed": "Failed to start. Please try again. ",
