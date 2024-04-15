@@ -8,7 +8,7 @@ export const errorPageStyle = css`
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  padding-top: 30vh;
+  padding: 30vh 20px 0 20px;
   font-size: 14px;
   color: ${globalColor(`--${illaPrefix}-grayBlue-02`)};
   font-weight: bold;
@@ -16,6 +16,7 @@ export const errorPageStyle = css`
   span + span {
     font-weight: normal;
     color: ${globalColor(`--${illaPrefix}-grayBlue-03`)};
+    text-align: center;
   }
 `
 
@@ -31,4 +32,5 @@ export const buttonStyle = css`
   margin-top: 24px;
   display: flex;
   gap: 8px;
+  justify-content: center;
 `
