@@ -129,7 +129,7 @@
   "team_setting.left_panel.delete": "チームを削除",
   "team_setting.left_panel.leave": "チームを脱退",
   "billing.redirect_page.title": "支払いが成功しました",
-  "billing.redirect_page.desc1": "ご購入いただき、ありがとうございます。ILLA Cloudは引き続きさまざまな機能を提供します。",
+  "billing.redirect_page.desc1": "ご購入いただき、ありがとうございます。Tipisは引き続きさまざまな機能を提供します。",
   "billing.redirect_page.desc2": "Tipisへのリダイレクトまであと{{time}}秒...",
   "billing.redirect_page.button": "Tipisに戻る",
   "billing.menu.overview": "概要",
