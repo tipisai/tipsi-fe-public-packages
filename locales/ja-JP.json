@@ -269,7 +269,7 @@
   "editor.ai-agent.save": "保存",
   "homepage.edit_tipi.modal.create": "作成",
   "share": "共有",
-  "user_management.modal.custom_copy_text_agent_invite": "{{userName}}さんが「{{teamName}}」からAIエージェントを共有しました。チームに参加して確認してください：{{inviteLink}}",
+  "user_management.modal.custom_copy_text_agent_invite": "{{userName}}さんが「{{teamName}}」からTipiを共有しました。チームに参加して確認してください：{{inviteLink}}",
   "editor.ai-agent.validation_blank.variable_value": "キーと値の両方が空でないか、いずれかが空であることを確認してください。",
   "editor.ai-agent.start": "開始",
   "editor.ai-agent.restart": "再起動",
