@@ -22,6 +22,7 @@ export interface IKnowledgeFile {
   fileName: string
   contentType: string
   fileID: string
+  downloadURL?: string
 }
 
 export interface AgentRaw {
