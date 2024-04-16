@@ -17,6 +17,7 @@ import DeleteIcon from "./publicIcon/delete.svg?react"
 import DocsIcon from "./publicIcon/doc.svg?react"
 import DoubtIcon from "./publicIcon/doubt.svg?react"
 import DownIcon from "./publicIcon/down.svg?react"
+import DownloadIcon from "./publicIcon/download.svg?react"
 import DragPointIcon from "./publicIcon/dragPoint.svg?react"
 import EmptyIcon from "./publicIcon/emptyIcon.svg?react"
 import ErrorIcon from "./publicIcon/error.svg?react"
@@ -108,4 +109,5 @@ export {
   ResultEmptyIcon,
   SendIcon,
   ExitIcon,
+  DownloadIcon,
 }
