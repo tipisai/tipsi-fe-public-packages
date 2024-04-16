@@ -129,7 +129,7 @@
   "team_setting.left_panel.delete": "删除团队",
   "team_setting.left_panel.leave": "退出团队",
   "billing.redirect_page.title": "支付成功",
-  "billing.redirect_page.desc1": "感谢您的购买。ILLA Cloud将继续为您提供更多功能。",
+  "billing.redirect_page.desc1": "感谢您的购买。Tipis将继续为您提供更多功能。",
   "billing.redirect_page.desc2": "正在跳转到Tipis，请稍候{{time}}s...",
   "billing.redirect_page.button": "返回Tipis",
   "billing.menu.overview": "概览",
