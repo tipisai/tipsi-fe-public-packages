@@ -299,6 +299,7 @@
   "homepage.tipi_chat.message.drop_to_upload": "Zum Hochladen hier ablegen",
   "homepage.tipi_chat.message.drag_to_upload": "Hierhin ziehen und loslassen um Dateien hochzuladen",
   "editor.ai-agent.copy_code": "Code kopieren",
+  "homepage.tipi_chat.message.file_expired": "The file has expired.",
   "homepage.tipi_chat.response.resonse": "Response",
   "homepage.tipi_chat.processing_status.title.python": "Tipis intelligente Analyse",
   "homepage.tipi_chat.processing_status.suc": "Erfolgreich analysiert",
