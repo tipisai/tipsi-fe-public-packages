@@ -40,7 +40,7 @@ export const Calculator: FC<CalculatorProps> = ({
         <span css={orStyle}>or</span>
         <span>
           {`${t("billing.payment_sidebar.colla.5", {
-            functionNum: `${changeNum * unitCreditByCycle * FUNCTION_NUM}s`,
+            functionNum: `${changeNum * unitCreditByCycle * FUNCTION_NUM}`,
           })}`}
         </span>
       </div>
