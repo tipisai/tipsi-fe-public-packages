@@ -269,7 +269,7 @@
   "editor.ai-agent.save": "Speichern",
   "homepage.edit_tipi.modal.create": "Erstellen",
   "share": "Teilen",
-  "user_management.modal.custom_copy_text_agent_invite": "{{ userName }} teilen Sie einen AI Agent von <unk>{{ teamName }}<unk> . Schließen Sie sich dem Team an und überprüfen Sie: {{ inviteLink }}",
+  "user_management.modal.custom_copy_text_agent_invite": "{{ userName }} teilen Sie einen Tipi von <unk>{{ teamName }}<unk> . Schließen Sie sich dem Team an und überprüfen Sie: {{ inviteLink }}<unk>",
   "editor.ai-agent.validation_blank.variable_value": "Bitte stellen Sie sicher, dass sowohl der Schlüssel als auch der Wert entweder leer oder nicht leer sind.",
   "editor.ai-agent.start": "Starten",
   "editor.ai-agent.restart": "Neustart",
