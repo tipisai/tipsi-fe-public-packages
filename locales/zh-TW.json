@@ -6,7 +6,7 @@
   "network_error": "網路斷開。請檢查此裝置的網路。",
   "page.user.sign_up.actions.send": "發送代碼。",
   "editor.ai-agent.tips.not-start": "完成 Tipi 配置並點擊「開始」執行。",
-  "editor.ai-agent.tips.not-start-run": "Processing...",
+  "editor.ai-agent.tips.not-start-run": "處理中...",
   "editor.ai-agent.button.generating": "產生中",
   "dashboard.message.support_for_up_to_10": "支援最多10個檔案。",
   "dashboard.message.please_use_a_file_wi": "請使用不超過20MB的檔案。",
