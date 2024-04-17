@@ -299,7 +299,7 @@
   "homepage.tipi_chat.message.drop_to_upload": "松开即可上传",
   "homepage.tipi_chat.message.drag_to_upload": "拖拽文件到这里上传文件",
   "editor.ai-agent.copy_code": "复制代码",
-  "homepage.tipi_chat.message.file_expired": "The file has expired.",
+  "homepage.tipi_chat.message.file_expired": "文件已过期。",
   "homepage.tipi_chat.response.resonse": "Response",
   "homepage.tipi_chat.processing_status.title.python": "Tipis 智能分析",
   "homepage.tipi_chat.processing_status.suc": "分析成功",
