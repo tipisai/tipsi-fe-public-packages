@@ -6,7 +6,7 @@
   "network_error": "ネットワークが切断されました。このデバイスのネットワークを確認してください。",
   "page.user.sign_up.actions.send": "コードを送信",
   "editor.ai-agent.tips.not-start": "Tipi の設定を完了し、「開始」をクリックして実行してください。",
-  "editor.ai-agent.tips.not-start-run": "Processing...",
+  "editor.ai-agent.tips.not-start-run": "処理中...",
   "editor.ai-agent.button.generating": "生成中",
   "dashboard.message.support_for_up_to_10": "最大10個までのファイルをサポートします。",
   "dashboard.message.please_use_a_file_wi": "20MBを超えないファイルを使用してください。",
