@@ -151,6 +151,7 @@
   "tipi_billing.used": "Verwendet",
   "tipi_billing.token": "Token",
   "tipi_billing.traffic": "Verkehr",
+  "tipi_billing.function": "Run functions",
   "tipi_billing.credit_usage": "Kreditnutzung",
   "tipi_billing.text_generation": "Textgenerierung",
   "tipi_billing.text_generation_num": "Etwa 100.000 Token / 5.000 Credits",
