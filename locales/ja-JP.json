@@ -151,7 +151,7 @@
   "tipi_billing.used": "使用済",
   "tipi_billing.token": "Token",
   "tipi_billing.traffic": "トラフィック",
-  "tipi_billing.function": "Run functions",
+  "tipi_billing.function": "関数の実行",
   "tipi_billing.credit_usage": "クレジットの利用",
   "tipi_billing.text_generation": "テキスト生成",
   "tipi_billing.text_generation_num": "約200,000トークン / 5000クレジット",
