@@ -151,7 +151,7 @@
   "tipi_billing.used": "已使用",
   "tipi_billing.token": "Token",
   "tipi_billing.traffic": "流量",
-  "tipi_billing.function": "Run functions",
+  "tipi_billing.function": "执行函数",
   "tipi_billing.credit_usage": "额度使用情況",
   "tipi_billing.text_generation": "文字生成",
   "tipi_billing.text_generation_num": "約200,000個token / 5000额度",
