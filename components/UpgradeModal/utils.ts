@@ -3,7 +3,7 @@ import { SUBSCRIBE_PLAN } from "@illa-public/public-types"
 import { getILLACloudURL } from "@illa-public/utils"
 import { BILLING_REPORT_FROM } from "./constants"
 import { createCreditModal, createTeamLimitModal } from "./hook"
-import { CreditModalType, FREE_TEAM_LIMIT_TYPE } from "./interface"
+import { FREE_TEAM_LIMIT_TYPE } from "./interface"
 
 export function getSuccessRedirectWithParams(
   params: Record<string, string | number>,
@@ -19,14 +19,12 @@ export function getSuccessRedirectWithParams(
   return `${getILLACloudURL(window.customDomain)}${redirectPath}?${paramString}`
 }
 
-export const handleCreditPurchaseError = (
-  e: unknown,
-  modalType: CreditModalType,
-) => {
+export const handleCreditPurchaseError = (e: unknown) => {
   const creditModal = createCreditModal()
   if (
     isILLAAPiError(e) &&
     (e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_CREDIT ||
+      e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_FUND ||
       e.data.errorFlag === ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_DRIVE_VOLUME ||
       e.data.errorFlag ===
         ERROR_FLAG.ERROR_FLAG_INSUFFICIENT_AI_TOKEN_GENERAL ||
@@ -39,7 +37,6 @@ export const handleCreditPurchaseError = (
         ERROR_FLAG.ERROR_FLAG_AI_AGENT_MAX_TOKEN_OVER_CREDIT_BALANCE)
   ) {
     creditModal?.({
-      modalType,
       from: BILLING_REPORT_FROM.RUN,
     })
     return true

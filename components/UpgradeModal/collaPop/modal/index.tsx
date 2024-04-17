@@ -36,7 +36,6 @@ export const UpgradeCreditModal: FC = () => {
     }
     return (
       <CreditModal
-        modalType={modal.modalType}
         visible={modal.visible}
         from={modal.from}
         onCancel={() => {
