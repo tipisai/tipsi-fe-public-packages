@@ -19,8 +19,8 @@ export interface IForgetPasswordRequestBody {
 }
 
 export interface ICreditUsageInfoResponse {
-  // driveVolumeUsage: number
-  // driveVolumeUsagePercent: number
+  toolCallUsage: number
+  toolCallUsagePercent: number
   driveTrafficUsage: number
   driveTrafficUsagePercent: number
   aiTokenGeneralUsage: number
