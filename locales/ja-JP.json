@@ -299,6 +299,7 @@
   "homepage.tipi_chat.message.drop_to_upload": "アップロードするにはここにドロップ",
   "homepage.tipi_chat.message.drag_to_upload": "ここにドラッグ＆ドロップしてアップロードします",
   "editor.ai-agent.copy_code": "コードをコピー",
+  "homepage.tipi_chat.message.file_expired": "The file has expired.",
   "homepage.tipi_chat.response.resonse": "Response",
   "homepage.tipi_chat.processing_status.title.python": "Python を実行",
   "homepage.tipi_chat.processing_status.suc": "成功に解析",
