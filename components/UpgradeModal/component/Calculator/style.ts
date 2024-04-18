@@ -14,8 +14,6 @@ export const calculatorTitleStyle = css`
   line-height: 22px;
 `
 export const goodsStyle = css`
-  display: flex;
-  gap: 8px;
   align-items: center;
   font-size: 14px;
   font-weight: 400;
@@ -25,4 +23,9 @@ export const goodsStyle = css`
 
 export const orStyle = css`
   color: ${getColor("grayBlue", "03")};
+  margin-right: 4px;
+`
+
+export const singleGoodStyle = css`
+  margin-right: 4px;
 `

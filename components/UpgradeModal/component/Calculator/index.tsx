@@ -1,14 +1,16 @@
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 import {
-  FUNCTION_NUM,
+  UNIT_CREDIT_CONVERSION_FUNCTION_NUM,
   UNIT_CREDIT_CONVERSION_TOKEN,
 } from "../../service/interface"
+import { toThousands } from "../../utils"
 import {
   calculatorStyle,
   calculatorTitleStyle,
   goodsStyle,
   orStyle,
+  singleGoodStyle,
 } from "./style"
 
 interface CalculatorProps {
@@ -25,22 +27,22 @@ export const Calculator: FC<CalculatorProps> = ({
     <div css={calculatorStyle}>
       <span css={calculatorTitleStyle}>
         {t("tipi_billing.credit_calculator_title", {
-          purchaseNum: `${changeNum * unitCreditByCycle}k`,
+          purchaseNum: `${toThousands(changeNum * unitCreditByCycle)}`,
         })}
         &nbsp; ≈
       </span>
       <div css={goodsStyle}>
-        <span>
+        <span css={singleGoodStyle}>
           {`${t("billing.payment_sidebar.colla.4", {
-            tokenNum: `${
-              changeNum * unitCreditByCycle * UNIT_CREDIT_CONVERSION_TOKEN
-            }k`,
+            tokenNum: `${toThousands(
+              changeNum * unitCreditByCycle * UNIT_CREDIT_CONVERSION_TOKEN,
+            )}`,
           })}`}
         </span>
         <span css={orStyle}>or</span>
         <span>
           {`${t("billing.payment_sidebar.colla.5", {
-            functionNum: `${changeNum * unitCreditByCycle * FUNCTION_NUM}`,
+            functionNum: `${toThousands(changeNum * unitCreditByCycle * UNIT_CREDIT_CONVERSION_FUNCTION_NUM)}`,
           })}`}
         </span>
       </div>

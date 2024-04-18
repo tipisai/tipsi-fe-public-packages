@@ -50,6 +50,7 @@ import SorterUpIcon from "./publicIcon/sorterUp.svg?react"
 import StarFillIcon from "./publicIcon/starFill.svg?react"
 import StarOutlineIcon from "./publicIcon/starOutline.svg?react"
 import SuccessIcon from "./publicIcon/success.svg?react"
+import UnPinIcon from "./publicIcon/unpin.svg?react"
 import UpIcon from "./publicIcon/up.svg?react"
 import UploadIcon from "./publicIcon/upload.svg?react"
 import WarningCircleIcon from "./publicIcon/warningCircle.svg?react"
@@ -110,4 +111,5 @@ export {
   SendIcon,
   ExitIcon,
   DownloadIcon,
+  UnPinIcon,
 }

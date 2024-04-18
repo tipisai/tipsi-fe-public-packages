@@ -67,3 +67,7 @@ export const isSubscribeForDrawer = (subscribePlan?: SUBSCRIBE_PLAN) => {
     subscribePlan === SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_PAID
   )
 }
+
+export const toThousands = (num: number) => {
+  return num.toLocaleString("en-US")
+}
