@@ -160,6 +160,29 @@ export const userAPI = createApi({
       },
       invalidatesTags: ["User"],
     }),
+    setPersonalization: builder.mutation<void, Record<string, unknown>>({
+      query: (data) => ({
+        method: "PUT",
+        url: "/users/personalization",
+        body: data,
+      }),
+      onQueryStarted: async (data, { dispatch, queryFulfilled }) => {
+        const patchResult = dispatch(
+          userAPI.util.updateQueryData("getUserInfo", null, (draft) => {
+            draft = {
+              ...draft,
+              personalization: data,
+            }
+            return draft
+          }),
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
+    }),
   }),
 })
 
@@ -170,4 +193,5 @@ export const {
   useUpdateUserAvatarMutation,
   useUpdateNickNameMutation,
   useSetPasswordMutation,
+  useSetPersonalizationMutation,
 } = userAPI
