@@ -140,7 +140,7 @@
   "billing.redirect_page.desc2": "Weiterleitung zu Tipis in {{time}} Sekunden...",
   "billing.redirect_page.button": "Zurück zu Tipis",
   "billing.menu.overview": "Übersicht",
-  "tipi_billing.credits_desc": "5000 Credits ≈ 200.000 Tokens oder 5.000 Minuten Funktionsausführung",
+  "tipi_billing.credits_desc": "{{creditUnit}} Credits ≈ {{tokenUnit}} Tokens oder {{functionUnit}} Minuten Funktionsausführung",
   "tipi_billing.manage_credits": "Credits verwalten",
   "billing.label.expired": "Abgelaufen",
   "billing.label.canceled": "Canceled",
