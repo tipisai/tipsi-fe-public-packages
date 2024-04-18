@@ -34,6 +34,7 @@ export interface BaseUserInfo {
   createdAt: string
   updatedAt: string
   promotionCode?: BasePromotionCode[]
+  personalization: Record<string, unknown> | null
 }
 
 export interface CurrentUserInfo extends BaseUserInfo {
