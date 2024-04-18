@@ -7,7 +7,11 @@ import { CloseIcon, UpgradeIcon } from "@illa-public/icon"
 import { SUBSCRIPTION_CYCLE } from "@illa-public/public-types"
 import { TipisTrack } from "@illa-public/track-utils"
 import { useCreditDrawer } from "../../hook"
-import { CREDIT_UNIT_PRICE } from "../../service/interface"
+import {
+  CREDIT_UNIT_BY_CYCLE,
+  CREDIT_UNIT_PRICE,
+} from "../../service/interface"
+import { toThousands } from "../../utils"
 import CreditBg from "./assets/collarBg.svg?react"
 import { CreditModalProps } from "./interface"
 import {
@@ -83,7 +87,11 @@ export const CreditModal: FC<CreditModalProps> = (props) => {
               {`$${CREDIT_UNIT_PRICE[SUBSCRIPTION_CYCLE.MONTHLY]}`}
             </div>
             <div css={priceContentStyle}>
-              {t("billing.modal.colla_insufficient_modal.cycle")}
+              {t("billing.modal.colla_insufficient_modal.cycle", {
+                unit: toThousands(
+                  CREDIT_UNIT_BY_CYCLE[SUBSCRIPTION_CYCLE.MONTHLY],
+                ),
+              })}
             </div>
           </div>
           <Button
