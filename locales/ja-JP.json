@@ -140,7 +140,7 @@
   "billing.redirect_page.desc2": "Tipisへのリダイレクトまであと{{time}}秒...",
   "billing.redirect_page.button": "Tipisに戻る",
   "billing.menu.overview": "概要",
-  "tipi_billing.credits_desc": "5kクレジット ≈ 200,000 トークンまたは 5,000 分間の関数実行",
+  "tipi_billing.credits_desc": "{{creditUnit}}クレジット ≈ {{tokenUnit}}トークンまたは{{functionUnit}}分間の関数実行",
   "tipi_billing.manage_credits": "クレジットの管理",
   "billing.label.expired": "期限切れ",
   "billing.label.canceled": "キャンセル済み",
