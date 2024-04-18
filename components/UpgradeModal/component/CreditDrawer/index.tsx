@@ -18,7 +18,11 @@ import {
   CREDIT_UNIT_BY_CYCLE,
   CREDIT_UNIT_PRICE,
 } from "../../service/interface"
-import { getSuccessRedirectWithParams, isSubscribeForDrawer } from "../../utils"
+import {
+  getSuccessRedirectWithParams,
+  isSubscribeForDrawer,
+  toThousands,
+} from "../../utils"
 import { Calculator } from "../Calculator"
 import { LEARN_MORE_LINK, SUBSCRIBE_CLASS_NAME } from "./constants"
 import { CreditDrawerProps } from "./interface"
@@ -215,7 +219,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
   }
 
   const { btnText, description } = useMemo(() => {
-    const num = `${changeNum * unitCreditByCycle}k`
+    const num = `${toThousands(changeNum * unitCreditByCycle)}`
     if (currentTeamInfo?.credit?.cycle !== cycle && isSubScribe) {
       return {
         btnText: t("tipi_billing.change_plan", {
@@ -324,8 +328,26 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
             <div css={manageHeaderStyle}>
               <div>{t("tipi_billing.credit")}</div>
               <div css={managePriceStyle}>
-                <span>{t("tipi_billing.monthly_price_total")}</span>
-                <span>{t("tipi_billing.annual_price_total")}</span>
+                <span>
+                  {t("tipi_billing.monthly_price_total", {
+                    unitPrice: toThousands(
+                      CREDIT_UNIT_PRICE[SUBSCRIPTION_CYCLE.MONTHLY],
+                    ),
+                    unitCredit: toThousands(
+                      CREDIT_UNIT_BY_CYCLE[SUBSCRIPTION_CYCLE.MONTHLY],
+                    ),
+                  })}
+                </span>
+                <span>
+                  {t("tipi_billing.annual_price_total", {
+                    unitPrice: toThousands(
+                      CREDIT_UNIT_PRICE[SUBSCRIPTION_CYCLE.YEARLY],
+                    ),
+                    unitCredit: toThousands(
+                      CREDIT_UNIT_BY_CYCLE[SUBSCRIPTION_CYCLE.YEARLY],
+                    ),
+                  })}
+                </span>
               </div>
             </div>
             <div css={manageItemStyle}>
