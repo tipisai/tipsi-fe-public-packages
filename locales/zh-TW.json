@@ -140,7 +140,7 @@
   "billing.redirect_page.desc2": "Redirecting to Tipis in {{time}} seconds...",
   "billing.redirect_page.button": "Back to Tipis",
   "billing.menu.overview": "概览",
-  "tipi_billing.credits_desc": "5k額度 ≈ 200,000 token 或 5,000 分鐘函數執行",
+  "tipi_billing.credits_desc": "{{creditUnit}}額度 ≈ {{tokenUnit}} token或{{functionUnit}}分鐘函數執行",
   "tipi_billing.manage_credits": "管理額度",
   "billing.label.expired": "已過期",
   "billing.label.canceled": "已取消",
