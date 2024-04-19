@@ -24,9 +24,17 @@ export interface IMarketplaceInfo {
   updatedAt: string
   isStarredByCurrentUser: boolean
   config: IMarketplaceConfig
+  isOfficial: boolean
 }
 
 export interface IMarketAIAgent {
   aiAgent: Agent
   marketplace: IMarketplaceInfo
+}
+
+export interface IMarketAgentListData {
+  products: IMarketAIAgent[]
+  hasMore: boolean
+  recommendHashtags: string[]
+  summaryHashtags?: string[]
 }
