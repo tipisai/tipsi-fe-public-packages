@@ -4,6 +4,7 @@ export const IMAGE_FILE_TYPE_RULES = ["image/"]
 export const EXCEL_FILE_TYPE_RULES = [
   "application/vnd.sealed.xls",
   "application/vnd.sealed.csv",
+  "text/csv",
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
 ]
 export const WORD_FILE_TYPE_RULES = [
