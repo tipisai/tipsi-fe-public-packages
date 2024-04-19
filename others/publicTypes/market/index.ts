@@ -7,6 +7,10 @@ export interface IContributorTeam {
   teamIdentifier: string
 }
 
+export interface IMarketplaceConfig {
+  publishConfiguration: boolean
+}
+
 export interface IMarketplaceInfo {
   marketplaceID: string
   numStars: number
@@ -19,7 +23,7 @@ export interface IMarketplaceInfo {
   updatedBy: string
   updatedAt: string
   isStarredByCurrentUser: boolean
-  publishConfiguration: boolean
+  config: IMarketplaceConfig
 }
 
 export interface IMarketAIAgent {
