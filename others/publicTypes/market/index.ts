@@ -1,27 +1,28 @@
 import { Agent } from "../agent"
 
-export interface ContributorTeam {
+export interface IContributorTeam {
   teamID: string
   icon: string
   name: string
   teamIdentifier: string
 }
 
-export interface MarketplaceInfo {
+export interface IMarketplaceInfo {
   marketplaceID: string
   numStars: number
   numForks: number
   numRuns: number
-  contributorTeam: ContributorTeam
+  contributorTeam: IContributorTeam
   createdBy: string
   createdAt: string
   hashtags: string[]
   updatedBy: string
   updatedAt: string
   isStarredByCurrentUser: boolean
+  publishConfiguration: boolean
 }
 
-export interface MarketAIAgent {
+export interface IMarketAIAgent {
   aiAgent: Agent
-  marketplace: MarketplaceInfo
+  marketplace: IMarketplaceInfo
 }

@@ -34,12 +34,14 @@ export const ContributeAgentPC: FC<ContributeAgentProps> = (props) => {
               props.teamID,
               props.productID,
               currentHashtags,
+              false, // TODO:  publishConfiguration or not
             )
           } else {
             await contributeAgentWithHashtags(
               props.teamID,
               props.productID,
               currentHashtags,
+              false, // TODO:  publishConfiguration or not
             )
           }
           props.onContributed?.(true)

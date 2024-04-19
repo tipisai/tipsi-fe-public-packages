@@ -1,6 +1,6 @@
-import { MarketAIAgent } from "@illa-public/public-types"
 import { HTMLAttributes } from "react"
+import { IMarketAIAgent } from "@illa-public/public-types"
 
 export interface MarketAgentCardProps extends HTMLAttributes<HTMLDivElement> {
-  marketAIAgent: MarketAIAgent
+  marketAIAgent: IMarketAIAgent
 }

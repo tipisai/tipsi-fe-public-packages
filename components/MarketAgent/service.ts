@@ -1,5 +1,5 @@
 import { marketplaceRequest } from "@illa-public/illa-net"
-import { MarketAIAgent } from "@illa-public/public-types"
+import { IMarketAIAgent } from "@illa-public/public-types"
 
 export enum MARKET_AGENT_SORTED_OPTIONS {
   POPULAR = "popular",
@@ -8,7 +8,7 @@ export enum MARKET_AGENT_SORTED_OPTIONS {
 }
 
 export interface MarketAgentListData {
-  products: MarketAIAgent[]
+  products: IMarketAIAgent[]
   hasMore: boolean
   recommendHashtags: string[]
   summaryHashtags?: string[]
@@ -32,7 +32,7 @@ export const getAIAgentMarketplaceInfo = (
   aiAgentID: string,
   abortSignal?: AbortSignal,
 ) => {
-  return marketplaceRequest<MarketAIAgent>({
+  return marketplaceRequest<IMarketAIAgent>({
     url: `/aiAgents/${aiAgentID}`,
     method: "GET",
     signal: abortSignal,
