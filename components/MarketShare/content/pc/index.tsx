@@ -1,13 +1,13 @@
 import Icon from "@ant-design/icons"
+import { App, Button, Flex } from "antd"
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
 import { BindIcon } from "@illa-public/icon"
 import {
   COPY_STATUS,
   copyToClipboard,
   getAgentPublicLink,
 } from "@illa-public/utils"
-import { App, Button, Flex } from "antd"
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
 import { ShareBlockPC } from "../../components/ShareBlock/pc"
 import { IMarketShareProps } from "../../interface"
 
@@ -20,8 +20,8 @@ export const MarketplaceContentPC: FC<IMarketShareProps> = (props) => {
   const handleCopyMarketplaceLink = (link: string) => {
     const flag = copyToClipboard(
       t("user_management.modal.contribute.default_text.agent", {
-        agentName: name,
-        agentLink: link,
+        tipisName: name,
+        tipisLink: link,
       }),
     )
     if (flag === COPY_STATUS.EMPTY) {

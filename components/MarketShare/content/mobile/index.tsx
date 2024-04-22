@@ -1,11 +1,11 @@
+import { App, Button } from "antd"
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
 import {
   COPY_STATUS,
   copyToClipboard,
   getAgentPublicLink,
 } from "@illa-public/utils"
-import { App, Button } from "antd"
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
 import InviteIcon from "../../assets/InviteLink.svg?react"
 import { ShareBlockMobile } from "../../components/ShareBlock/mobile"
 import { IMarketShareProps } from "../../interface"
@@ -24,8 +24,8 @@ export const MarketplaceShareContentMobile: FC<IMarketShareProps> = (props) => {
   const handleCopyMarketplaceLink = (link: string) => {
     const flag = copyToClipboard(
       t("user_management.modal.contribute.default_text.agent", {
-        agentName: name,
-        agentLink: link,
+        tipisName: name,
+        tipisLink: link,
       }),
     )
     if (flag === COPY_STATUS.EMPTY) {
