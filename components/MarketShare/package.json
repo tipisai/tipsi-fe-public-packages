@@ -1,27 +1,27 @@
 {
-  "name": "@illa-public/market-agent",
+  "name": "@illa-public/market-share",
   "version": "0.0.0",
   "private": true,
-  "main": "index.ts",
+  "main": "index.tsx",
   "dependencies": {
-    "@illa-public/avatar": "workspace:*",
     "@illa-public/color-scheme": "workspace:*",
     "@illa-public/icon": "workspace:*",
-    "@illa-public/illa-net": "workspace:*",
-    "@illa-public/public-types": "workspace:*",
-    "@illa-public/record-editor": "workspace:*",
-    "@illa-public/utils": "workspace:*"
+    "@illa-public/utils": "workspace:*",
+    "@illa-public/layout-auto-change": "workspace:*",
+    "react-share": "^4.4.1"
   },
   "devDependencies": {
     "tsconfig": "workspace:*"
   },
   "peerDependencies": {
+    "@ant-design/icons": "^5.3.1",
     "@emotion/react": "^11.11.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
+    "antd": "^5.15.2",
+    "i18next": "^23.7.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@ant-design/icons": "^5.3.1",
-    "antd": "^5.15.1"
+    "react-i18next": "^13.5.0"
   }
 }
