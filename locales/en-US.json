@@ -330,6 +330,7 @@
   "dashboard.common.run": "Run",
   "dashboard.common.fork": "Fork",
   "dashboard.common.share": "Share",
+  "user_management.modal.social_media.default_text.agent": "",
   "status.blank": "",
   "dashboard.create": "Create",
   "dashboard.sort-type.popular": "Most popular",

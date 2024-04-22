@@ -330,6 +330,7 @@
   "dashboard.common.run": "執行",
   "dashboard.common.fork": "複製",
   "dashboard.common.share": "Share",
+  "user_management.modal.social_media.default_text.agent": "",
   "status.blank": "",
   "dashboard.create": "建立",
   "dashboard.sort-type.popular": "最受歡迎",
