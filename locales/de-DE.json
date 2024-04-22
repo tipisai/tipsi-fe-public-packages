@@ -330,6 +330,7 @@
   "dashboard.common.run": "Ausführen",
   "dashboard.common.fork": "Verzweigen",
   "dashboard.common.share": "Teilen",
+  "user_management.modal.social_media.default_text.agent": "",
   "status.blank": "",
   "dashboard.create": "Anlegen",
   "dashboard.sort-type.popular": "Am beliebtesten",
