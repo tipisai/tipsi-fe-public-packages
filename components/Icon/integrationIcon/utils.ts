@@ -1,10 +1,11 @@
 import { FC, SVGProps } from "react"
+import { TIntegrationType } from "@illa-public/public-types"
 import LarkIcon from "./lark.svg?react"
 import TencentCloud from "./tencentCloud.svg?react"
 
 // integration
 export const INTEGRATION_TYPE_MAP_ICON: Record<
-  string,
+  TIntegrationType,
   FC<
     SVGProps<SVGSVGElement> & {
       title?: string | undefined
@@ -12,5 +13,5 @@ export const INTEGRATION_TYPE_MAP_ICON: Record<
   >
 > = {
   larkBot: LarkIcon,
-  tencentCos: TencentCloud,
+  tencentcos: TencentCloud,
 }

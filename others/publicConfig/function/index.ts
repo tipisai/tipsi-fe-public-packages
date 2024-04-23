@@ -6,7 +6,7 @@ export const getFunctionInitDataByType = (
   integrationType: TIntegrationType,
 ): IBaseFunction => {
   switch (integrationType) {
-    case "tencentCos": {
+    case "tencentcos": {
       return INIT_TENCENT_COS_FUNCTION
     }
     case "larkBot":
