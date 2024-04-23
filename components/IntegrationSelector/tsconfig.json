@@ -1,6 +1,6 @@
 {
   "extends": "tsconfig/react.json",
-  "include": [".", "integration/.keep"],
+  "include": ["."],
   "compilerOptions": {
     "types": ["node"]
   }
