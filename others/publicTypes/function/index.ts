@@ -1,3 +1,4 @@
+import { TIntegrationType } from "../integration"
 import type { TLarkBotFunctionContent } from "./larkBot"
 import type { TTencentCosFunctionContent } from "./tencentCos"
 
@@ -29,6 +30,7 @@ export interface IFunctionConfig {
 export interface IBaseFunction<T extends unknown = unknown> {
   name: string
   description: string
+  type: TIntegrationType
   config: IFunctionConfig
   resourceID: string
   content: T

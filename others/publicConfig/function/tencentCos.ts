@@ -20,4 +20,5 @@ export const INIT_TENCENT_COS_FUNCTION: IBaseFunction<TTencentCosFunctionContent
         versionID: "",
       },
     },
+    type: "tencentcos",
   }
