@@ -25,13 +25,13 @@ export type TTencentCosRegion =
   | "eu-frankfurt"
 
 export interface ITencentCosIntegrationContent {
-  secretId: string
-  secretKey: string
-  bucket: string
+  accessKeyID: string
+  secretAccessKey: string
+  bucketName: string
   region: TTencentCosRegion
 }
 
 export interface ITencentCosIntegration
   extends IBaseIntegration<ITencentCosIntegrationContent> {
-  resourceType: "tencentCos"
+  resourceType: "tencentcos"
 }

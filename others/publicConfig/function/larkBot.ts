@@ -19,4 +19,5 @@ export const INIT_LARK_BOT_FUNCTION: IBaseFunction<IGuiLarkBotFunctionContent> =
       language: [],
       title: "",
     },
+    type: "tencentcos",
   }

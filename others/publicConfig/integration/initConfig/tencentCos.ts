@@ -1,7 +1,7 @@
 import { ITencentCosIntegration } from "@illa-public/public-types"
 
 export const INIT_TENCENT_COS_INTEGRATION: ITencentCosIntegration = {
-  resourceType: "tencentCos",
+  resourceType: "tencentcos",
   resourceID: "",
   resourceName: "",
   createdBy: "",
@@ -9,9 +9,9 @@ export const INIT_TENCENT_COS_INTEGRATION: ITencentCosIntegration = {
   createdAt: "",
   updatedAt: "",
   content: {
-    secretId: "",
-    secretKey: "",
-    bucket: "",
+    accessKeyID: "",
+    secretAccessKey: "",
+    bucketName: "",
     region: "ap-beijing-1",
   },
 }
