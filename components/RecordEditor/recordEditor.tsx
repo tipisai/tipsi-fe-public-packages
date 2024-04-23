@@ -2,13 +2,13 @@ import Icon from "@ant-design/icons"
 import { Button, Input, Space } from "antd"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
+import { getColor } from "@illa-public/color-scheme"
 import { AddIcon, DeleteIcon } from "@illa-public/icon"
 import { RecordEditorProps } from "./interface"
 import {
   applyRecordEditorContainerStyle,
   recordEditorLabelStyle,
   recordEditorStyle,
-  recordStyle,
   subLabelStyle,
 } from "./style"
 
@@ -102,6 +102,7 @@ export const RecordEditor: FC<RecordEditorProps> = (props) => {
                 marginBottom: "8px",
                 padding: "1px 8px",
                 minWidth: "32px",
+                color: getColor("techPurple", "03"),
               }}
               type="text"
               onClick={() => {

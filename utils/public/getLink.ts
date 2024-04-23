@@ -23,5 +23,5 @@ export const getPublicLinkTemplate = (
 }
 
 export const getAgentPublicLink = (agentID: string): string => {
-  return `${process.env.ILLA_MARKET_URL}/ai-agent/${agentID}/detail`
+  return `${process.env.ILLA_MARKET_URL}/tipis/${agentID}/detail`
 }
