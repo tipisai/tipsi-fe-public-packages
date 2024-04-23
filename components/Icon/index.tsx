@@ -1,15 +1,19 @@
+/* eslint-disable react-refresh/only-export-components */
 import AnonymousIcon from "./assets/anonymous.svg?react"
 import FolderIcon from "./assets/folder.svg?react"
 import GithubIcon from "./assets/github.svg?react"
 import GoogleIcon from "./assets/google.svg?react"
 import UpgradeIcon from "./assets/upgradeButtonIcon.svg?react"
 import ZipIcon from "./assets/zip.svg?react"
+import { getFileIconByContentType, getFileIconByILLAFileType } from "./drive"
+import { INTEGRATION_TYPE_MAP_ICON } from "./integrationIcon/utils"
 // public icon
 import AddIcon from "./publicIcon/add.svg?react"
 import AttachmentIcon from "./publicIcon/attachment.svg?react"
 import BindIcon from "./publicIcon/bind.svg?react"
 import CameraIcon from "./publicIcon/camera.svg?react"
 import CloseIcon from "./publicIcon/close.svg?react"
+import CommentIcon from "./publicIcon/comment.svg?react"
 import ConfigurationIcon from "./publicIcon/configuration.svg?react"
 import ContributeIcon from "./publicIcon/contribute.svg?react"
 import CopyIcon from "./publicIcon/copy.svg?react"
@@ -55,8 +59,9 @@ import UpIcon from "./publicIcon/up.svg?react"
 import UploadIcon from "./publicIcon/upload.svg?react"
 import WarningCircleIcon from "./publicIcon/warningCircle.svg?react"
 
-export * from "./drive"
 export {
+  getFileIconByILLAFileType,
+  getFileIconByContentType,
   GithubIcon,
   GoogleIcon,
   UpgradeIcon,
@@ -112,4 +117,6 @@ export {
   ExitIcon,
   DownloadIcon,
   UnPinIcon,
+  CommentIcon,
+  INTEGRATION_TYPE_MAP_ICON as RESOURCE_TYPE_MAP_ICON,
 }
