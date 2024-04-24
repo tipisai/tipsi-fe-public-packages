@@ -118,5 +118,5 @@ export {
   DownloadIcon,
   UnPinIcon,
   CommentIcon,
-  INTEGRATION_TYPE_MAP_ICON as RESOURCE_TYPE_MAP_ICON,
+  INTEGRATION_TYPE_MAP_ICON,
 }
