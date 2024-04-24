@@ -12,7 +12,7 @@ export const INIT_LARK_BOT_FUNCTION: IBaseFunction<IGuiLarkBotFunctionContent> =
       icon: "",
       variables: [],
     },
-    resourceID: "",
+    integrationID: "",
     content: {
       contentMode: LARK_BOT_CONTENT_MODE.GUI,
       content: [],

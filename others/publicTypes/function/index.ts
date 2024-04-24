@@ -33,7 +33,7 @@ export interface IBaseFunction<T extends unknown = unknown> {
   description: string
   type: TIntegrationType
   config: IFunctionConfig
-  resourceID: string
+  integrationID: string
   content: T
 }
 
