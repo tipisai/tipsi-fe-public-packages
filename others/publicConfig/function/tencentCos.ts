@@ -12,7 +12,7 @@ export const INIT_TENCENT_COS_FUNCTION: IBaseFunction<TTencentCosFunctionContent
       icon: "",
       variables: [],
     },
-    resourceID: "",
+    integrationID: "",
     content: {
       actionType: FUNCTION_ACTION_TYPE.GET_DOWNLOAD_URL,
       config: {
