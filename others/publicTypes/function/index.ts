@@ -20,6 +20,7 @@ export interface IVariables {
   description: string
   isEnum: boolean
   enumValues: string[]
+  testValue?: string
 }
 
 export interface IFunctionConfig {
