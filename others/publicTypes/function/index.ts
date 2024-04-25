@@ -8,32 +8,41 @@ export type TFunctionContent =
 
 export enum VARIABLE_TYPE {
   STRING = "string",
-  INT = "int",
-  FLOAT = "float",
+  INT = "integer",
+  FLOAT = "number",
   BOOLEAN = "boolean",
+  NULL = "null",
+  OBJECT = "object",
+  STRING_ARRAY = "stringArray",
+  INTEGER_ARRAY = "integerArray",
+  NUMBER_ARRAY = "numberArray",
+  BOOLEAN_ARRAY = "booleanArray",
+  NULL_ARRAY = "nullArray",
+  OBJECT_ARRAY = "objectArray",
 }
 
 export interface IVariables {
   name: string
-  required: boolean
-  type: VARIABLE_TYPE
   description: string
+  type: VARIABLE_TYPE
   isEnum: boolean
-  enumValues: string[]
+  required: boolean
+  enum: string[]
+  children: IVariables[]
   testValue?: string
 }
 
 export interface IFunctionConfig {
   icon: string
-  variables: IVariables[]
 }
 
 export interface IBaseFunction<T extends unknown = unknown> {
   name: string
   description: string
-  type: TIntegrationType
+  resourceType: TIntegrationType
+  resourceID: string
   config: IFunctionConfig
-  integrationID: string
+  parameters: IVariables[]
   content: T
 }
 
