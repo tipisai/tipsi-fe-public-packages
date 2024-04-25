@@ -1,5 +1,16 @@
 import { css } from "@emotion/react"
 import { getColor } from "@illa-public/color-scheme"
+import ArrayIcon from "./assets/array.svg"
+import BooleanIcon from "./assets/boolean.svg"
+import FunctionIcon from "./assets/function.svg"
+import KeywordIcon from "./assets/keyword.svg"
+import NullIcon from "./assets/null.svg"
+import NumberIcon from "./assets/number.svg"
+import ObjectIcon from "./assets/object.svg"
+import StringIcon from "./assets/string.svg"
+import TableIcon from "./assets/table.svg"
+import TypeIcon from "./assets/type.svg"
+import UnknownIcon from "./assets/undefine.svg"
 import {
   defaultHighlightClassName,
   errorHighlightClassName,
@@ -47,7 +58,12 @@ export const ILLACodeMirrorTheme = {
 }
 
 export const illaCodeMirrorTooltipStyle = css`
+  > div {
+    height: unset;
+    min-height: unset;
+  }
   .cm-tooltip {
+    z-index: 1000;
     &.cm-tooltip-autocomplete {
       border: none;
       > ul {
@@ -65,16 +81,54 @@ export const illaCodeMirrorTooltipStyle = css`
             background-color: ${getColor("techPurple", "08")};
             color: ${getColor("techPurple", "03")};
           }
+          .cm-completionIcon {
+            width: 14px;
+            height: 14px;
+            font-size: 14px;
+            opacity: 1;
+            padding-right: 8px;
+            position: absolute;
+            top: 2.5px;
+          }
+          .cm-completionIcon-Function::after {
+            content: url(${FunctionIcon});
+          }
+          .cm-completionIcon-Number::after {
+            content: url(${NumberIcon});
+          }
+          .cm-completionIcon-String::after {
+            content: url(${StringIcon});
+          }
+          .cm-completionIcon-Boolean::after {
+            content: url(${BooleanIcon});
+          }
+          .cm-completionIcon-Null::after {
+            content: url(${NullIcon});
+          }
+          .cm-completionIcon-Object::after {
+            content: url(${ObjectIcon});
+          }
+          .cm-completionIcon-Array::after {
+            content: url(${ArrayIcon});
+          }
+          .cm-completionIcon-Unknown::after {
+            content: url(${UnknownIcon});
+          }
+          .cm-completionIcon-keyword::after {
+            content: url(${KeywordIcon});
+          }
+          .cm-completionIcon-type::after {
+            content: url(${TypeIcon});
+          }
+          .cm-completionIcon-table::after {
+            content: url(${TableIcon});
+          }
           .cm-completionLabel {
             font-size: 12px;
             line-height: 22px;
             position: absolute;
-            left: 8px;
+            left: 25px;
             top: 2px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 100px;
-            overflow: hidden;
             .cm-completionMatchedText {
               font-weight: 600;
               text-decoration: none;
@@ -89,10 +143,6 @@ export const illaCodeMirrorTooltipStyle = css`
             font-size: 12px;
             line-height: 22px;
             font-style: normal;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 100px;
           }
         }
       }
