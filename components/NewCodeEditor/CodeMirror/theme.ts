@@ -59,8 +59,9 @@ export const ILLACodeMirrorTheme = {
 
 export const illaCodeMirrorTooltipStyle = css`
   .cm-tooltip {
-    z-index: 1000;
+    z-index: 9999;
     &.cm-tooltip-autocomplete {
+      border-radius: 8px;
       border: none;
       > ul {
         background-color: ${getColor("white", "01")};
