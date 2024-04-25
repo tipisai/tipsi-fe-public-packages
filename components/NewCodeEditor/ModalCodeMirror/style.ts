@@ -25,4 +25,5 @@ export const contentWrapperStyle = css`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  overflow-y: scroll;
 `

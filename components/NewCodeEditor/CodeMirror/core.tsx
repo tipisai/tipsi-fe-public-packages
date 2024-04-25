@@ -34,7 +34,6 @@ export const ILLACodeMirrorCore: FC<ILLACodeMirrorProps> = (props) => {
   } = props
 
   const {
-    autoCompleteTipContainer,
     singleLine,
     showLineNumbers = false,
     lang = CODE_LANG.MARKDOWN,
@@ -53,9 +52,8 @@ export const ILLACodeMirrorCore: FC<ILLACodeMirrorProps> = (props) => {
       showLineNumbers,
       lang,
       sqlScheme,
-      autoCompleteTipContainer,
     }
-  }, [autoCompleteTipContainer, expressions, lang, showLineNumbers, sqlScheme])
+  }, [expressions, lang, showLineNumbers, sqlScheme])
 
   const basicExtensions = useBasicSetup(
     extensionOptions,

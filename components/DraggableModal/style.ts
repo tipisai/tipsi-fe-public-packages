@@ -16,6 +16,10 @@ export const customModalStyle = css`
     flex-direction: column;
     height: 100%;
   }
+  .ant-modal-body {
+    height: calc(100% - 8px - 24px);
+    overflow: hidden;
+  }
   .resize-handle-wrapper {
     pointer-events: auto;
   }

@@ -84,7 +84,6 @@ export const useBasicSetup = (
     showLineNumbers,
     lang = CODE_LANG.JAVASCRIPT,
     sqlScheme = {},
-    autoCompleteTipContainer,
   } = options
 
   const autocompletionExtension = useMemo(
@@ -148,22 +147,13 @@ export const useBasicSetup = (
     return plugins
   }, [lang])
 
-  const buildTooltipExtension = useCallback(
-    (autoCompleteTipContainer?: HTMLElement) => {
-      return tooltips({
-        position: "fixed",
-        parent:
-          autoCompleteTipContainer ||
-          document.querySelector<HTMLElement>(".illaCodeMirrorWrapper") ||
-          document.body,
-      })
-    },
-    [],
-  )
+  const buildTooltipExtension = useCallback(() => {
+    return tooltips()
+  }, [])
 
   const tooltipExtension = useMemo(() => {
-    return buildTooltipExtension(autoCompleteTipContainer)
-  }, [autoCompleteTipContainer, buildTooltipExtension])
+    return buildTooltipExtension()
+  }, [buildTooltipExtension])
 
   const extensions = useMemo(
     () => [
