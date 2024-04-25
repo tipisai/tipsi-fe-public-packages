@@ -4,6 +4,7 @@
   "private": true,
   "main": "index.tsx",
   "dependencies": {
+    "@illa-public/icon": "workspace:*",
     "react-rnd": "^10.4.10",
     "react-use": "^17.5.0"
   },

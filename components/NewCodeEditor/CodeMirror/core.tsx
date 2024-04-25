@@ -11,6 +11,7 @@ import {
 } from "@codemirror/view"
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useBasicSetup } from "./extensions"
+import { CODE_LANG } from "./extensions/interface"
 import { ILLACodeMirrorProps } from "./interface"
 import { applyEditorWrapperStyle } from "./style"
 import { ILLACodeMirrorTheme } from "./theme"
@@ -18,23 +19,27 @@ import { ILLACodeMirrorTheme } from "./theme"
 // thk ReactCodeMirror:https://github.com/uiwjs/react-codemirror
 export const ILLACodeMirrorCore: FC<ILLACodeMirrorProps> = (props) => {
   const {
-    className,
     value,
-    height = "",
-    maxHeight = "",
-    minHeight = "",
-    width = "",
-    maxWidth = "",
-    minWidth = "",
+    styles = {},
+    options,
     editable = true,
     readOnly = false,
     placeholder,
-    expressions = [],
     completionOptions,
+    hasError = false,
+    expressions = [],
     onChange,
     onBlur,
     onFocus,
   } = props
+
+  const {
+    autoCompleteTipContainer,
+    singleLine,
+    showLineNumbers = false,
+    lang = CODE_LANG.MARKDOWN,
+    sqlScheme = {},
+  } = options ?? {}
 
   const [isFocus, setIsFocus] = useState(false)
 
@@ -45,26 +50,28 @@ export const ILLACodeMirrorCore: FC<ILLACodeMirrorProps> = (props) => {
   const extensionOptions = useMemo(() => {
     return {
       expressions,
-      completionOptions,
+      showLineNumbers,
+      lang,
+      sqlScheme,
+      autoCompleteTipContainer,
     }
-  }, [completionOptions, expressions])
+  }, [autoCompleteTipContainer, expressions, lang, showLineNumbers, sqlScheme])
 
-  const basicExtensions = useBasicSetup(extensionOptions)
+  const basicExtensions = useBasicSetup(
+    extensionOptions,
+    completionOptions,
+    expressions,
+  )
 
   const defaultThemeOption = useMemo(
     () =>
       EditorView.theme({
         "&": {
-          height,
-          minHeight,
-          maxHeight,
-          width,
-          maxWidth,
-          minWidth,
+          ...styles,
         },
         ...ILLACodeMirrorTheme,
       }),
-    [height, maxHeight, maxWidth, minHeight, minWidth, width],
+    [styles],
   )
 
   const focusUpdateListener: Extension = useMemo(() => {
@@ -112,6 +119,14 @@ export const ILLACodeMirrorCore: FC<ILLACodeMirrorProps> = (props) => {
       : []
   }, [placeholder])
 
+  const singleLineExt: Extension = useMemo(() => {
+    return singleLine
+      ? EditorState.transactionFilter.of((tr) => {
+          return tr.newDoc.lines > 1 ? [] : [tr]
+        })
+      : EditorView.lineWrapping
+  }, [singleLine])
+
   const allExtensions = useMemo(() => {
     return [
       basicExtensions,
@@ -121,6 +136,7 @@ export const ILLACodeMirrorCore: FC<ILLACodeMirrorProps> = (props) => {
       readOnlyStateChangeEffect,
       editableStateChangeEffect,
       placeholderExt,
+      singleLineExt,
       EditorView.lineWrapping,
     ]
   }, [
@@ -131,6 +147,7 @@ export const ILLACodeMirrorCore: FC<ILLACodeMirrorProps> = (props) => {
     readOnlyStateChangeEffect,
     editableStateChangeEffect,
     placeholderExt,
+    singleLineExt,
   ])
 
   const extensionsWithCompartment = useMemo(() => {
@@ -195,8 +212,7 @@ export const ILLACodeMirrorCore: FC<ILLACodeMirrorProps> = (props) => {
   return (
     <div
       ref={editorWrapperRef}
-      className={className}
-      css={applyEditorWrapperStyle(editable)}
+      css={applyEditorWrapperStyle(hasError, isFocus, editable, readOnly)}
     />
   )
 }
