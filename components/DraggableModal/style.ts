@@ -18,7 +18,7 @@ export const customModalStyle = css`
   }
   .ant-modal-body {
     height: calc(100% - 8px - 24px);
-    overflow: hidden;
+    flex: none;
   }
   .resize-handle-wrapper {
     pointer-events: auto;

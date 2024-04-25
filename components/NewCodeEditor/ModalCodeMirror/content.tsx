@@ -10,7 +10,7 @@ export const ModalContent: FC<ModalBodyContent> = (props) => {
   const { lang, onChange, value, placeholder, completionOptions } = props
 
   return (
-    <div css={contentWrapperStyle}>
+    <div css={contentWrapperStyle} onMouseDown={(e) => e.stopPropagation()}>
       <div css={applyCodeMirrorWrapperStyle}>
         <CodeEditor
           completionOptions={completionOptions}
