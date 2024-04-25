@@ -68,6 +68,7 @@ export interface TotalTeamLicense {
 
 export interface ICreditInfo {
   volume: number
+  volumeConverted: number
   balance: number
   balanceConverted: number
   quantity: number
