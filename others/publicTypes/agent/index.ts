@@ -25,6 +25,40 @@ export interface IKnowledgeFile {
   downloadURL?: string
 }
 
+export enum SCHEDULE_TYPES {
+  EVERY_HOUR = "Every hour",
+  EVERY_DAY = "Every day",
+  EVERY_WEEK = "Every week",
+  EVERY_MONTH = "Every month",
+  EVERY_YEAR = "Every year",
+}
+
+export enum DAY_OF_WEEK {
+  MONDAY = "Monday",
+  TUESDAY = "Tuesday",
+  WEDNESDAY = "Wednesday",
+  THURSDAY = "Thursday",
+  FRIDAY = "Friday",
+  SATURDAY = "Saturday",
+  SUNDAY = "Sunday",
+}
+
+export interface IScheduleOptions {
+  interval?: number
+  minute?: number
+  hour?: number
+  weekday?: DAY_OF_WEEK
+  dayOfMonth?: string
+  month?: number
+}
+
+export interface ISchedule {
+  enabled: boolean
+  timezone: string
+  type: SCHEDULE_TYPES
+  options: IScheduleOptions
+}
+
 export interface AgentRaw {
   name: string
   agentType: AI_AGENT_TYPE
@@ -58,4 +92,5 @@ export interface Agent extends AgentRaw {
   updatedAt: string
   editedBy: AgentEditor[]
   knowledge: IKnowledgeFile[]
+  schedule: ISchedule
 }
