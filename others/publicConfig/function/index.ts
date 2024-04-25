@@ -4,18 +4,30 @@ import {
   TIntegrationType,
   VARIABLE_TYPE,
 } from "@illa-public/public-types"
-import { INIT_LARK_BOT_FUNCTION } from "./larkBot"
-import { INIT_TENCENT_COS_FUNCTION } from "./tencentCos"
+import { getInitLarkBotFunction } from "./larkBot"
+import { getInitTencentCosFunction } from "./tencentCos"
+
+export const getInitBaseFunction = (): IBaseFunction => ({
+  name: "",
+  description: "",
+  resourceID: "",
+  config: {
+    icon: "",
+  },
+  parameters: [],
+  resourceType: "tencentcos",
+  content: undefined,
+})
 
 export const getFunctionInitDataByType = (
   integrationType: TIntegrationType,
 ): IBaseFunction => {
   switch (integrationType) {
     case "tencentcos": {
-      return INIT_TENCENT_COS_FUNCTION
+      return getInitTencentCosFunction()
     }
     case "larkBot":
-      return INIT_LARK_BOT_FUNCTION
+      return getInitLarkBotFunction()
   }
 }
 
@@ -24,7 +36,8 @@ export const INIT_VARIABLE: IVariables = {
   type: VARIABLE_TYPE.STRING,
   testValue: "",
   required: true,
-  enumValues: [],
+  enum: [],
   description: "",
   isEnum: false,
+  children: [],
 }
