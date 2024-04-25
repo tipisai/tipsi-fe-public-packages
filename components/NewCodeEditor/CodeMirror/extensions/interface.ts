@@ -34,7 +34,6 @@ export interface ICodeMirrorOptions {
   lang?: CODE_LANG
   sqlScheme?: Record<string, unknown>
   singleLine?: boolean
-  autoCompleteTipContainer?: HTMLElement
 }
 
 export interface ICompletionOption {
