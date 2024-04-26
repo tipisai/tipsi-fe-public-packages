@@ -4,10 +4,6 @@ export const INIT_TENCENT_COS_INTEGRATION: ITencentCosIntegration = {
   resourceType: "tencentcos",
   resourceID: "",
   resourceName: "",
-  createdBy: "",
-  updatedBy: "",
-  createdAt: "",
-  updatedAt: "",
   content: {
     accessKeyID: "",
     secretAccessKey: "",
