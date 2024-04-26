@@ -37,7 +37,7 @@ export const applyEditorWrapperStyle = (
     .cm-editor {
       border: 1px solid
         ${getEditorWrapperBorderColor(hasError, isFocused, false)};
-      border-radius: "8px";
+      border-radius: 8px;
       &.cm-focused {
         z-index: 1;
       }
