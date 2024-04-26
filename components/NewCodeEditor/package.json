@@ -15,6 +15,7 @@
     "@illa-public/color-scheme": "workspace:*",
     "@illa-public/draggable-modal": "workspace:*",
     "@illa-public/dynamic-string": "workspace:^",
+    "@illa-public/icon": "workspace:*",
     "@illa-public/utils": "workspace:*",
     "@lezer/common": "^1.2.1",
     "@lezer/highlight": "^1.2.0",

@@ -17,14 +17,16 @@ export const openWindowIconHotspotStyle = css`
   z-index: 10;
   right: 2px;
   bottom: 2px;
-  width: 16px;
-  height: 16px;
   cursor: pointer;
-  font-size: 12px;
-  background-color: ${getColor("grayBlue", "09")};
+  font-size: 14px;
+  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 2px 2px 6px 2px;
   visibility: hidden;
+  color: ${getColor("grayBlue", "03")};
+  transition: color 0.3s;
+  :hover {
+    color: ${getColor("grayBlue", "02")};
+  }
 `
