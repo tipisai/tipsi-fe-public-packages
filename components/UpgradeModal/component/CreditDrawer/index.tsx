@@ -90,41 +90,56 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
     onCancel?.()
   }
 
-  const handleNumChange = (value: number | null) => {
-    if (value === null) return
-    if (isCancelSubscribe && value < teamQuantity) {
-      message.info(t("tipi_billing.restore_subscribe_first"))
-      setCurrentQuantity(teamQuantity)
-    } else if (currentTeamInfo.credit.balanceConverted < 0) {
-      const minNum = Math.floor(
-        (currentTeamInfo.credit.volumeConverted -
-          currentTeamInfo.credit.balanceConverted) /
-          5000,
-      )
-      if (value < minNum && value < currentQuantity) {
-        message.info(t("tipi_billing.could_not_decrease"))
-        return
-      } else {
-        setCurrentQuantity(value)
+  const getBlockSubscribeQuantity = (
+    type: CREDIT_TYPE,
+  ): boolean | undefined => {
+    switch (type) {
+      case CREDIT_TYPE.CANCEL_SUBSCRIPTION: {
+        return false
       }
-    } else {
-      setCurrentQuantity(value)
+      case CREDIT_TYPE.MODIFY_SUBSCRIPTION: {
+        if (currentQuantity < teamQuantity) {
+          message.info(t("tipi_billing.restore_subscribe_first"))
+          return true
+        }
+        break
+      }
+      case CREDIT_TYPE.REMOVE_CREDIT: {
+        const usedBalance =
+          currentTeamInfo.credit.volumeConverted -
+          currentTeamInfo.credit.balanceConverted
+
+        if (usedBalance > 0) {
+          const minNum = Math.ceil(usedBalance / 5000)
+          if (teamQuantity <= minNum) {
+            message.info(t("tipi_billing.could_not_decrease"))
+            return true
+          }
+        }
+        break
+      }
+      default: {
+        return false
+      }
     }
   }
 
   const handleSubscribe = async () => {
     if (loading || !currentTeamInfo || !currentTeamInfo?.id) return
+    const type = getCurrentCreditType(
+      teamQuantity,
+      currentQuantity ?? 1,
+      isCancelSubscribe,
+    )
+    const isBlockSubscribe = getBlockSubscribeQuantity(type)
+    if (!!isBlockSubscribe) return
     setLoading(true)
     const successRedirect = getSuccessRedirectWithParams({
       returnTo: window.location.href,
       from,
     })
     const cancelRedirect = window.location.href
-    const type = getCurrentCreditType(
-      teamQuantity,
-      currentQuantity ?? 1,
-      isCancelSubscribe,
-    )
+
     try {
       switch (type) {
         case CREDIT_TYPE.CANCEL_SUBSCRIPTION:
@@ -296,7 +311,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
                   width: "100%",
                 }}
                 value={currentQuantity}
-                onChange={handleNumChange}
+                onChange={(v) => setCurrentQuantity(v ?? 1)}
                 min={isSubScribe ? 0 : 1}
               />
             </div>
