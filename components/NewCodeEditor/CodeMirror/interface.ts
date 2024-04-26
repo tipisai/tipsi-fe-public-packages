@@ -27,15 +27,3 @@ export interface ILLACodeMirrorProps {
   placeholder?: string
   hasError?: boolean
 }
-
-export enum RESULT_TYPES {
-  STRING = "STRING",
-  NUMBER = "NUMBER",
-  BOOLEAN = "BOOLEAN",
-  OBJECT = "OBJECT",
-  ARRAY = "ARRAY",
-  FUNCTION = "FUNCTION",
-  UNDEFINED = "UNDEFINED",
-  NULL = "NULL",
-  UNKNOWN = "UNKNOWN",
-}

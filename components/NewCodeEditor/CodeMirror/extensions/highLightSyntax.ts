@@ -17,7 +17,7 @@ import {
   getStringSnippets,
   hasDynamicStringSnippet,
 } from "@illa-public/dynamic-string"
-import { CODE_LANG } from "./interface"
+import { CODE_LANG } from "../../interface"
 
 const highlighterFacet = Facet.define()
 

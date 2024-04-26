@@ -24,11 +24,11 @@ import {
   TaskList,
 } from "@lezer/markdown"
 import { useCallback, useMemo } from "react"
+import { CODE_LANG } from "../../interface"
 import { buildCompletionSources } from "./completionSources/buildSources"
 import { getHighlightExpressionExtension } from "./heighLightJSExpression"
 import { highlightSyntaxExtension } from "./highLightSyntax"
 import {
-  CODE_LANG,
   ICodeMirrorOptions,
   ICompletionOption,
   IExpressionShape,

@@ -1,5 +1,4 @@
-import { CODE_LANG } from "../CodeMirror/extensions/interface"
-import { ICodeEditorProps } from "../interface"
+import { CODE_LANG, ICodeEditorProps } from "../interface"
 
 export interface ModalBodyContent {
   placeholder?: string
