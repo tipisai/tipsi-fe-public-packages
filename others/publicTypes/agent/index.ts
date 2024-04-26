@@ -1,4 +1,4 @@
-import { IBaseFunction, Params } from ".."
+import { Params } from ".."
 
 export enum AI_AGENT_MODEL {
   GPT_3_5 = 1,
@@ -46,8 +46,13 @@ export interface AgentEditor {
   editedAt: string
 }
 
-export interface IEditorFunction extends IBaseFunction {
+export interface IEditorAIToolsVO {
   aiToolID: string
+  name: string
+  description: string
+  config: {
+    icon: string
+  }
 }
 
 export interface Agent extends AgentRaw {
@@ -63,5 +68,5 @@ export interface Agent extends AgentRaw {
   updatedAt: string
   editedBy: AgentEditor[]
   knowledge: IKnowledgeFile[]
-  aiTools: IEditorFunction[]
+  aiTools: IEditorAIToolsVO[]
 }
