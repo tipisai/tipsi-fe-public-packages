@@ -45,6 +45,12 @@ export interface AgentEditor {
   editedAt: string
 }
 
+export interface IEditorFunctionItem {
+  functionName: string
+  functionIcon: string
+  functionID: string
+}
+
 export interface Agent extends AgentRaw {
   aiAgentID: string
   teamIdentifier: string
@@ -58,4 +64,5 @@ export interface Agent extends AgentRaw {
   updatedAt: string
   editedBy: AgentEditor[]
   knowledge: IKnowledgeFile[]
+  functions: IEditorFunctionItem[]
 }
