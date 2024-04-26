@@ -60,7 +60,10 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
   const currentTeamInfo = useSelector(getCurrentTeamInfo)!
 
   const isSubScribe = isSubscribeForDrawer(currentTeamInfo?.credit?.plan)
-  const teamQuantity = currentTeamInfo?.credit?.quantity
+  const teamQuantity =
+    currentTeamInfo?.credit?.quantity === 0
+      ? 1
+      : currentTeamInfo?.credit?.quantity
 
   const [currentQuantity, setCurrentQuantity] = useState<number>(
     teamQuantity ?? 1,
@@ -111,7 +114,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
 
         if (usedBalance > 0) {
           const minNum = Math.ceil(usedBalance / 5000)
-          if (teamQuantity <= minNum) {
+          if (currentQuantity <= minNum) {
             message.info(t("tipi_billing.could_not_decrease"))
             return true
           }
