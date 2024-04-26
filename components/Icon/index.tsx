@@ -28,6 +28,7 @@ import EmptyIcon from "./publicIcon/emptyIcon.svg?react"
 import ErrorIcon from "./publicIcon/error.svg?react"
 import ExitIcon from "./publicIcon/exit.svg?react"
 import ForkIcon from "./publicIcon/fork.svg?react"
+import FullScreenIcon from "./publicIcon/fullScreen.svg?react"
 import InfoIcon from "./publicIcon/info.svg?react"
 import LoadingIcon from "./publicIcon/loading.svg?react"
 import MinusIcon from "./publicIcon/minus.svg?react"
@@ -120,5 +121,6 @@ export {
   UnPinIcon,
   CommentIcon,
   DeleteOutlineIcon,
+  FullScreenIcon,
   INTEGRATION_TYPE_MAP_ICON,
 }

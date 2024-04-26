@@ -3,12 +3,12 @@ import {
   getStringSnippets,
   isDynamicStringSnippet,
 } from "@illa-public/dynamic-string"
+import { FullScreenIcon } from "@illa-public/icon"
 import { ILLACodeMirrorCore } from "./CodeMirror/core"
 import { IExpressionShape } from "./CodeMirror/extensions/interface"
 import { illaCodeMirrorTooltipStyle } from "./CodeMirror/theme"
 import { fixedValue } from "./CodeMirror/utils"
 import { ModalCodeMirror } from "./ModalCodeMirror"
-import OpenWindowIcon from "./assets/openWindow.svg?react"
 import { ICodeEditorProps } from "./interface"
 import { ILLACodeMirrorWrapperStyle, openWindowIconHotspotStyle } from "./style"
 
@@ -91,7 +91,7 @@ const CodeEditor = forwardRef<HTMLDivElement, ICodeEditorProps>(
             className="open-window-icon-hotspot"
             onClick={handleOpenExpandModal}
           >
-            <OpenWindowIcon />
+            <FullScreenIcon />
           </div>
         )}
         <ModalCodeMirror

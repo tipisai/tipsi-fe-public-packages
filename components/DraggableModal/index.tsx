@@ -1,6 +1,7 @@
 import { Modal } from "antd"
 import { FC } from "react"
 import { Rnd } from "react-rnd"
+import { useWindowSize } from "react-use"
 import Title from "./Title"
 import ResizeBarIcon from "./assets/resize-bar-icon.svg?react"
 import { IDraggableModalProps } from "./interface"
@@ -9,7 +10,10 @@ import { customModalStyle, resizeIconStyle } from "./style"
 export const DraggableModal: FC<IDraggableModalProps> = (props) => {
   const { open, changeOpen, children, title, defaultPosition } = props
 
-  const { width = 520, height = 300 } = defaultPosition ?? {}
+  const { width: windowWidth, height: windowHeight } = useWindowSize()
+
+  const { width = windowWidth * 0.8, height = windowHeight * 0.8 } =
+    defaultPosition ?? {}
 
   const handleOk = () => {
     changeOpen(false)
@@ -27,6 +31,7 @@ export const DraggableModal: FC<IDraggableModalProps> = (props) => {
       onCancel={handleCancel}
       footer={false}
       destroyOnClose
+      width={width}
       modalRender={(modal) => (
         <Rnd
           bounds=".ant-modal-wrap"
