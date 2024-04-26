@@ -101,9 +101,11 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
           currentTeamInfo.credit.balanceConverted) /
           5000,
       )
-      if (value < minNum) {
+      if (value < minNum && value < currentQuantity) {
         message.info(t("tipi_billing.could_not_decrease"))
-        setCurrentQuantity(minNum)
+        return
+      } else {
+        setCurrentQuantity(value)
       }
     } else {
       setCurrentQuantity(value)
@@ -132,8 +134,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
           })
           await cancelSubscribe(
             currentTeamInfo.id,
-            currentTeamInfo.credit?.plan ||
-              SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_PAID,
+            SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_PAID,
           )
           onSuccessCallback?.(currentTeamInfo.id, type)
           message.success({
@@ -165,9 +166,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
                 : BILLING_REPORT_TYPE.INCREASE,
           })
           await modifySubscribe(currentTeamInfo.id, {
-            plan:
-              currentTeamInfo.credit?.plan ??
-              SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_PAID,
+            plan: SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_PAID,
             quantity: currentQuantity,
             cycle,
           })
