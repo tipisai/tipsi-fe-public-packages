@@ -1,7 +1,7 @@
 import Icon from "@ant-design/icons"
 import { App, ConfigProvider, Divider, Drawer, InputNumber, Select } from "antd"
 import { Button } from "antd"
-import { FC, useEffect, useMemo, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import { Trans, useTranslation } from "react-i18next"
 import { useSelector } from "react-redux"
 import { useWindowSize } from "react-use"
@@ -25,6 +25,7 @@ import {
 } from "../../utils"
 import { Calculator } from "../Calculator"
 import { LEARN_MORE_LINK, SUBSCRIBE_CLASS_NAME } from "./constants"
+import { useGetDataState, useGetUIState } from "./hooks"
 import { CreditDrawerProps } from "./interface"
 import {
   accountsStyle,
@@ -43,7 +44,7 @@ import {
   titleContainerStyle,
   titleStyle,
 } from "./style"
-import { getCurrentCreditType } from "./utils"
+import { getCurrentCreditType, getDefaultQuantity } from "./utils"
 
 export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
   const { onCancel, visible, afterClose, onSuccessCallback, from, subCycle } =
@@ -56,26 +57,13 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(false)
   const { message } = App.useApp()
 
-  const paymentOptions = [
-    {
-      label: t("tipi_billing.annual"),
-      value: SUBSCRIPTION_CYCLE.YEARLY,
-    },
-    {
-      label: t("tipi_billing.monthly"),
-      value: SUBSCRIPTION_CYCLE.MONTHLY,
-    },
-  ]
-
   const currentTeamInfo = useSelector(getCurrentTeamInfo)!
 
   const isSubScribe = isSubscribeForDrawer(currentTeamInfo?.credit?.plan)
-  const isCancelSubscribe =
-    currentTeamInfo?.credit?.plan === SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_CANCELED
+  const teamQuantity = currentTeamInfo?.credit?.quantity
 
-  const teamQuantity = isSubScribe ? currentTeamInfo?.credit?.quantity ?? 0 : 0
   const [currentQuantity, setCurrentQuantity] = useState<number>(
-    teamQuantity === 0 ? 1 : teamQuantity,
+    getDefaultQuantity(currentTeamInfo!),
   )
   const [cycle, setCycle] = useState<SUBSCRIPTION_CYCLE>(
     isSubScribe
@@ -83,32 +71,44 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
       : subCycle ?? SUBSCRIPTION_CYCLE.MONTHLY,
   )
 
-  const disabledSubscribe =
-    (currentQuantity === teamQuantity &&
-      cycle === currentTeamInfo?.credit?.cycle) ||
-    (currentQuantity === 0 && cycle !== currentTeamInfo?.credit?.cycle)
+  const { btnText, description, paymentOptions } = useGetUIState(
+    currentQuantity,
+    cycle,
+  )
 
-  const changeNum = Math.abs(teamQuantity - currentQuantity)
-
-  const unitPrice = CREDIT_UNIT_PRICE[cycle ?? SUBSCRIPTION_CYCLE.MONTHLY]
-  const unitCreditByCycle =
-    CREDIT_UNIT_BY_CYCLE[cycle ?? SUBSCRIPTION_CYCLE.MONTHLY]
-
-  const calculatorNum =
-    currentTeamInfo?.credit?.cycle === cycle ? changeNum : currentQuantity
+  const {
+    disabledSubscribe,
+    isCancelSubscribe,
+    unitPrice,
+    unitCreditByCycle,
+    calculatorNum,
+    hiddenCalculator,
+  } = useGetDataState(currentQuantity, cycle)
 
   const handleCancel = () => {
     setCurrentQuantity(teamQuantity)
     onCancel?.()
   }
 
-  const hiddenCalculator =
-    currentQuantity === 0 ||
-    // not modify cycle
-    (changeNum === 0 && currentTeamInfo?.credit?.cycle === cycle)
-  // not cancel subscribe
-  getCurrentCreditType(teamQuantity, currentQuantity, isCancelSubscribe) !==
-    CREDIT_TYPE.CANCEL_SUBSCRIPTION
+  const handleNumChange = (value: number | null) => {
+    if (value === null) return
+    if (isCancelSubscribe && value < teamQuantity) {
+      message.info(t("tipi_billing.restore_subscribe_first"))
+      setCurrentQuantity(teamQuantity)
+    } else if (currentTeamInfo.credit.balanceConverted < 0) {
+      const minNum = Math.floor(
+        (currentTeamInfo.credit.volumeConverted -
+          currentTeamInfo.credit.balanceConverted) /
+          5000,
+      )
+      if (value < minNum) {
+        message.info(t("tipi_billing.could_not_decrease"))
+        setCurrentQuantity(minNum)
+      }
+    } else {
+      setCurrentQuantity(value)
+    }
+  }
 
   const handleSubscribe = async () => {
     if (loading || !currentTeamInfo || !currentTeamInfo?.id) return
@@ -218,70 +218,6 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
     }
   }
 
-  const { btnText, description } = useMemo(() => {
-    const num = `${toThousands(changeNum * unitCreditByCycle)}`
-    if (currentTeamInfo?.credit?.cycle !== cycle && isSubScribe) {
-      return {
-        btnText: t("tipi_billing.change_plan", {
-          changeNum: num,
-        }),
-        description: t("tipi_billing.change_desc", {
-          changeNum: num,
-        }),
-      }
-    } else {
-      const type = getCurrentCreditType(teamQuantity, currentQuantity ?? 1)
-      switch (type) {
-        case CREDIT_TYPE.ADD_CREDIT:
-          return {
-            btnText: t("tipi_billing.increase", {
-              changeNum: num,
-            }),
-            description: t("tipi_billing.increase_desc", {
-              changeNum: num,
-            }),
-          }
-        case CREDIT_TYPE.REMOVE_CREDIT:
-          return {
-            btnText: t("tipi_billing.remove", {
-              changeNum: num,
-            }),
-            description: t("tipi_billing.reduce_desc", {
-              changeNum: num,
-            }),
-          }
-        case CREDIT_TYPE.CANCEL_SUBSCRIPTION:
-          return {
-            btnText: t("tipi_billing.unsubscribe", {
-              changeNum: num,
-            }),
-            description: t("tipi_billing.unsub_desc", {
-              changeNum: num,
-            }),
-          }
-        default:
-        case CREDIT_TYPE.SUBSCRIBE:
-          return {
-            btnText: t("tipi_billing.subscribe", {
-              changeNum: num,
-            }),
-            description: t("tipi_billing.sub_desc", {
-              changeNum: num,
-            }),
-          }
-      }
-    }
-  }, [
-    changeNum,
-    unitCreditByCycle,
-    currentTeamInfo?.credit?.cycle,
-    cycle,
-    isSubScribe,
-    t,
-    teamQuantity,
-    currentQuantity,
-  ])
-
   useEffect(() => {
     if (visible) {
       TipisTrack.track("show_billing_sidebar", {
@@ -361,7 +297,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
                   width: "100%",
                 }}
                 value={currentQuantity}
-                onChange={(v) => setCurrentQuantity(v ?? 1)}
+                onChange={handleNumChange}
                 min={isSubScribe ? 0 : 1}
               />
             </div>
