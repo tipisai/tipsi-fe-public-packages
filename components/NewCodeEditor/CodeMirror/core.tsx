@@ -10,8 +10,8 @@ import {
   placeholder as placeholderExtension,
 } from "@codemirror/view"
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { CODE_LANG } from "../interface"
 import { useBasicSetup } from "./extensions"
-import { CODE_LANG } from "./extensions/interface"
 import { ILLACodeMirrorProps } from "./interface"
 import { applyEditorWrapperStyle } from "./style"
 import { ILLACodeMirrorTheme } from "./theme"

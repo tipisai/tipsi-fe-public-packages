@@ -2,7 +2,7 @@
   "name": "@illa-public/code-editor-new",
   "version": "0.0.0",
   "private": true,
-  "main": "index.tsx",
+  "main": "index.ts",
   "dependencies": {
     "@codemirror/autocomplete": "^6.16.0",
     "@codemirror/commands": "^6.5.0",

@@ -57,92 +57,120 @@ export const ILLACodeMirrorTheme = {
   },
 }
 
-export const illaCodeMirrorTooltipStyle = css`
-  .cm-tooltip {
-    z-index: 9999;
-    &.cm-tooltip-autocomplete {
+export const illaCodeMirrorTooltipStyle = () => {
+  const baseCompletionIconStyle = css`
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    opacity: 1;
+  `
+  return css`
+    .cm-tooltip.cm-tooltip-autocomplete {
+      z-index: 9999;
       border-radius: 8px;
       border: none;
-      > ul {
-        background-color: ${getColor("white", "01")};
-        border: 1px solid ${getColor("greyBlue", "08")};
-        box-shadow: 0 2px 16px rgba(0, 0, 0, 0.16);
-        border-radius: 8px;
+      background-color: ${getColor("white", "01")};
+      border: 1px solid ${getColor("greyBlue", "08")};
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.16);
+      padding: 1px;
+
+      ul[aria-label="Completions"] {
         font-family: "Fira Code", monospace;
-        li {
+        li[role="option"] {
+          border-radius: 8px;
           height: 24px;
           line-height: 24px;
           position: relative;
           overflow: hidden;
+          padding: 1px 8px;
+          display: flex;
+          align-items: center;
+          gap: 4px;
           &[aria-selected] {
             background-color: ${getColor("techPurple", "08")};
             color: ${getColor("techPurple", "03")};
           }
-          .cm-completionIcon {
+          [class="cm-completionIcon"] {
+            display: none;
+          }
+          [class^="cm-completionIcon-"],
+          [class*=" cm-completionIcon-"] {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
             width: 14px;
             height: 14px;
-            font-size: 14px;
+            flex: none;
+            line-height: 14px;
             opacity: 1;
-            padding-right: 8px;
-            position: absolute;
-            top: 2.5px;
+            padding-right: 0;
           }
           .cm-completionIcon-Function::after {
+            ${baseCompletionIconStyle};
             content: url(${FunctionIcon});
           }
           .cm-completionIcon-Number::after {
+            ${baseCompletionIconStyle};
             content: url(${NumberIcon});
           }
           .cm-completionIcon-String::after {
+            ${baseCompletionIconStyle};
             content: url(${StringIcon});
           }
           .cm-completionIcon-Boolean::after {
+            ${baseCompletionIconStyle};
             content: url(${BooleanIcon});
           }
           .cm-completionIcon-Null::after {
+            ${baseCompletionIconStyle};
             content: url(${NullIcon});
           }
           .cm-completionIcon-Object::after {
+            ${baseCompletionIconStyle};
             content: url(${ObjectIcon});
           }
           .cm-completionIcon-Array::after {
+            ${baseCompletionIconStyle};
             content: url(${ArrayIcon});
           }
           .cm-completionIcon-Unknown::after {
+            ${baseCompletionIconStyle};
             content: url(${UnknownIcon});
           }
           .cm-completionIcon-keyword::after {
+            ${baseCompletionIconStyle};
             content: url(${KeywordIcon});
           }
           .cm-completionIcon-type::after {
+            ${baseCompletionIconStyle};
             content: url(${TypeIcon});
           }
           .cm-completionIcon-table::after {
+            ${baseCompletionIconStyle};
             content: url(${TableIcon});
           }
           .cm-completionLabel {
             font-size: 12px;
-            line-height: 22px;
-            position: absolute;
-            left: 25px;
-            top: 2px;
+            width: 100%;
             .cm-completionMatchedText {
               font-weight: 600;
               text-decoration: none;
             }
           }
           .cm-completionDetail {
-            position: absolute;
-            right: 8px;
-            top: 2px;
             margin: 0;
             color: ${getColor("grayBlue", "04")};
             font-size: 12px;
-            line-height: 22px;
             font-style: normal;
+            flex: none;
+            max-width: 70px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }
+
       .cm-completionInfo {
         padding: 4px 8px;
         background-color: ${getColor("white", "01")};
@@ -227,5 +255,5 @@ export const illaCodeMirrorTooltipStyle = css`
         }
       }
     }
-  }
-`
+  `
+}

@@ -13,7 +13,7 @@ import OpenWindowIcon from "./assets/openWindow.svg?react"
 import { ICodeEditorProps } from "./interface"
 import { ILLACodeMirrorWrapperStyle, openWindowIconHotspotStyle } from "./style"
 
-export const CodeEditor: FC<ICodeEditorProps> = (props) => {
+const CodeEditor: FC<ICodeEditorProps> = (props) => {
   const {
     value = "",
     onChange = () => {},
@@ -114,3 +114,4 @@ export const CodeEditor: FC<ICodeEditorProps> = (props) => {
 }
 
 CodeEditor.displayName = "CodeEditor"
+export default CodeEditor

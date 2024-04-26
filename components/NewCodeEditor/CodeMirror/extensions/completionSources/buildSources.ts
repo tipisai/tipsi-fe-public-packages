@@ -15,7 +15,8 @@ import {
   keywordCompletionSource,
   schemaCompletionSource,
 } from "@codemirror/lang-sql"
-import { CODE_LANG, ICompletionOption } from "../interface"
+import { CODE_LANG } from "../../../interface"
+import { ICompletionOption } from "../interface"
 import { buildILLAContextCompletionSource } from "./illaContext"
 
 const buildSqlSchemeSources = (
