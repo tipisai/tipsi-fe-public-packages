@@ -30,12 +30,6 @@ export const getDefaultQuantity = (teamInfo: TeamInfo) => {
 
   if (isCancelSubscribe) {
     return teamInfo?.credit.quantity ?? 0
-  } else if (teamInfo.credit.balanceConverted < 0) {
-    const minNum = Math.floor(
-      (teamInfo.credit.volumeConverted - teamInfo.credit.balanceConverted) /
-        5000,
-    )
-    return minNum
   } else {
     return teamInfo?.credit?.quantity ?? 0
   }
