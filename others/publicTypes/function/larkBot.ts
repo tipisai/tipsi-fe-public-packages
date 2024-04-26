@@ -1,3 +1,5 @@
+import { IBaseFunction } from "."
+
 export enum LARK_BOT_CONTENT_MODE {
   GUI = "gui",
   JSON = "json",
@@ -45,3 +47,14 @@ export interface IJsonLarkBotFunctionContent extends IBaseLarkBotFunction {
 export type TLarkBotFunctionContent =
   | IGuiLarkBotFunctionContent
   | IJsonLarkBotFunctionContent
+
+export enum LARK_BOT_ACTION_OPERATION {
+  FEISHU_IM_SEND_MESSAGE = "feishuim/sendMessage",
+  LARK_IM_SEND_MESSAGE = "larkim/sendMessage",
+}
+
+export interface ILarkBotFUnction extends IBaseFunction {
+  resourceType: "larkBot"
+  content: TLarkBotFunctionContent | {}
+  actionOperation: LARK_BOT_ACTION_OPERATION
+}
