@@ -1,6 +1,7 @@
 import {
   FUNCTION_ACTION_TYPE,
-  IBaseFunction,
+  ITencentCosFunction,
+  TENCENT_COS_ACTION_OPERATION,
   TTencentCosFunctionContent,
 } from "@illa-public/public-types"
 import { getInitBaseFunction } from "."
@@ -13,13 +14,14 @@ export const INIT_TENCENT_COS_FUNCTION_CONTENT: TTencentCosFunctionContent = {
   },
 }
 
-export const getInitTencentCosFunction =
-  (): IBaseFunction<TTencentCosFunctionContent> => {
-    const baseFunction = getInitBaseFunction()
+export const getInitTencentCosFunction = (): ITencentCosFunction => {
+  const baseFunction = getInitBaseFunction()
 
-    return {
-      ...baseFunction,
-      resourceType: "tencentcos",
-      content: INIT_TENCENT_COS_FUNCTION_CONTENT,
-    }
+  return {
+    ...baseFunction,
+    resourceType: "tencentcos",
+    // content: INIT_TENCENT_COS_FUNCTION_CONTENT,
+    content: {},
+    actionOperation: TENCENT_COS_ACTION_OPERATION.TENCENT_COS_LIST,
   }
+}

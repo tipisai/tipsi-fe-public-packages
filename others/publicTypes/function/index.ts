@@ -1,6 +1,9 @@
 import { TIntegrationType } from "../integration"
-import type { TLarkBotFunctionContent } from "./larkBot"
-import type { TTencentCosFunctionContent } from "./tencentCos"
+import type { ILarkBotFUnction, TLarkBotFunctionContent } from "./larkBot"
+import type {
+  ITencentCosFunction,
+  TTencentCosFunctionContent,
+} from "./tencentCos"
 
 export type TFunctionContent =
   | TTencentCosFunctionContent
@@ -45,6 +48,8 @@ export interface IBaseFunction<T extends unknown = unknown> {
   parameters: IVariables[]
   content: T
 }
+
+export type IFunctionInterface = ITencentCosFunction | ILarkBotFUnction
 
 export * from "./larkBot"
 export * from "./tencentCos"

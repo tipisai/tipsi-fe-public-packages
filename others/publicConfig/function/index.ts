@@ -1,5 +1,6 @@
 import {
   IBaseFunction,
+  IFunctionInterface,
   IVariables,
   TIntegrationType,
   VARIABLE_TYPE,
@@ -21,7 +22,7 @@ export const getInitBaseFunction = (): IBaseFunction => ({
 
 export const getFunctionInitDataByType = (
   integrationType: TIntegrationType,
-): IBaseFunction => {
+): IFunctionInterface => {
   switch (integrationType) {
     case "tencentcos": {
       return getInitTencentCosFunction()
