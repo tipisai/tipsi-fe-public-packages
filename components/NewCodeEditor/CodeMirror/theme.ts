@@ -152,6 +152,7 @@ export const illaCodeMirrorTooltipStyle = () => {
           .cm-completionLabel {
             font-size: 12px;
             width: 100%;
+            line-height: normal;
             .cm-completionMatchedText {
               font-weight: 600;
               text-decoration: none;
