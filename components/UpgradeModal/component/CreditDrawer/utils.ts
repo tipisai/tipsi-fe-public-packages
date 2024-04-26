@@ -1,4 +1,3 @@
-import { SUBSCRIBE_PLAN, TeamInfo } from "@illa-public/public-types"
 import { CREDIT_TYPE } from "../../interface"
 
 export const getCurrentCreditType = (
@@ -21,16 +20,5 @@ export const getCurrentCreditType = (
     } else {
       return CREDIT_TYPE.SUBSCRIBE
     }
-  }
-}
-
-export const getDefaultQuantity = (teamInfo: TeamInfo) => {
-  const isCancelSubscribe =
-    teamInfo?.credit?.plan === SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_CANCELED
-
-  if (isCancelSubscribe) {
-    return teamInfo?.credit.quantity ?? 0
-  } else {
-    return teamInfo?.credit?.quantity ?? 0
   }
 }
