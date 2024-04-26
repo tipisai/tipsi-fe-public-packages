@@ -11,10 +11,6 @@ export interface IBaseIntegration<T extends unknown = unknown> {
   resourceID: string
   resourceName: string
   resourceType: TIntegrationType
-  createdBy: string
-  updatedBy: string
-  createdAt: string
-  updatedAt: string
   content: T
 }
 
