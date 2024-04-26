@@ -18,6 +18,7 @@ import ConfigurationIcon from "./publicIcon/configuration.svg?react"
 import ContributeIcon from "./publicIcon/contribute.svg?react"
 import CopyIcon from "./publicIcon/copy.svg?react"
 import DeleteIcon from "./publicIcon/delete.svg?react"
+import DeleteOutlineIcon from "./publicIcon/deleteOutline.svg?react"
 import DocsIcon from "./publicIcon/doc.svg?react"
 import DoubtIcon from "./publicIcon/doubt.svg?react"
 import DownIcon from "./publicIcon/down.svg?react"
@@ -118,5 +119,6 @@ export {
   DownloadIcon,
   UnPinIcon,
   CommentIcon,
+  DeleteOutlineIcon,
   INTEGRATION_TYPE_MAP_ICON,
 }
