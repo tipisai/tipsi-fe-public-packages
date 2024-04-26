@@ -44,7 +44,7 @@ import {
   titleContainerStyle,
   titleStyle,
 } from "./style"
-import { getCurrentCreditType, getDefaultQuantity } from "./utils"
+import { getCurrentCreditType } from "./utils"
 
 export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
   const { onCancel, visible, afterClose, onSuccessCallback, from, subCycle } =
@@ -63,7 +63,7 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
   const teamQuantity = currentTeamInfo?.credit?.quantity
 
   const [currentQuantity, setCurrentQuantity] = useState<number>(
-    getDefaultQuantity(currentTeamInfo!),
+    teamQuantity ?? 1,
   )
   const [cycle, setCycle] = useState<SUBSCRIPTION_CYCLE>(
     isSubScribe
