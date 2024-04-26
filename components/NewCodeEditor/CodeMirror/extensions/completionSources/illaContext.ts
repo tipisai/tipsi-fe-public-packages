@@ -8,7 +8,7 @@ import { capitalize } from "lodash-es"
 import { ICompletionOption } from "../interface"
 import { checkCursorInDynamicFlag } from "./util"
 
-export const newGetDataInfo = (
+export const getDataInfo = (
   completeOptions: ICompletionOption[],
   path: string,
 ): [ICompletionOption[], number] => {
@@ -53,7 +53,7 @@ export const buildILLAContextCompletionSource = (
       return null
     }
 
-    const info = newGetDataInfo(completeOptions, matchPath.text)
+    const info = getDataInfo(completeOptions, matchPath.text)
     if (!info) {
       return null
     }
@@ -68,11 +68,11 @@ export const buildILLAContextCompletionSource = (
     const keys = currentData.map((item) => item.key)
 
     const options = keys.map((key) => {
-      const dataType = keysMapCompletionOption[key]?.type || ""
+      const item = keysMapCompletionOption[key]
       const result: Completion = {
-        type: dataType,
+        type: item.type ? capitalize(item.type) : undefined,
         label: key,
-        detail: capitalize(dataType),
+        detail: item.value || undefined,
         boost: 1,
         apply:
           offset === 0
@@ -89,9 +89,23 @@ export const buildILLAContextCompletionSource = (
                 })
               },
       }
+      if (item.description) {
+        result.info = () => {
+          let dom = document.createElement("span")
+          dom.innerHTML = `<div class="completionInfoCardTitle">
+        <span class="cardTitle">${key}</span>
+
+      </div>
+      <p class="completionInfoType">${item.type}</p>
+      <p class="completionInfoDoc">${item.description}</p>
+      `
+          return dom
+        }
+      }
+
       return result
     })
-    console.log("options", options)
+
     const completions = {
       from: matchPath.from + offset,
       validFor: /^\w*$/,

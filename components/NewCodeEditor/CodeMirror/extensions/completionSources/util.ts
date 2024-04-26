@@ -1,6 +1,6 @@
 import { CompletionContext } from "@codemirror/autocomplete"
 import { getStringSnippets } from "@illa-public/dynamic-string"
-import { DATA_VALUE_TYPE } from "../interface"
+import { DATA_VALUE_TYPE } from "../../../interface"
 
 export function getDataType(data: unknown): DATA_VALUE_TYPE {
   const type = typeof data
