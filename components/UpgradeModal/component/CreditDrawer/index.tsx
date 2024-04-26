@@ -97,13 +97,25 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
     type: CREDIT_TYPE,
   ): boolean | undefined => {
     switch (type) {
-      case CREDIT_TYPE.CANCEL_SUBSCRIPTION: {
-        return false
-      }
       case CREDIT_TYPE.MODIFY_SUBSCRIPTION: {
-        if (currentQuantity < teamQuantity) {
-          message.info(t("tipi_billing.restore_subscribe_first"))
-          return true
+        if (isCancelSubscribe) {
+          const currentVolume = CREDIT_UNIT_BY_CYCLE[cycle] * currentQuantity
+          if (currentVolume < currentTeamInfo.credit.volumeConverted) {
+            message.info(t("tipi_billing.restore_subscribe_first"))
+            return true
+          }
+        } else {
+          const usedBalance =
+            currentTeamInfo.credit.volumeConverted -
+            currentTeamInfo.credit.balanceConverted
+
+          if (usedBalance > 0) {
+            const currentVolume = CREDIT_UNIT_BY_CYCLE[cycle] * currentQuantity
+            if (currentVolume <= usedBalance) {
+              message.info(t("tipi_billing.could_not_decrease"))
+              return true
+            }
+          }
         }
         break
       }
@@ -113,8 +125,8 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
           currentTeamInfo.credit.balanceConverted
 
         if (usedBalance > 0) {
-          const minNum = Math.ceil(usedBalance / 5000)
-          if (currentQuantity <= minNum) {
+          const currentVolume = CREDIT_UNIT_BY_CYCLE[cycle] * currentQuantity
+          if (currentVolume <= usedBalance) {
             message.info(t("tipi_billing.could_not_decrease"))
             return true
           }
@@ -130,9 +142,9 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
   const handleSubscribe = async () => {
     if (loading || !currentTeamInfo || !currentTeamInfo?.id) return
     const type = getCurrentCreditType(
-      teamQuantity,
+      currentTeamInfo,
       currentQuantity ?? 1,
-      isCancelSubscribe,
+      cycle,
     )
     const isBlockSubscribe = getBlockSubscribeQuantity(type)
     if (!!isBlockSubscribe) return
@@ -364,9 +376,9 @@ export const CreditDrawer: FC<CreditDrawerProps> = (props) => {
                 }}
                 className={
                   getCurrentCreditType(
-                    teamQuantity,
+                    currentTeamInfo,
                     currentQuantity ?? 1,
-                    isCancelSubscribe,
+                    cycle,
                   ) === CREDIT_TYPE.SUBSCRIBE && !disabledSubscribe
                     ? SUBSCRIBE_CLASS_NAME
                     : ""

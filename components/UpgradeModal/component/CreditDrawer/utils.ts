@@ -1,17 +1,32 @@
+import {
+  SUBSCRIBE_PLAN,
+  SUBSCRIPTION_CYCLE,
+  TeamInfo,
+} from "@illa-public/public-types"
 import { CREDIT_TYPE } from "../../interface"
+import { isSubscribeForDrawer } from "../../utils"
 
 export const getCurrentCreditType = (
-  teamSubscribeNum: number,
+  teamInfo: TeamInfo,
   currentSubscribeNum: number,
-  isCanceled?: boolean,
+  cycle: SUBSCRIPTION_CYCLE,
 ) => {
-  if (isCanceled) {
-    return CREDIT_TYPE.MODIFY_SUBSCRIPTION
+  if (!teamInfo) {
+    return CREDIT_TYPE.SUBSCRIBE
   }
-  if (teamSubscribeNum === 0) {
+  const teamSubscribeNum = teamInfo.credit.quantity
+  const isSubScribe = isSubscribeForDrawer(teamInfo?.credit?.plan)
+  const isCancelSubscribe =
+    teamInfo?.credit?.plan === SUBSCRIBE_PLAN.CREDIT_SUBSCRIBE_CANCELED
+
+  if (isCancelSubscribe) {
+    return CREDIT_TYPE.MODIFY_SUBSCRIPTION
+  } else if (!isSubScribe || teamSubscribeNum === 0) {
     return CREDIT_TYPE.SUBSCRIBE
   } else {
-    if (currentSubscribeNum > teamSubscribeNum) {
+    if (cycle !== teamInfo.credit.cycle) {
+      return CREDIT_TYPE.MODIFY_SUBSCRIPTION
+    } else if (currentSubscribeNum > teamSubscribeNum) {
       return CREDIT_TYPE.ADD_CREDIT
     } else if (currentSubscribeNum === 0) {
       return CREDIT_TYPE.CANCEL_SUBSCRIPTION
