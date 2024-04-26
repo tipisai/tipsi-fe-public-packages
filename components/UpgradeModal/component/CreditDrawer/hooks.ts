@@ -43,7 +43,11 @@ export const useGetUIState = (
         }),
       }
     } else {
-      const type = getCurrentCreditType(teamQuantity, currentQuantity ?? 1)
+      const type = getCurrentCreditType(
+        currentTeamInfo,
+        currentQuantity ?? 1,
+        cycle,
+      )
       switch (type) {
         case CREDIT_TYPE.ADD_CREDIT:
           return {
@@ -84,15 +88,7 @@ export const useGetUIState = (
           }
       }
     }
-  }, [
-    changeNum,
-    currentQuantity,
-    currentTeamInfo?.credit?.cycle,
-    cycle,
-    isSubScribe,
-    t,
-    teamQuantity,
-  ])
+  }, [changeNum, currentQuantity, currentTeamInfo, cycle, isSubScribe, t])
 
   return {
     paymentOptions,
@@ -134,7 +130,7 @@ export const useGetDataState = (
     // not modify cycle
     (changeNum === 0 && currentTeamInfo?.credit?.cycle === cycle)
   // not cancel subscribe
-  getCurrentCreditType(teamQuantity, currentQuantity, isCancelSubscribe) !==
+  getCurrentCreditType(currentTeamInfo, currentQuantity, cycle) !==
     CREDIT_TYPE.CANCEL_SUBSCRIPTION
 
   return {
