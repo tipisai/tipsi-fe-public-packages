@@ -37,7 +37,6 @@ export interface IVariables {
   required: boolean
   enum: string[]
   children: IVariables[]
-  testValue?: string
 }
 
 export interface IFunctionConfig {
