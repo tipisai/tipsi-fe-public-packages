@@ -1,15 +1,16 @@
 import Icon from "@ant-design/icons"
-import { App, Button, Flex } from "antd"
-import { FC } from "react"
-import { useTranslation } from "react-i18next"
 import { BindIcon } from "@illa-public/icon"
 import {
   COPY_STATUS,
   copyToClipboard,
   getAgentPublicLink,
 } from "@illa-public/utils"
+import { App, Button, Flex } from "antd"
+import { FC } from "react"
+import { useTranslation } from "react-i18next"
 import { ShareBlockPC } from "../../components/ShareBlock/pc"
 import { IMarketShareProps } from "../../interface"
+import { bindIconStyle } from "./style"
 
 export const MarketplaceContentPC: FC<IMarketShareProps> = (props) => {
   const { title, name, ID } = props
@@ -36,19 +37,15 @@ export const MarketplaceContentPC: FC<IMarketShareProps> = (props) => {
 
   return (
     <Flex vertical gap="middle">
-      <Flex vertical gap="small">
-        <Flex gap="small">
-          <Button
-            block
-            icon={<Icon component={BindIcon} />}
-            onClick={() => {
-              handleCopyMarketplaceLink?.(getAgentPublicLink(ID))
-            }}
-          >
-            {t("user_management.modal.link.copy")}
-          </Button>
-        </Flex>
-      </Flex>
+      <Button
+        block
+        icon={<Icon component={BindIcon} css={bindIconStyle} />}
+        onClick={() => {
+          handleCopyMarketplaceLink?.(getAgentPublicLink(ID))
+        }}
+      >
+        {t("user_management.modal.link.copy")}
+      </Button>
       <ShareBlockPC title={title} shareUrl={getAgentPublicLink(ID)} />
     </Flex>
   )
