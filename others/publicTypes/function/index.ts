@@ -1,7 +1,12 @@
 import { TIntegrationType } from "../integration"
-import type { ILarkBotFUnction, TLarkBotFunctionContent } from "./larkBot"
+import type {
+  ILarkBotFUnction,
+  LARK_BOT_ACTION_OPERATION,
+  TLarkBotFunctionContent,
+} from "./larkBot"
 import type {
   ITencentCosFunction,
+  TENCENT_COS_ACTION_OPERATION,
   TTencentCosFunctionContent,
 } from "./tencentCos"
 
@@ -50,6 +55,10 @@ export interface IBaseFunction<T extends unknown = unknown> {
 }
 
 export type IFunctionInterface = ITencentCosFunction | ILarkBotFUnction
+
+export type TActionOperation =
+  | LARK_BOT_ACTION_OPERATION
+  | TENCENT_COS_ACTION_OPERATION
 
 export * from "./larkBot"
 export * from "./tencentCos"
