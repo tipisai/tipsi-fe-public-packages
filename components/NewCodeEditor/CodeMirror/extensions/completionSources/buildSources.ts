@@ -82,9 +82,9 @@ const buildSqlKeywordSources = (lang: CODE_LANG) => {
 }
 
 export const buildCompletionSources = (
-  lang: CODE_LANG,
   sqlScheme: Record<string, unknown>,
   completeOptions: ICompletionOption[],
+  lang?: CODE_LANG,
 ) => {
   const illaSources = buildILLAContextCompletionSource(completeOptions)
   const completionSources = [illaSources]

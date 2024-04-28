@@ -21,7 +21,7 @@ export const ILLACodeMirrorCore: FC<ILLACodeMirrorProps> = (props) => {
   const {
     value,
     styles = {},
-    options,
+    extensionOptions,
     editable = true,
     readOnly = false,
     placeholder,
@@ -38,7 +38,7 @@ export const ILLACodeMirrorCore: FC<ILLACodeMirrorProps> = (props) => {
     showLineNumbers = false,
     lang = CODE_LANG.MARKDOWN,
     sqlScheme = {},
-  } = options ?? {}
+  } = extensionOptions ?? {}
 
   const [isFocus, setIsFocus] = useState(false)
 
@@ -46,7 +46,7 @@ export const ILLACodeMirrorCore: FC<ILLACodeMirrorProps> = (props) => {
   const editorWrapperRef = useRef<HTMLDivElement | null>(null)
   const compartmentsRef = useRef<Compartment[]>([])
 
-  const extensionOptions = useMemo(() => {
+  const basicExtensionOptions = useMemo(() => {
     return {
       expressions,
       showLineNumbers,
@@ -56,7 +56,7 @@ export const ILLACodeMirrorCore: FC<ILLACodeMirrorProps> = (props) => {
   }, [expressions, lang, showLineNumbers, sqlScheme])
 
   const basicExtensions = useBasicSetup(
-    extensionOptions,
+    basicExtensionOptions,
     completionOptions,
     expressions,
   )
