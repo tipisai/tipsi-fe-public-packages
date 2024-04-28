@@ -8,6 +8,7 @@ import {
 } from "@codemirror/autocomplete"
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands"
 import { javascript } from "@codemirror/lang-javascript"
+import { json } from "@codemirror/lang-json"
 import { markdown } from "@codemirror/lang-markdown"
 import { sql } from "@codemirror/lang-sql"
 import { bracketMatching, indentOnInput } from "@codemirror/language"
@@ -56,14 +57,14 @@ const keyMapExtensions = Prec.highest(
 )
 
 const getAutoCompletionExtension = (
-  lang: CODE_LANG,
   sqlScheme: Record<string, unknown>,
   completionOptions: ICompletionOption[],
+  lang?: CODE_LANG,
 ) => {
   const completionSources = buildCompletionSources(
-    lang,
     sqlScheme,
     completionOptions,
+    lang,
   )
   return [
     autocompletion({
@@ -82,13 +83,13 @@ export const useBasicSetup = (
 ) => {
   const {
     showLineNumbers,
-    lang = CODE_LANG.JAVASCRIPT,
+    lang,
     sqlScheme = {},
     autoCompleteTipContainer,
   } = options
 
   const autocompletionExtension = useMemo(
-    () => getAutoCompletionExtension(lang, sqlScheme, completionOptions),
+    () => getAutoCompletionExtension(sqlScheme, completionOptions, lang),
     [completionOptions, lang, sqlScheme],
   )
 
@@ -139,9 +140,15 @@ export const useBasicSetup = (
         )
         break
       }
-      case CODE_LANG.JAVASCRIPT:
-      default: {
+      case CODE_LANG.JAVASCRIPT: {
         plugins.push(javascript())
+      }
+
+      case CODE_LANG.JSON: {
+        plugins.push(json())
+      }
+
+      default: {
         break
       }
     }
