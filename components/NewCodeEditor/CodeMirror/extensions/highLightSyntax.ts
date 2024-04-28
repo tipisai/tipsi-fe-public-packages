@@ -127,6 +127,9 @@ function syntaxHighlighting(highlighter: HighlightStyle, filterJs: boolean) {
   return ext
 }
 
-export function highlightSyntaxExtension(language: CODE_LANG) {
-  return syntaxHighlighting(defaultHighlightStyle, language === "javascript")
+export function highlightSyntaxExtension(language?: CODE_LANG) {
+  return syntaxHighlighting(
+    defaultHighlightStyle,
+    language === CODE_LANG.JAVASCRIPT,
+  )
 }

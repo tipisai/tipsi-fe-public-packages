@@ -14,7 +14,7 @@ export interface IILLACodeMirrorStyles {
 }
 
 export interface ILLACodeMirrorProps {
-  options?: ICodeMirrorOptions
+  extensionOptions?: ICodeMirrorOptions
   expressions?: IExpressionShape[]
   completionOptions: ICompletionOption[]
   styles?: IILLACodeMirrorStyles

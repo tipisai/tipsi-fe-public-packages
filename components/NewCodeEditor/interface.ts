@@ -9,7 +9,7 @@ export interface ICodeEditorProps {
   editable?: ILLACodeMirrorProps["editable"]
   readOnly?: ILLACodeMirrorProps["editable"]
   placeholder?: ILLACodeMirrorProps["placeholder"]
-  options?: ILLACodeMirrorProps["options"]
+  options?: ILLACodeMirrorProps["extensionOptions"]
   completionOptions: ILLACodeMirrorProps["completionOptions"]
   styles?: ILLACodeMirrorProps["styles"]
   wrapperCss?: SerializedStyles
@@ -19,10 +19,9 @@ export interface ICodeEditorProps {
 
 export enum CODE_LANG {
   "JAVASCRIPT" = "javascript",
-  "SQL" = "sql",
-  "HTML" = "html",
   "JSON" = "json",
-  "XML" = "xml",
+
+  "SQL" = "sql",
   "PGSQL" = "pgsql",
   "MYSQL" = "mysql",
   "MARIASQL" = "mariasql",
@@ -30,6 +29,7 @@ export enum CODE_LANG {
   "SQLite" = "sqlite",
   "CASSANDRA" = "cassandra",
   "PLSQL" = "plsql",
+
   "MARKDOWN" = "markdown",
 }
 
