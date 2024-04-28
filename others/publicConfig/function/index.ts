@@ -35,7 +35,6 @@ export const getFunctionInitDataByType = (
 export const INIT_VARIABLE: IVariables = {
   name: "",
   type: VARIABLE_TYPE.STRING,
-  testValue: "",
   required: true,
   enum: [],
   description: "",

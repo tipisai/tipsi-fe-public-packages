@@ -1,8 +1,10 @@
 import {
   FUNCTION_ACTION_TYPE,
   ITencentCosFunction,
+  IVariables,
   TENCENT_COS_ACTION_OPERATION,
   TTencentCosFunctionContent,
+  VARIABLE_TYPE,
 } from "@illa-public/public-types"
 import { getInitBaseFunction } from "."
 
@@ -25,3 +27,15 @@ export const getInitTencentCosFunction = (): ITencentCosFunction => {
     actionOperation: TENCENT_COS_ACTION_OPERATION.TENCENT_COS_LIST,
   }
 }
+
+export const DEFAULT_TENCENT_COS_PARAMETERS: IVariables[] = [
+  {
+    name: "fileName",
+    description: "fileName",
+    type: VARIABLE_TYPE.STRING,
+    isEnum: false,
+    required: true,
+    enum: [],
+    children: [],
+  },
+]
