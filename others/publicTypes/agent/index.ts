@@ -49,7 +49,7 @@ export interface AgentEditor {
 export interface IEditorAIToolsVO {
   aiToolID: string
   name: string
-  description: string
+  description?: string
   config: {
     icon: string
   }
