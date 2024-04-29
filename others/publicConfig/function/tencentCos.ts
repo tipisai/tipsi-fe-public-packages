@@ -21,6 +21,10 @@ export const getInitTencentCosFunction = (): ITencentCosFunction => {
 
   return {
     ...baseFunction,
+    config: {
+      ...baseFunction.config,
+      icon: "https://cdn.tipis.ai/tipis/default-tipi-icon.png",
+    },
     resourceType: "tencentcos",
     // content: INIT_TENCENT_COS_FUNCTION_CONTENT,
     content: {},
