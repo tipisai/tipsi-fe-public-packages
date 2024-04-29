@@ -35,6 +35,7 @@ export interface AgentRaw {
   icon: string
   description: string
   knowledge: IKnowledgeFile[]
+  aiToolIDs: string[]
 }
 
 export interface AgentEditor {
@@ -43,6 +44,15 @@ export interface AgentEditor {
   avatar: string
   email: string
   editedAt: string
+}
+
+export interface IEditorAIToolsVO {
+  aiToolID: string
+  name: string
+  description: string
+  config: {
+    icon: string
+  }
 }
 
 export interface Agent extends AgentRaw {
@@ -58,4 +68,5 @@ export interface Agent extends AgentRaw {
   updatedAt: string
   editedBy: AgentEditor[]
   knowledge: IKnowledgeFile[]
+  aiTools: IEditorAIToolsVO[]
 }

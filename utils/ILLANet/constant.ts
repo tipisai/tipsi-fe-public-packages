@@ -1,11 +1,6 @@
-// TODO: isCloudVersion
-export const HTTP_REQUEST_PUBLIC_BASE_URL =
-  process.env.ILLA_INSTANCE_ID === "CLOUD"
-    ? `https://${process.env.ILLA_API_BASE_URL}`
-    : // if use self-host,must has protocol,like this:http://localhost:8080
-      process.env.ILLA_API_BASE_URL
-      ? `${location.protocol}//${process.env.ILLA_API_BASE_URL}`
-      : `${location.origin}`
+export const HTTP_REQUEST_PUBLIC_BASE_URL = process.env.ILLA_API_BASE_URL
+export const HTTP_REQUEST_PERIPHERAL_BASE_URL =
+  process.env.ILLA_PERIPHERAL_API_BASE_URL
 
 export const BUILDER_REQUEST_PREFIX = "/builder/api/v1"
 export const BUILDER_WS_REQUEST_PREFIX = "/builder-ws/api/v1"
@@ -17,6 +12,7 @@ export const AGENT_REQUEST_PREFIX = "/resource-manager/api/v1"
 export const WORKFLOW_REQUEST_PREFIX = "/flow/api/v1"
 export const DOMAIN_REQUEST_PREFIX = "/domain/api/v1"
 export const OBJECT_STORAGE_REQUEST_PREFIX = "/object-storage/api/v1"
+export const INTEGRATION_REQUEST_PREFIX = "/resource/api/v1"
 
 export const MARKETPLACE_AUTH_REQUEST_PREFIX = "/marketplace/api/v1/auth"
 export const MARKETPLACE_AUTH_PRODUCT_REQUEST_PREFIX =
