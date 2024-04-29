@@ -26,6 +26,7 @@ import DownloadIcon from "./publicIcon/download.svg?react"
 import DragPointIcon from "./publicIcon/dragPoint.svg?react"
 import EmptyIcon from "./publicIcon/emptyIcon.svg?react"
 import ErrorIcon from "./publicIcon/error.svg?react"
+import ErrorCircleIcon from "./publicIcon/errorCircle.svg?react"
 import ExitIcon from "./publicIcon/exit.svg?react"
 import ForkIcon from "./publicIcon/fork.svg?react"
 import FullScreenIcon from "./publicIcon/fullScreen.svg?react"
@@ -124,5 +125,6 @@ export {
   DeleteOutlineIcon,
   FullScreenIcon,
   SuccessCircleIcon,
+  ErrorCircleIcon,
   INTEGRATION_TYPE_MAP_ICON,
 }
