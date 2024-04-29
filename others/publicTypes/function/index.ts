@@ -51,6 +51,7 @@ export interface IBaseFunction<T extends unknown = unknown> {
   config: IFunctionConfig
   parameters: IVariables[]
   content: T
+  actionOperation: TActionOperation
 }
 
 export type IFunctionInterface = ITencentCosFunction | ILarkBotFUnction
