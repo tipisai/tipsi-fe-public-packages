@@ -25,6 +25,50 @@ export interface IKnowledgeFile {
   downloadURL?: string
 }
 
+export enum SCHEDULE_TYPES {
+  EVERY_HOUR = "Every hour",
+  EVERY_DAY = "Every day",
+  EVERY_WEEK = "Every week",
+  EVERY_MONTH = "Every month",
+  EVERY_YEAR = "Every year",
+}
+
+export enum DAY_OF_WEEK {
+  MONDAY = "Monday",
+  TUESDAY = "Tuesday",
+  WEDNESDAY = "Wednesday",
+  THURSDAY = "Thursday",
+  FRIDAY = "Friday",
+  SATURDAY = "Saturday",
+  SUNDAY = "Sunday",
+}
+
+export interface IScheduleOptions {
+  interval?: number
+  minute?: number
+  hour?: number
+  weekday?: DAY_OF_WEEK
+  dayOfMonth?: string
+  month?: number
+}
+
+export interface IScheduleDTO {
+  name: ""
+  contentID: ""
+  triggerType: "schedule"
+  timezone: string
+  scheduleConfig: {
+    type: SCHEDULE_TYPES
+    options: IScheduleOptions
+  }
+}
+
+export interface ITriggerConfigDTO {
+  poll: []
+  webhook: []
+  schedule: IScheduleDTO[]
+}
+
 export interface AgentRaw {
   name: string
   agentType: AI_AGENT_TYPE
@@ -36,6 +80,8 @@ export interface AgentRaw {
   description: string
   knowledge: IKnowledgeFile[]
   aiToolIDs: string[]
+  triggerIsActive: boolean
+  triggerConfig: ITriggerConfigDTO
 }
 
 export interface AgentEditor {
@@ -55,7 +101,19 @@ export interface IEditorAIToolsVO {
   }
 }
 
-export interface Agent extends AgentRaw {
+export interface IScheduleVO {
+  timezone: string
+  scheduleConfig: {
+    type: SCHEDULE_TYPES
+    options: IScheduleOptions
+  }
+}
+
+export interface ITriggerConfigVO {
+  schedule: IScheduleVO[]
+}
+
+export interface Agent extends Omit<AgentRaw, "triggerConfig"> {
   aiAgentID: string
   teamIdentifier: string
   teamID: string
@@ -69,4 +127,6 @@ export interface Agent extends AgentRaw {
   editedBy: AgentEditor[]
   knowledge: IKnowledgeFile[]
   aiTools: IEditorAIToolsVO[]
+  triggerIsActive: boolean
+  triggerConfig: ITriggerConfigVO
 }
