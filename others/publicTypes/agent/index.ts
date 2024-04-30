@@ -52,11 +52,21 @@ export interface IScheduleOptions {
   month?: number
 }
 
-export interface ISchedule {
-  enabled: boolean
+export interface IScheduleDTO {
+  name: ""
+  contentID: ""
+  triggerType: "schedule"
   timezone: string
-  type: SCHEDULE_TYPES
-  options: IScheduleOptions
+  scheduleConfig: {
+    type: SCHEDULE_TYPES
+    options: IScheduleOptions
+  }
+}
+
+export interface ITriggerConfigDTO {
+  poll: []
+  webhook: []
+  schedule: IScheduleDTO[]
 }
 
 export interface AgentRaw {
@@ -70,6 +80,8 @@ export interface AgentRaw {
   description: string
   knowledge: IKnowledgeFile[]
   aiToolIDs: string[]
+  triggerIsActive: boolean
+  triggerConfig: ITriggerConfigDTO
 }
 
 export interface AgentEditor {
@@ -89,7 +101,19 @@ export interface IEditorAIToolsVO {
   }
 }
 
-export interface Agent extends AgentRaw {
+export interface IScheduleVO {
+  timezone: string
+  scheduleConfig: {
+    type: SCHEDULE_TYPES
+    options: IScheduleOptions
+  }
+}
+
+export interface ITriggerConfigVO {
+  schedule: IScheduleVO[]
+}
+
+export interface Agent extends Omit<AgentRaw, "triggerConfig"> {
   aiAgentID: string
   teamIdentifier: string
   teamID: string
@@ -102,6 +126,7 @@ export interface Agent extends AgentRaw {
   updatedAt: string
   editedBy: AgentEditor[]
   knowledge: IKnowledgeFile[]
-  schedule: ISchedule
   aiTools: IEditorAIToolsVO[]
+  triggerIsActive: boolean
+  triggerConfig: ITriggerConfigVO
 }
