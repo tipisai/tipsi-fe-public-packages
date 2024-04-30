@@ -1,0 +1,25 @@
+{
+  "name": "@illa-public/draggable-modal",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.tsx",
+  "dependencies": {
+    "@illa-public/icon": "workspace:*",
+    "react-rnd": "^10.4.10",
+    "react-use": "^17.5.0"
+  },
+  "devDependencies": {
+    "tsconfig": "workspace:*"
+  },
+  "peerDependencies": {
+    "@ant-design/icons": "^5.3.1",
+    "@emotion/react": "^11.11.1",
+    "@types/react": "^18.2.20",
+    "@types/react-dom": "^18.2.7",
+    "antd": "^5.15.2",
+    "i18next": "^23.7.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^13.5.0"
+  }
+}
