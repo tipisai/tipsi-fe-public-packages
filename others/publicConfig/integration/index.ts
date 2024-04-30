@@ -6,6 +6,6 @@ export const INTEGRATION_TYPE_MAP_CONFIG: Record<
   TIntegrationType,
   IBaseIntegration
 > = {
-  larkBot: INIT_LARK_BOT_INTEGRATION,
+  larkbot: INIT_LARK_BOT_INTEGRATION,
   tencentcos: INIT_TENCENT_COS_INTEGRATION,
 }
