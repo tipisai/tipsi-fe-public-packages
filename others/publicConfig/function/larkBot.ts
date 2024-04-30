@@ -23,7 +23,7 @@ export const getInitLarkBotFunction = (): ILarkBotFUnction => {
     resourceType: "larkbot",
     // content: INIT_LARK_BOT_FUNCTION_CONTENT,
     content: {},
-    actionOperation: LARK_BOT_ACTION_OPERATION.LARK_IM_SEND_MESSAGE,
+    actionOperation: LARK_BOT_ACTION_OPERATION.FEISHU_IM_SEND_MESSAGE,
   }
 }
 

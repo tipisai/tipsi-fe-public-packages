@@ -2,10 +2,10 @@ import { IBaseIntegration } from "."
 
 export interface ILarkBotIntegrationContent {
   webhookAddress: string
-  useSecret: boolean
-  secret?: string
+  // useSecret: boolean
+  // secret?: string
   allowImageContent: boolean
-  bearerToken?: string
+  bearerToken: string
 }
 
 export interface ILarkBotIntegration

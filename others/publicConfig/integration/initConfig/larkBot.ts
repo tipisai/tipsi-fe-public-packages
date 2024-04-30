@@ -6,7 +6,7 @@ export const INIT_LARK_BOT_INTEGRATION: ILarkBotIntegration = {
   resourceName: "",
   content: {
     webhookAddress: "",
-    useSecret: false,
     allowImageContent: false,
+    bearerToken: "",
   },
 }
