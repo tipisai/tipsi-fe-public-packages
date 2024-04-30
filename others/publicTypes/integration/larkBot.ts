@@ -10,5 +10,5 @@ export interface ILarkBotIntegrationContent {
 
 export interface ILarkBotIntegration
   extends IBaseIntegration<ILarkBotIntegrationContent> {
-  resourceType: "larkBot"
+  resourceType: "larkbot"
 }
