@@ -1,14 +1,8 @@
 import { Flex } from "antd"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
-import {
-  FacebookShareButton,
-  LinkedinShareButton,
-  RedditShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-} from "react-share"
-import { PlatformType, ShareBlockProps, SocialMediaList } from "../interface"
+import { getComponentByPlatform } from "../config"
+import { ShareBlockProps, SocialMediaList } from "../interface"
 import {
   cardContainerStyle,
   cardIconStyle,
@@ -30,85 +24,15 @@ export const ShareBlockPC: FC<ShareBlockProps> = (props) => {
       <div css={shareGridLayoutStyle}>
         {SocialMediaList.map((platform) => {
           const child = (
-            <div
-              key={platform.platform}
-              css={cardContainerStyle}
-              onClick={() => {
-                // can report platform
-              }}
-            >
+            <div key={platform.platform} css={cardContainerStyle}>
               <div css={cardIconStyle}>{platform.icon}</div>
               <div css={cardNameStyle}>{platform.platformName}</div>
             </div>
           )
-          switch (platform.platform) {
-            case PlatformType.X:
-              return (
-                <TwitterShareButton
-                  key={platform.platform}
-                  url={shareUrl}
-                  title={title}
-                >
-                  {child}
-                </TwitterShareButton>
-              )
-            case PlatformType.REDDIT:
-              return (
-                <RedditShareButton
-                  key={platform.platform}
-                  url={shareUrl}
-                  title={title}
-                >
-                  {child}
-                </RedditShareButton>
-              )
-            case PlatformType.LINKEDIN:
-              return (
-                <LinkedinShareButton
-                  key={platform.platform}
-                  url={shareUrl}
-                  title={title}
-                >
-                  {child}
-                </LinkedinShareButton>
-              )
-            case PlatformType.HACKER_NEWS:
-              return (
-                <div
-                  key={platform.platform}
-                  onClick={() => {
-                    window.open(
-                      `https://news.ycombinator.com/submitlink?u=${shareUrl}&t=${title}`,
-                      "_blank",
-                    )
-                  }}
-                >
-                  {child}
-                </div>
-              )
-            case PlatformType.FACEBOOK:
-              return (
-                <FacebookShareButton
-                  key={platform.platform}
-                  url={shareUrl}
-                  title={title}
-                >
-                  {child}
-                </FacebookShareButton>
-              )
-            case PlatformType.WHATSAPP:
-              return (
-                <WhatsappShareButton
-                  key={platform.platform}
-                  url={shareUrl}
-                  title={title}
-                >
-                  {child}
-                </WhatsappShareButton>
-              )
-            default:
-              return null
-          }
+          return getComponentByPlatform(platform.platform, child, {
+            shareUrl,
+            title,
+          })
         })}
       </div>
     </Flex>
