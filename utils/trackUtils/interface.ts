@@ -1,3 +1,5 @@
+import { SUBSCRIPTION_CYCLE } from "../../others/publicTypes"
+
 type TipisPropertiesPrefix<T extends string, U> = `${T}${string & U}`
 
 type TipisPrefixedPropertiesInterface<T extends string, U> = {
@@ -56,4 +58,5 @@ export interface IReportedTeamInfo {
   name: string
   identifier: string
   paymentPlan: string
+  cycle: SUBSCRIPTION_CYCLE
 }
