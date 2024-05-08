@@ -54,7 +54,7 @@ export enum LARK_BOT_ACTION_OPERATION {
 }
 
 export interface ILarkBotFUnction extends IBaseFunction {
-  resourceType: "larkbot"
+  resourceType: "larkim"
   content: TLarkBotFunctionContent | {}
   actionOperation: LARK_BOT_ACTION_OPERATION
 }
