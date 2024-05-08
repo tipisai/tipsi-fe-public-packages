@@ -10,7 +10,7 @@ export const useGetResourceNameFormResourceType = () => {
       switch (resourceType) {
         case "tencentcos":
           return t("editor.action.form.title.tx.tencent")
-        case "larkbot":
+        case "larkim":
           return "Lark Bot"
         default:
           return ""

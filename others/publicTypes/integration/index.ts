@@ -1,7 +1,7 @@
 import { ILarkBotIntegrationContent } from "./larkBot"
 import { ITencentCosIntegrationContent } from "./tencentCos"
 
-export type TIntegrationType = "tencentcos" | "larkbot"
+export type TIntegrationType = "tencentcos" | "larkim"
 
 export type TIntegrationContent =
   | ITencentCosIntegrationContent
