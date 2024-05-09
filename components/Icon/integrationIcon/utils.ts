@@ -12,6 +12,6 @@ export const INTEGRATION_TYPE_MAP_ICON: Record<
     }
   >
 > = {
-  larkbot: LarkIcon,
+  larkim: LarkIcon,
   tencentcos: TencentCloud,
 }

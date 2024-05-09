@@ -29,7 +29,7 @@ export const getFunctionInitDataByType = (
     case "tencentcos": {
       return getInitTencentCosFunction()
     }
-    case "larkbot":
+    case "larkim":
       return getInitLarkBotFunction()
   }
 }

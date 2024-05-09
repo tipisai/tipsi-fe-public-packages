@@ -19,7 +19,11 @@ export const getInitLarkBotFunction = (): ILarkBotFUnction => {
 
   return {
     ...baseFunction,
-    resourceType: "larkbot",
+    config: {
+      ...baseFunction.config,
+      icon: "https://cdn.tipis.ai/tipis/defaultIcon/function-lark.png",
+    },
+    resourceType: "larkim",
     // content: INIT_LARK_BOT_FUNCTION_CONTENT,
     content: {},
     actionOperation: LARK_BOT_ACTION_OPERATION.FEISHU_IM_SEND_MESSAGE,
