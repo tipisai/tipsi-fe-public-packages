@@ -7,7 +7,8 @@
     "@illa-public/illa-net": "workspace:*",
     "@illa-public/public-types": "workspace:*",
     "@illa-public/track-utils": "workspace:^",
-    "@illa-public/utils": "workspace:*"
+    "@illa-public/utils": "workspace:*",
+    "@supabase/supabase-js": "^2.43.1"
   },
   "devDependencies": {
     "tsconfig": "workspace:*"
