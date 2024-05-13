@@ -1,0 +1,15 @@
+{
+  "contribute.first_time_modal.button": "Contribute",
+  "contribute.first_time_modal.title": "Contribute to Marketplace",
+  "contribute.tag.recommended": "Recommended",
+  "contribute.tag.tag": "Tag",
+  "contribute.update": "Edit tags",
+  "contribute.update_modal.button": "Update",
+  "contribute.update_modal.title": "Edit",
+  "user_management.modal.contribute.desc": "After contributing to Marketplace, all users can run, star, and fork your Tipi. When users from other teams run this tipi, it will not consume your credits.",
+  "user_management.modal.contribute.label": "Contribute to Marketplace",
+  "user_management.modal.message.make_public_failed": "Failed to set",
+  "user_management.modal.tab.with_team": "Share with team members",
+  "user_management.modal.tips.license_insufficient": "Remaining licenses",
+  "user_management.modal.title.contribute": "Marketplace"
+}
