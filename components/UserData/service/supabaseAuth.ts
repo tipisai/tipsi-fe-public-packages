@@ -3,7 +3,7 @@ import { Provider, Session, createClient } from "@supabase/supabase-js"
 
 const supabase = createClient(
   process.env.ILLA_SUPABASE_URL!,
-  process.env.ILLA_SUPABASE_KEY!,
+  process.env.ILLA_SUPABASE_ANON_KEY!,
 )
 
 const SUCCESS_AUTH_REDIRECT = `${process.env.ILLA_CLOUD_URL}/authRedirect`
