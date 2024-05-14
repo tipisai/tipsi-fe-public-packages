@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import {
-  CLOUD_REQUEST_PREFIX,
-  HTTP_REQUEST_PUBLIC_BASE_URL,
-} from "@illa-public/illa-net"
+import { Provider, UserIdentity } from "@supabase/supabase-js"
 import { CurrentUserInfo } from "@illa-public/public-types"
 import { IForgetPasswordRequestBody } from "./interface"
 import { prepareHeaders } from "./prepareHeaders"
+
+const HTTP_REQUEST_PUBLIC_BASE_URL = "http://192.168.50.195:3000"
+const CLOUD_REQUEST_PREFIX = "/v1/user"
 
 export const userAPI = createApi({
   reducerPath: "userAPI",
@@ -39,38 +39,6 @@ export const userAPI = createApi({
               language,
             }
             return draft
-          }),
-        )
-        try {
-          await queryFulfilled
-        } catch {
-          patchResult.undo()
-        }
-      },
-      invalidatesTags: ["User"],
-    }),
-
-    cancelLinked: builder.mutation<undefined, "github" | "google">({
-      query: (oauthAgency) => ({
-        url: `/users/oauth/${oauthAgency}`,
-        method: "DELETE",
-      }),
-      onQueryStarted: async (type, { dispatch, queryFulfilled }) => {
-        const patchResult = dispatch(
-          userAPI.util.updateQueryData("getUserInfo", null, (draft) => {
-            const ssoVerified = {
-              google: draft?.ssoVerified?.google ?? false,
-              github: draft?.ssoVerified?.github ?? false,
-            }
-            if (type === "github") {
-              ssoVerified.github = false
-            } else {
-              ssoVerified.google = false
-            }
-            draft = {
-              ...draft,
-              ssoVerified,
-            }
           }),
         )
         try {
@@ -183,15 +151,30 @@ export const userAPI = createApi({
         }
       },
     }),
+    getProviders: builder.query<Provider[], null>({
+      query: () => ({
+        url: "/getProviders",
+        method: "GET",
+      }),
+    }),
+
+    getIdentifier: builder.query<UserIdentity, Provider>({
+      query: (provider) => ({
+        url: `/getIdentifier/${provider}`,
+        method: "GET",
+      }),
+    }),
   }),
 })
 
 export const {
   useGetUserInfoQuery,
   useUpdateUserLanguageMutation,
-  useCancelLinkedMutation,
   useUpdateUserAvatarMutation,
   useUpdateNickNameMutation,
   useSetPasswordMutation,
   useSetPersonalizationMutation,
+  useGetProvidersQuery,
+  useLazyGetProvidersQuery,
+  useLazyGetIdentifierQuery,
 } = userAPI

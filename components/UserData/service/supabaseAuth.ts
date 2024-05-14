@@ -5,6 +5,7 @@ import {
   UserIdentity,
   createClient,
 } from "@supabase/supabase-js"
+import { userAPI } from "./user"
 
 const supabase = createClient(
   process.env.ILLA_SUPABASE_URL!,
@@ -67,34 +68,6 @@ export const supabaseApi = createApi({
       invalidatesTags: ["Session"],
     }),
 
-    // this need resp by node server
-    getIdentifier: builder.query<UserIdentity, Provider>({
-      queryFn: async (provider) => {
-        const { data, error } = await supabase.auth.getUserIdentities()
-        const providerIdentity = data?.identities.find(
-          (identity) => identity.provider === provider,
-        )
-        if (error || !providerIdentity) {
-          return { error }
-        }
-        return { data: providerIdentity }
-      },
-      providesTags: ["Identifier"],
-    }),
-
-    // this need resp by node server
-    getProviders: builder.query<Provider[], null>({
-      queryFn: async () => {
-        const { data, error } = await supabase.auth.getUser()
-        const provider =
-          (data.user?.app_metadata?.providers as Provider[]) || []
-        if (error) {
-          return { error }
-        }
-        return { data: provider }
-      },
-    }),
-
     linkIdentity: builder.mutation<
       null,
       { provider: Provider; redirectTo: string }
@@ -124,7 +97,7 @@ export const supabaseApi = createApi({
       },
       onQueryStarted: async (userIdentity, { dispatch, queryFulfilled }) => {
         const patchResult = dispatch(
-          supabaseApi.util.updateQueryData("getProviders", null, (draft) => {
+          userAPI.util.updateQueryData("getProviders", null, (draft) => {
             draft = draft.filter(
               (provider) => provider !== userIdentity.provider,
             )
@@ -147,6 +120,4 @@ export const {
   useAuthBySocialMutation,
   useUnlinkIdentityMutation,
   useLinkIdentityMutation,
-  useLazyGetIdentifierQuery,
-  useGetProvidersQuery,
 } = supabaseApi
