@@ -11,7 +11,11 @@ const supabase = createClient(
   process.env.ILLA_SUPABASE_ANON_KEY!,
 )
 
-const SUCCESS_AUTH_REDIRECT = `${process.env.ILLA_CLOUD_URL}/authRedirect`
+const CLOUD_URL =
+  process.env.ILLA_APP_ENV === "test"
+    ? "https://dashboard-test.tipis.ai"
+    : "http://localhost:5555"
+const SUCCESS_AUTH_REDIRECT = `${CLOUD_URL}/authRedirect`
 
 export const supabaseApi = createApi({
   reducerPath: "supabaseApi",
