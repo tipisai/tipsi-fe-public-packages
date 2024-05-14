@@ -3,11 +3,7 @@ import {
   CLOUD_REQUEST_PREFIX,
   HTTP_REQUEST_PUBLIC_BASE_URL,
 } from "@illa-public/illa-net"
-import {
-  BaseUserInfo,
-  CurrentUserInfo,
-  TeamInfo,
-} from "@illa-public/public-types"
+import { BaseUserInfo, CurrentUserInfo } from "@illa-public/public-types"
 import { IForgetPasswordRequestBody, ISignInRequestData } from "./interface"
 import { prepareHeaders } from "./prepareHeaders"
 
@@ -126,47 +122,6 @@ export const authAPI = createApi({
       },
     }),
 
-    getPortalURL: builder.query<
-      {
-        url: string
-      },
-      {
-        teamID: string
-        returningURL: string
-      }
-    >({
-      query: ({ teamID, returningURL }) => ({
-        url: `/teams/${teamID}/billing/getPortalURL`,
-        method: "POST",
-        body: { returningURL },
-      }),
-    }),
-
-    joinTeam: builder.mutation<TeamInfo, string>({
-      query: (inviteToken) => ({
-        url: `/join/${inviteToken}`,
-        method: "PUT",
-      }),
-    }),
-
-    getTeamIconUploadAddress: builder.query<
-      {
-        uploadAddress: string
-      },
-      {
-        fileName: string
-        teamID: string
-        type: string
-      }
-    >({
-      query: ({ teamID, type, fileName }) => {
-        return {
-          url: `/teams/${teamID}/icon/uploadAddress/fileName/${fileName}.${type}`,
-          method: "GET",
-        }
-      },
-    }),
-
     updateUserPassword: builder.mutation<
       undefined,
       {
@@ -179,23 +134,6 @@ export const authAPI = createApi({
         method: "PATCH",
         body: data,
       }),
-    }),
-
-    getUserAvatarUploadAddress: builder.query<
-      {
-        uploadAddress: string
-      },
-      {
-        fileName: string
-        type: string
-      }
-    >({
-      query: ({ type, fileName }) => {
-        return {
-          url: `/users/avatar/uploadAddress/fileName/${fileName}.${type}`,
-          method: "GET",
-        }
-      },
     }),
 
     logout: builder.mutation<undefined, string>({
@@ -217,9 +155,6 @@ export const {
   useSendVerificationCodeToEmailMutation,
   useForgetPasswordMutation,
   useExchangeTokenMutation,
-  useLazyGetPortalURLQuery,
-  useLazyGetTeamIconUploadAddressQuery,
   useUpdateUserPasswordMutation,
-  useLazyGetUserAvatarUploadAddressQuery,
   useLogoutMutation,
 } = authAPI

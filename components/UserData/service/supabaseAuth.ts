@@ -5,7 +5,6 @@ import {
   UserIdentity,
   createClient,
 } from "@supabase/supabase-js"
-import { userAPI } from "./user"
 
 const supabase = createClient(
   process.env.ILLA_SUPABASE_URL!,
@@ -68,6 +67,17 @@ export const supabaseApi = createApi({
       invalidatesTags: ["Session"],
     }),
 
+    getIdentifiers: builder.query<UserIdentity[], null>({
+      queryFn: async () => {
+        const { data, error } = await supabase.auth.getUserIdentities()
+        if (error) {
+          return { error }
+        }
+        return { data: data.identities || [] }
+      },
+      providesTags: ["Identifier"],
+    }),
+
     linkIdentity: builder.mutation<
       null,
       { provider: Provider; redirectTo: string }
@@ -97,7 +107,7 @@ export const supabaseApi = createApi({
       },
       onQueryStarted: async (userIdentity, { dispatch, queryFulfilled }) => {
         const patchResult = dispatch(
-          userAPI.util.updateQueryData("getIdentifiers", null, (draft) => {
+          supabaseApi.util.updateQueryData("getIdentifiers", null, (draft) => {
             draft = draft.filter(
               (identifiers) => identifiers.provider !== userIdentity.provider,
             )
@@ -111,6 +121,17 @@ export const supabaseApi = createApi({
         }
       },
     }),
+
+    signOut: builder.mutation<null, null>({
+      queryFn: async () => {
+        const { error } = await supabase.auth.signOut()
+        if (error) {
+          return { error }
+        }
+        return { data: null }
+      },
+      invalidatesTags: ["Session"],
+    }),
   }),
 })
 
@@ -120,4 +141,6 @@ export const {
   useAuthBySocialMutation,
   useUnlinkIdentityMutation,
   useLinkIdentityMutation,
+  useSignOutMutation,
+  useGetIdentifiersQuery,
 } = supabaseApi

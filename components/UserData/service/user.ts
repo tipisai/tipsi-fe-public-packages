@@ -1,7 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { UserIdentity } from "@supabase/supabase-js"
 import { CurrentUserInfo } from "@illa-public/public-types"
-import { IForgetPasswordRequestBody } from "./interface"
 import { prepareHeaders } from "./prepareHeaders"
 
 const HTTP_REQUEST_PUBLIC_BASE_URL = "http://192.168.50.195:3000"
@@ -17,7 +15,7 @@ export const userAPI = createApi({
   endpoints: (builder) => ({
     getUserInfo: builder.query<CurrentUserInfo, null>({
       query: () => ({
-        url: "/users",
+        url: "/",
         method: "GET",
       }),
       providesTags: ["User"],
@@ -104,30 +102,6 @@ export const userAPI = createApi({
       invalidatesTags: ["User"],
     }),
 
-    setPassword: builder.mutation<undefined, IForgetPasswordRequestBody>({
-      query: (data) => ({
-        method: "POST",
-        url: "/auth/forgetPassword",
-        body: data,
-      }),
-      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
-        const patchResult = dispatch(
-          userAPI.util.updateQueryData("getUserInfo", null, (draft) => {
-            draft = {
-              ...draft,
-              isPasswordSet: true,
-            }
-            return draft
-          }),
-        )
-        try {
-          await queryFulfilled
-        } catch {
-          patchResult.undo()
-        }
-      },
-      invalidatesTags: ["User"],
-    }),
     setPersonalization: builder.mutation<void, Record<string, unknown>>({
       query: (data) => ({
         method: "PUT",
@@ -152,11 +126,21 @@ export const userAPI = createApi({
       },
     }),
 
-    getIdentifiers: builder.query<UserIdentity[], null>({
-      query: () => ({
-        url: "/getIdentifier",
-        method: "GET",
-      }),
+    getUserAvatarUploadAddress: builder.query<
+      {
+        uploadAddress: string
+      },
+      {
+        fileName: string
+        type: string
+      }
+    >({
+      query: ({ type, fileName }) => {
+        return {
+          url: `/users/avatar/uploadAddress/fileName/${fileName}.${type}`,
+          method: "GET",
+        }
+      },
     }),
   }),
 })
@@ -166,7 +150,6 @@ export const {
   useUpdateUserLanguageMutation,
   useUpdateUserAvatarMutation,
   useUpdateNickNameMutation,
-  useSetPasswordMutation,
   useSetPersonalizationMutation,
-  useGetIdentifiersQuery,
+  useLazyGetUserAvatarUploadAddressQuery,
 } = userAPI

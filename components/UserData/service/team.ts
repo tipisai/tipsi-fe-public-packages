@@ -445,6 +445,40 @@ export const teamAPI = createApi({
         method: "GET",
       }),
     }),
+
+    getTeamIconUploadAddress: builder.query<
+      {
+        uploadAddress: string
+      },
+      {
+        fileName: string
+        teamID: string
+        type: string
+      }
+    >({
+      query: ({ teamID, type, fileName }) => {
+        return {
+          url: `/teams/${teamID}/icon/uploadAddress/fileName/${fileName}.${type}`,
+          method: "GET",
+        }
+      },
+    }),
+
+    getPortalURL: builder.query<
+      {
+        url: string
+      },
+      {
+        teamID: string
+        returningURL: string
+      }
+    >({
+      query: ({ teamID, returningURL }) => ({
+        url: `/teams/${teamID}/billing/getPortalURL`,
+        method: "POST",
+        body: { returningURL },
+      }),
+    }),
   }),
 })
 
@@ -465,4 +499,6 @@ export const {
   useInviteByEmailMutation,
   useGetTeamSubscriptionQuery,
   useLazyGetCreditUsageInfoQuery,
+  useLazyGetTeamIconUploadAddressQuery,
+  useLazyGetPortalURLQuery,
 } = teamAPI
