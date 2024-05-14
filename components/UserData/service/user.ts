@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import { Provider, UserIdentity } from "@supabase/supabase-js"
+import { UserIdentity } from "@supabase/supabase-js"
 import { CurrentUserInfo } from "@illa-public/public-types"
 import { IForgetPasswordRequestBody } from "./interface"
 import { prepareHeaders } from "./prepareHeaders"
@@ -151,16 +151,10 @@ export const userAPI = createApi({
         }
       },
     }),
-    getProviders: builder.query<Provider[], null>({
-      query: () => ({
-        url: "/getProviders",
-        method: "GET",
-      }),
-    }),
 
-    getIdentifier: builder.query<UserIdentity, Provider>({
-      query: (provider) => ({
-        url: `/getIdentifier/${provider}`,
+    getIdentifiers: builder.query<UserIdentity[], null>({
+      query: () => ({
+        url: "/getIdentifier",
         method: "GET",
       }),
     }),
@@ -174,7 +168,5 @@ export const {
   useUpdateNickNameMutation,
   useSetPasswordMutation,
   useSetPersonalizationMutation,
-  useGetProvidersQuery,
-  useLazyGetProvidersQuery,
-  useLazyGetIdentifierQuery,
+  useGetIdentifiersQuery,
 } = userAPI

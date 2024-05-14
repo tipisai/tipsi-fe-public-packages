@@ -97,9 +97,9 @@ export const supabaseApi = createApi({
       },
       onQueryStarted: async (userIdentity, { dispatch, queryFulfilled }) => {
         const patchResult = dispatch(
-          userAPI.util.updateQueryData("getProviders", null, (draft) => {
+          userAPI.util.updateQueryData("getIdentifiers", null, (draft) => {
             draft = draft.filter(
-              (provider) => provider !== userIdentity.provider,
+              (identifiers) => identifiers.provider !== userIdentity.provider,
             )
             return draft
           }),
