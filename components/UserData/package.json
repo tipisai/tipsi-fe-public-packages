@@ -8,9 +8,11 @@
     "@illa-public/public-types": "workspace:*",
     "@illa-public/track-utils": "workspace:^",
     "@illa-public/utils": "workspace:*",
-    "@supabase/supabase-js": "^2.43.1"
+    "@supabase/supabase-js": "^2.43.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.8",
     "tsconfig": "workspace:*"
   },
   "peerDependencies": {
