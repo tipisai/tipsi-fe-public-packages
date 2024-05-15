@@ -11,11 +11,7 @@ const supabase = createClient(
   process.env.ILLA_SUPABASE_ANON_KEY!,
 )
 
-const CLOUD_URL =
-  process.env.ILLA_APP_ENV === "test"
-    ? "https://dashboard-test.tipis.ai"
-    : "http://localhost:5555"
-const SUCCESS_AUTH_REDIRECT = `${CLOUD_URL}/authRedirect`
+const SUCCESS_AUTH_REDIRECT = `${process.env.ILLA_V2_DASH_URL_ORIGIN}/authRedirect`
 
 export const supabaseApi = createApi({
   reducerPath: "supabaseApi",
@@ -33,14 +29,18 @@ export const supabaseApi = createApi({
       providesTags: ["Session"],
     }),
 
-    authByMagicLink: builder.mutation<null, { email: string; name: string }>({
-      queryFn: async ({ email, name }) => {
+    authByMagicLink: builder.mutation<
+      null,
+      { email: string; name: string; language: string }
+    >({
+      queryFn: async ({ email, name, language }) => {
         const { error } = await supabase.auth.signInWithOtp({
           email,
           options: {
             emailRedirectTo: SUCCESS_AUTH_REDIRECT,
             data: {
               name,
+              language,
             },
           },
         })

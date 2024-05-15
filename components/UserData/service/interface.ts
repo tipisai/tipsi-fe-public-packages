@@ -1,22 +1,4 @@
-import { ICreditInfo } from "@illa-public/public-types"
-
-export interface ISignInRequestData {
-  nickname: string
-  email: string
-  verificationToken: string
-  password: string
-  isSubscribed: boolean
-  inviteToken?: string | null
-  language: string
-}
-
-export interface IForgetPasswordRequestBody {
-  email: string
-  verificationToken: string
-  verificationCode: string
-  newPassword: string
-  isFirstSet?: boolean
-}
+import { ICreditInfo, USER_ROLE } from "@illa-public/public-types"
 
 export interface ICreditUsageInfoResponse {
   toolCallUsage: number
@@ -34,8 +16,37 @@ export interface ITeamSubscription {
   }
 }
 
-export interface IUpdateTeamPermissionConfigRequest {
-  allowEditorManageTeamMember?: boolean
-  allowViewerManageTeamMember?: boolean
-  blockRegister?: boolean
+// new data types
+export interface IUserInfoDTO {
+  id: string
+  nickname: string
+  avatarUrl: string
+  language: string
+  personalization: Record<string, unknown>
+
+  // temp
+  email: string
+}
+
+// {
+//   "id": "string",
+//   "avatarUrl": "string",
+//   "identify": "string",
+//   "name": "string",
+//   "createdAt": "string"
+// }
+export interface ITeamInfoDTO {
+  id: string
+  avatarUrl: string
+  identify: string
+  name: string
+  createdAt: string
+
+  // temp
+  myRole: USER_ROLE
+  credit: ICreditInfo
+  teamMemberID: string
+  permission: {
+    inviteLinkEnabled: boolean
+  }
 }

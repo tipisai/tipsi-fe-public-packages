@@ -1,13 +1,13 @@
 import {
+  ITeamInfoVO,
   SUBSCRIBE_PLAN,
   SUBSCRIPTION_CYCLE,
-  TeamInfo,
 } from "@illa-public/public-types"
 import { CREDIT_TYPE } from "../../interface"
 import { isSubscribeForDrawer } from "../../utils"
 
 export const getCurrentCreditType = (
-  teamInfo: TeamInfo,
+  teamInfo: ITeamInfoVO,
   currentSubscribeNum: number,
   cycle: SUBSCRIPTION_CYCLE,
 ) => {

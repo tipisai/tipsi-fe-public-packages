@@ -47,25 +47,6 @@ export enum SUBSCRIPTION_CYCLE {
   LIFETIME = 3,
 }
 
-export interface SubscribeInfo {
-  volume: number
-  balance: number
-  quantity: number
-  plan: SUBSCRIBE_PLAN
-  invoiceIssueDate: string
-  cycle: SUBSCRIPTION_CYCLE
-  totalAmount: number
-  cancelAtPeriodEnd: boolean
-  invoiceURL: string
-}
-
-export interface TotalTeamLicense {
-  volume: number
-  balance: number
-  teamLicensePurchased: boolean
-  teamLicenseAllPaid: boolean
-}
-
 export interface ICreditInfo {
   volume: number
   volumeConverted: number
@@ -94,9 +75,6 @@ export interface TeamInfo {
   icon: string
   identifier: string
   teamMemberID: string
-  currentTeamLicense: SubscribeInfo
-  appSumoTeamLicense: SubscribeInfo
-  totalTeamLicense: TotalTeamLicense
   personalConfig: TeamPersonalConfig
   myRole: USER_ROLE
   permission: TeamMemberPermission
@@ -105,27 +83,32 @@ export interface TeamInfo {
   customInfo: ITeamCustomInfo
 }
 
-export interface Team {
-  items?: TeamInfo[]
-  currentId?: string
-  currentMemberList?: MemberInfo[]
+// new data types
+export interface ITeamInfoVO {
+  id: string
+  avatarUrl: string
+  identify: string
+  name: string
+  createdAt: string
+
+  // temp
+  myRole: USER_ROLE
+  credit: ICreditInfo
+  teamMemberID: string
+  permission: {
+    inviteLinkEnabled: boolean
+  }
 }
 
-export interface UpdateTransUserRolePayload {
+export interface IMemberVO {
   teamMemberID: string
-}
-
-export interface UpdateTeamMemberUserRolePayload {
-  teamMemberID: string
+  userID: string
+  nickname: string
+  email: string
+  avatar: string
   userRole: USER_ROLE
-}
-
-export interface UpdateTeamMemberPermissionPayload {
-  teamID: string
-  newPermission: Partial<TeamMemberPermission>
-}
-
-export interface UpdateTeamSubscribePayload {
-  teamID: string
-  subscribeInfo: SubscribeInfo
+  userStatus: USER_STATUS
+  permission: Record<string, any>
+  createdAt: string
+  updatedAt: string
 }

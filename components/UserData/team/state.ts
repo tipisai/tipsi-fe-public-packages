@@ -1,3 +1,13 @@
-import { Team } from "@illa-public/public-types"
+import { IMemberVO, ITeamInfoVO } from "@illa-public/public-types"
 
-export const teamInitialState: Team = {}
+export interface ITeamStateDataVO {
+  items: ITeamInfoVO[]
+  currentId: string
+  currentMemberList?: IMemberVO[]
+}
+
+export const teamInitialState: ITeamStateDataVO = {
+  items: [],
+  currentId: "",
+  currentMemberList: [],
+} as ITeamStateDataVO

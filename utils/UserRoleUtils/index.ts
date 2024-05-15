@@ -1,4 +1,8 @@
-import { SUBSCRIBE_PLAN, TeamInfo, USER_ROLE } from "@illa-public/public-types"
+import {
+  ITeamInfoVO,
+  SUBSCRIBE_PLAN,
+  USER_ROLE,
+} from "@illa-public/public-types"
 import { getPlanUtils } from "@illa-public/user-data"
 import { AttributeConfigList } from "./attributeConfigList"
 import { FreePlanAttributeConfigList } from "./freePlanAttributeConfigList"
@@ -212,17 +216,13 @@ export const canManageInvite = (
   }
 }
 
-export const showInviteModal = (teamInfo?: TeamInfo) => {
+export const showInviteModal = (teamInfo?: ITeamInfoVO) => {
   if (!teamInfo) return false
-  return canManageInvite(
-    teamInfo.myRole,
-    teamInfo.permission.allowEditorManageTeamMember,
-    teamInfo.permission.allowViewerManageTeamMember,
-  )
+  return canManageInvite(teamInfo.myRole)
 }
 
 export const openShareAppModal = (
-  teamInfo: TeamInfo,
+  teamInfo: ITeamInfoVO,
   userRoleForThisApp: USER_ROLE,
   isPublic: boolean,
   isContributed: boolean,
@@ -238,24 +238,15 @@ export const openShareAppModal = (
     )
   ) {
     return true
-  } else
-    return canManageInvite(
-      teamInfo.myRole,
-      teamInfo.permission.allowEditorManageTeamMember,
-      teamInfo.permission.allowViewerManageTeamMember,
-    )
+  } else return canManageInvite(teamInfo.myRole)
 }
 
 export const showShareAgentModal = (
-  teamInfo: TeamInfo,
+  teamInfo: ITeamInfoVO,
   userRoleForThisAgent: USER_ROLE,
   isContributed: boolean,
 ) => {
-  const canInvite = canManageInvite(
-    teamInfo.myRole,
-    teamInfo.permission.allowEditorManageTeamMember,
-    teamInfo.permission.allowViewerManageTeamMember,
-  )
+  const canInvite = canManageInvite(teamInfo.myRole)
   if (isContributed) {
     return true
   } else if (canInvite) {
@@ -270,16 +261,12 @@ export const showShareAgentModal = (
   }
 }
 
-export const showShareAgentModalOnlyForShare = (teamInfo: TeamInfo) => {
-  return canManageInvite(
-    teamInfo.myRole,
-    teamInfo.permission.allowEditorManageTeamMember,
-    teamInfo.permission.allowViewerManageTeamMember,
-  )
+export const showShareAgentModalOnlyForShare = (teamInfo: ITeamInfoVO) => {
+  return canManageInvite(teamInfo.myRole)
 }
 
 export const openShareAgentModal = (
-  teamInfo: TeamInfo,
+  teamInfo: ITeamInfoVO,
   userRoleForThisAgent: USER_ROLE,
   isContributed: boolean,
 ) => {
@@ -295,19 +282,11 @@ export const openShareAgentModal = (
   ) {
     return true
   } else {
-    return canManageInvite(
-      teamInfo.myRole,
-      teamInfo.permission.allowEditorManageTeamMember,
-      teamInfo.permission.allowViewerManageTeamMember,
-    )
+    return canManageInvite(teamInfo.myRole)
   }
 }
 
-export const canAccessMember = (teamInfo?: TeamInfo) => {
+export const canAccessMember = (teamInfo?: ITeamInfoVO) => {
   if (!teamInfo) return false
-  return canManageInvite(
-    teamInfo.myRole,
-    teamInfo.permission.allowEditorManageTeamMember,
-    teamInfo.permission.allowViewerManageTeamMember,
-  )
+  return canManageInvite(teamInfo.myRole)
 }
