@@ -1,26 +1,27 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-import {
-  CLOUD_REQUEST_PREFIX,
-  HTTP_REQUEST_PUBLIC_BASE_URL,
-} from "@illa-public/illa-net"
-import { MemberInfo, TeamInfo, USER_ROLE } from "@illa-public/public-types"
+import { MemberInfo, USER_ROLE } from "@illa-public/public-types"
 import {
   ICreditUsageInfoResponse,
+  ITeamInfoDTO,
   ITeamSubscription,
-  IUpdateTeamPermissionConfigRequest,
 } from "./interface"
 import { prepareHeaders } from "./prepareHeaders"
 
 export const teamAPI = createApi({
   reducerPath: "teamAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${HTTP_REQUEST_PUBLIC_BASE_URL}${CLOUD_REQUEST_PREFIX}`,
+    baseUrl: `${process.env.ILLA_V2_API_URL_ORIGIN}/v1`,
     prepareHeaders: prepareHeaders,
   }),
-  tagTypes: ["Teams", "TeamMembers"],
+  tagTypes: ["CurrentTeam", "Teams", "TeamMembers"],
   endpoints: (builder) => ({
-    getTeamsInfo: builder.query<TeamInfo[], null>({
-      query: () => "teams/my",
+    getTeamInfoByID: builder.query<ITeamInfoDTO, string>({
+      query: (id) => `/teams/${id}`,
+      providesTags: ["CurrentTeam"],
+    }),
+
+    getTeamsInfo: builder.query<ITeamInfoDTO[], null>({
+      query: () => "/teams",
       providesTags: (result) =>
         Array.isArray(result)
           ? [
@@ -32,20 +33,20 @@ export const teamAPI = createApi({
 
     getTeamsInfoAndCurrentID: builder.query<
       {
-        teams: TeamInfo[]
+        teams: ITeamInfoDTO[]
         currentTeamID?: string
-        currentTeamInfo?: TeamInfo
+        currentTeamInfo?: ITeamInfoDTO
       },
       string | undefined
     >({
       async queryFn(teamIdentifier, _queryAPI, _extraOptions, fetchWithBQ) {
-        const teamInfoResult = await fetchWithBQ("teams/my")
+        const teamInfoResult = await fetchWithBQ("/teams")
         if (teamInfoResult.error) {
           return {
             error: teamInfoResult.error,
           }
         }
-        const teamInfos = teamInfoResult.data as TeamInfo[]
+        const teamInfos = teamInfoResult.data as ITeamInfoDTO[]
 
         if (!teamIdentifier) {
           return {
@@ -55,13 +56,12 @@ export const teamAPI = createApi({
           }
         }
         const currentTeam = teamInfos.find(
-          (info) => info.identifier === teamIdentifier,
+          (info) => info.identify === teamIdentifier,
         )
         return {
           data: {
             teams: teamInfos,
             currentTeamID: currentTeam?.id,
-            currentTeamInfo: currentTeam,
           },
         }
       },
@@ -80,19 +80,48 @@ export const teamAPI = createApi({
           : ["Teams"],
     }),
 
-    changeTeamConfig: builder.mutation<
-      TeamInfo,
+    deleteTeamByID: builder.mutation<undefined, string>({
+      query: (teamID) => ({
+        method: "DELETE",
+        url: `/teams/${teamID}`,
+      }),
+      async onQueryStarted(teamID, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          teamAPI.util.updateQueryData(
+            "getTeamsInfo",
+            null,
+            (draft) => {
+              const currentTeams =
+                draft.filter((teamInfo) => teamInfo.id !== teamID) || []
+              draft = [...currentTeams]
+
+              return draft
+            },
+            true,
+          ),
+        )
+        try {
+          await queryFulfilled
+        } catch {
+          patchResult.undo()
+        }
+      },
+      invalidatesTags: ["Teams"],
+    }),
+
+    updateTeamInfo: builder.mutation<
+      ITeamInfoDTO,
       {
         teamID: string
         data: {
           name?: string
-          identifier?: string
-          icon?: string
+          identify?: string
+          avatarUrl?: string
         }
       }
     >({
       query: ({ teamID, data }) => ({
-        url: `/teams/${teamID}/config`,
+        url: `/teams/${teamID}`,
         method: "PATCH",
         body: data,
       }),
@@ -125,18 +154,18 @@ export const teamAPI = createApi({
     }),
 
     createTeam: builder.mutation<
-      TeamInfo,
+      ITeamInfoDTO,
       {
         name: string
-        identifier: string
+        identify: string
       }
     >({
-      query: ({ name, identifier }) => ({
+      query: ({ name, identify }) => ({
         url: "/teams",
         method: "POST",
         body: {
           name,
-          identifier,
+          identify,
         },
       }),
       async onQueryStarted({}, { dispatch, queryFulfilled }) {
@@ -158,7 +187,7 @@ export const teamAPI = createApi({
       invalidatesTags: ["Teams"],
     }),
 
-    joinTeam: builder.mutation<TeamInfo, string>({
+    joinTeam: builder.mutation<ITeamInfoDTO, string>({
       query: (inviteToken) => ({
         url: `/join/${inviteToken}`,
         method: "PUT",
@@ -173,35 +202,6 @@ export const teamAPI = createApi({
             }),
           )
         } catch {}
-      },
-      invalidatesTags: ["Teams"],
-    }),
-
-    deleteTeamByID: builder.mutation<undefined, string>({
-      query: (teamID) => ({
-        method: "DELETE",
-        url: `/teams/${teamID}`,
-      }),
-      async onQueryStarted(teamID, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          teamAPI.util.updateQueryData(
-            "getTeamsInfo",
-            null,
-            (draft) => {
-              const currentTeams =
-                draft.filter((teamInfo) => teamInfo.id !== teamID) || []
-              draft = [...currentTeams]
-
-              return draft
-            },
-            true,
-          ),
-        )
-        try {
-          await queryFulfilled
-        } catch {
-          patchResult.undo()
-        }
       },
       invalidatesTags: ["Teams"],
     }),
@@ -250,6 +250,7 @@ export const teamAPI = createApi({
       },
       invalidatesTags: ["Teams", "TeamMembers"],
     }),
+
     getMemberList: builder.query<MemberInfo[], string>({
       query: (teamID) => {
         return {
@@ -259,6 +260,7 @@ export const teamAPI = createApi({
       },
       providesTags: ["TeamMembers"],
     }),
+
     changeTeamMemberRole: builder.mutation<
       undefined,
       {
@@ -294,46 +296,6 @@ export const teamAPI = createApi({
         }
       },
       invalidatesTags: ["TeamMembers"],
-    }),
-
-    updateTeamPermissionConfig: builder.mutation<
-      undefined,
-      {
-        teamID: string
-        data: IUpdateTeamPermissionConfigRequest
-      }
-    >({
-      query: ({ teamID, data }) => ({
-        url: `/teams/${teamID}/permission`,
-        method: "PATCH",
-        body: data,
-      }),
-      onQueryStarted: async (
-        { teamID, data },
-        { dispatch, queryFulfilled },
-      ) => {
-        const patchResult = dispatch(
-          teamAPI.util.updateQueryData("getTeamsInfo", null, (draft) => {
-            draft = draft.map((team) => {
-              if (team.id === teamID) {
-                return {
-                  ...team,
-                  ...data,
-                }
-              }
-              return team
-            })
-            return draft
-          }),
-        )
-
-        try {
-          await queryFulfilled
-        } catch {
-          patchResult.undo()
-        }
-      },
-      invalidatesTags: ["Teams"],
     }),
 
     getInviteLink: builder.query<
@@ -374,10 +336,7 @@ export const teamAPI = createApi({
               if (team.id === teamID) {
                 return {
                   ...team,
-                  permission: {
-                    ...team.permission,
-                    inviteLinkEnabled,
-                  },
+                  inviteLinkEnabled,
                 }
               }
               return team
@@ -446,24 +405,6 @@ export const teamAPI = createApi({
       }),
     }),
 
-    getTeamIconUploadAddress: builder.query<
-      {
-        uploadAddress: string
-      },
-      {
-        fileName: string
-        teamID: string
-        type: string
-      }
-    >({
-      query: ({ teamID, type, fileName }) => {
-        return {
-          url: `/teams/${teamID}/icon/uploadAddress/fileName/${fileName}.${type}`,
-          method: "GET",
-        }
-      },
-    }),
-
     getPortalURL: builder.query<
       {
         url: string
@@ -484,7 +425,7 @@ export const teamAPI = createApi({
 
 export const {
   useGetTeamsInfoQuery,
-  useChangeTeamConfigMutation,
+  useUpdateTeamInfoMutation,
   useDeleteTeamByIDMutation,
   useCreateTeamMutation,
   useGetTeamsInfoAndCurrentIDQuery,
@@ -493,12 +434,11 @@ export const {
   useRemoveTeamMemberByIDMutation,
   useGetMemberListQuery,
   useChangeTeamMemberRoleMutation,
-  useUpdateTeamPermissionConfigMutation,
   useGetInviteLinkQuery,
   useChangeTeamInviteLinkEnabledMutation,
   useInviteByEmailMutation,
   useGetTeamSubscriptionQuery,
   useLazyGetCreditUsageInfoQuery,
-  useLazyGetTeamIconUploadAddressQuery,
   useLazyGetPortalURLQuery,
+  useGetTeamInfoByIDQuery,
 } = teamAPI

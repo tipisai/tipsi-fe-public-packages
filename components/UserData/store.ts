@@ -1,5 +1,5 @@
-import { Team } from "@illa-public/public-types"
+import { ITeamStateDataVO } from "./team"
 
 export type RootState = {
-  team: Team
+  team: ITeamStateDataVO
 }
