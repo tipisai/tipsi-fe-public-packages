@@ -5,6 +5,7 @@ import {
   UserIdentity,
   createClient,
 } from "@supabase/supabase-js"
+import { v4 } from "uuid"
 
 const supabase = createClient(
   process.env.ILLA_SUPABASE_URL!,
@@ -12,6 +13,7 @@ const supabase = createClient(
 )
 
 const SUCCESS_AUTH_REDIRECT = `${process.env.ILLA_V2_DASH_URL_ORIGIN}/authRedirect`
+const UPLOAD_BUCKET_NAME = "avatars"
 
 export const supabaseApi = createApi({
   reducerPath: "supabaseApi",
@@ -136,6 +138,42 @@ export const supabaseApi = createApi({
       },
       invalidatesTags: ["Session"],
     }),
+
+    uploadUserAvatar: builder.mutation<
+      string,
+      {
+        file: File
+        userID: string
+      }
+    >({
+      queryFn: async ({ file, userID }) => {
+        const { data, error } = await supabase.storage
+          .from(UPLOAD_BUCKET_NAME)
+          .upload(`user/${userID}/${v4()}`, file)
+        if (error) {
+          return { error }
+        }
+        return { data: data.path }
+      },
+    }),
+
+    uploadTeamAvatar: builder.mutation<
+      string,
+      {
+        file: File
+        teamID: string
+      }
+    >({
+      queryFn: async ({ file, teamID }) => {
+        const { data, error } = await supabase.storage
+          .from(UPLOAD_BUCKET_NAME)
+          .upload(`team/${teamID}/${v4()}`, file)
+        if (error) {
+          return { error }
+        }
+        return { data: data.path }
+      },
+    }),
   }),
 })
 
@@ -147,4 +185,6 @@ export const {
   useLinkIdentityMutation,
   useSignOutMutation,
   useGetIdentifiersQuery,
+  useUploadTeamAvatarMutation,
+  useUploadUserAvatarMutation,
 } = supabaseApi
