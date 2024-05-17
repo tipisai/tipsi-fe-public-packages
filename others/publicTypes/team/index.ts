@@ -13,24 +13,6 @@ export interface MemberInfo {
   updatedAt: string
 }
 
-export interface TeamMemberPermission {
-  blockRegister: boolean
-  inviteLinkEnabled: boolean
-  allowViewerInvite: boolean
-  allowEditorInvite: boolean
-  allowEditorManageTeamMember: boolean
-  allowViewerManageTeamMember: boolean
-}
-
-export interface TeamMemberPermissionConfig {
-  config: number
-}
-
-export interface TeamPersonalConfig {
-  teamLicenseSubscribeExpiredPopupShowed: boolean
-  teamLicenseSubscribeExpiredBannerShowed: boolean
-}
-
 export enum SUBSCRIBE_PLAN {
   UNDEFINED = "undefined",
   CREDIT_FREE = "credit_free",
@@ -60,27 +42,6 @@ export interface ICreditInfo {
   cancelAtPeriodEnd: boolean
   bonus: number
   bonusConverted: number
-}
-
-export interface ITeamCustomInfo {
-  customDomain: string
-  favicon: string
-  title: string
-}
-
-export interface TeamInfo {
-  id: string
-  uid: string
-  name: string
-  icon: string
-  identifier: string
-  teamMemberID: string
-  personalConfig: TeamPersonalConfig
-  myRole: USER_ROLE
-  permission: TeamMemberPermission
-  teamMemberPermission: TeamMemberPermissionConfig
-  credit: ICreditInfo
-  customInfo: ITeamCustomInfo
 }
 
 // new data types

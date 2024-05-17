@@ -12,6 +12,7 @@ import AddIcon from "./publicIcon/add.svg?react"
 import AttachmentIcon from "./publicIcon/attachment.svg?react"
 import BindIcon from "./publicIcon/bind.svg?react"
 import CameraIcon from "./publicIcon/camera.svg?react"
+import ClearIcon from "./publicIcon/clear.svg?react"
 import CloseIcon from "./publicIcon/close.svg?react"
 import CommentIcon from "./publicIcon/comment.svg?react"
 import ConfigurationIcon from "./publicIcon/configuration.svg?react"
@@ -32,6 +33,7 @@ import ForkIcon from "./publicIcon/fork.svg?react"
 import FullScreenIcon from "./publicIcon/fullScreen.svg?react"
 import InfoIcon from "./publicIcon/info.svg?react"
 import LoadingIcon from "./publicIcon/loading.svg?react"
+import MemoryIcon from "./publicIcon/memory.svg?react"
 import MinusIcon from "./publicIcon/minus.svg?react"
 import MoreIcon from "./publicIcon/more.svg?react"
 import NextIcon from "./publicIcon/next.svg?react"
@@ -129,4 +131,6 @@ export {
   ErrorCircleIcon,
   INTEGRATION_TYPE_MAP_ICON,
   TimeIcon,
+  ClearIcon,
+  MemoryIcon,
 }
